@@ -1,2 +1,2 @@
 # Chat_App
-Main project for the Programming Engineering course
+Main project for the Software Engineering course
