@@ -74,7 +74,7 @@
             this.textboxMessage.Location = new System.Drawing.Point(190, 390);
             this.textboxMessage.Multiline = true;
             this.textboxMessage.Name = "textboxMessage";
-            this.textboxMessage.Size = new System.Drawing.Size(494, 30);
+            this.textboxMessage.Size = new System.Drawing.Size(504, 30);
             this.textboxMessage.TabIndex = 1;
             // 
             // buttonSend
