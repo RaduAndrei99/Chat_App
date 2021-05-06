@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Users_friend_lists_1_fk" directorySegmentName="seg_0" id="F0DC117C-0B25-FD78-60DF-3632425ADD74">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 10:44:47 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<sourcePk>C9641EFE-6AF2-7D7F-765C-0A118B898D8E</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>BDB79296-8287-D105-23CF-2DE46B7A12D9</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>74815FD0-FBCB-A941-1569-BB6514257ED6</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

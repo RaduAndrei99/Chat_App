@@ -1,0 +1,145 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2E0A9755-6D57-6F04-E87F-6E2F065DEE8A" name="Messages">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 10:51:01 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="message_id" id="94A51FA2-17CE-9236-79CD-5C7EE0B67B7D">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 10:58:42 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>14</dataTypePrecision>
+<ownDataTypeParameters>,14,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="format" id="ED112CC3-A89C-5CE2-FB15-1EC0DF813092">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 11:59:18 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<constraintName>message_type_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>3</dataTypeSize>
+<ownDataTypeParameters>3,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="message_data" id="0CE94B1A-33E1-42D1-54D0-1E92A22F0D27">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 17:07:31 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="seen" id="EA9D90BD-E9FA-D8B1-480A-2AD5395EDB49">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 17:21:27 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<constraintName>seen_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1 CHAR</dataTypeSize>
+<listOfValues>
+<valueDef value="F" description=""/>
+<valueDef value="T" description=""/>
+</listOfValues>
+<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="sent_at" id="947FB1F2-9CD0-4608-84A1-23E20BD32DC1">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 11:29:32 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="seen_at" id="9030EC10-78D3-CC0D-5318-FCCD3D03F5E7">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 17:20:46 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="sender_id" id="9654BCC0-1E29-C5D9-B5F6-13E0256DA4AF">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 12:06:22 UTC</createdTime>
+<generatorID>D77AD817-03A6-8966-6503-ADE09024E55A</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<referedAttribute>6D6F903E-A56E-E097-8044-457BB3E57EA8</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="conversation_id" id="20A72E09-8146-CAE0-298E-797AEFD2E35B">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 12:22:00 UTC</createdTime>
+<generatorID>A7AEDF2B-BCB6-3C70-6E48-4C436FE16AD2</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<referedAttribute>E41E54AE-A9B7-8D65-4FF5-014A102064C7</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>13</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="30DF58E6-85B0-55EB-5466-135AD94DA3DE" name="Messages PK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 10:57:22 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>94A51FA2-17CE-9236-79CD-5C7EE0B67B7D</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

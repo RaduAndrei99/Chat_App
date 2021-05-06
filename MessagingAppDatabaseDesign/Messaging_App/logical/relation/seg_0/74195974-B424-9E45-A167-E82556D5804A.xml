@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Users_user_informations_fk" directorySegmentName="seg_0" id="74195974-B424-9E45-A167-E82556D5804A">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:11:15 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<sourcePk>C9641EFE-6AF2-7D7F-765C-0A118B898D8E</sourcePk>
+<identifying>true</identifying>
+<nameOnSource>are</nameOnSource>
+<nameOnTarget>descrie</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>BDB79296-8287-D105-23CF-2DE46B7A12D9</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>2882543A-BADB-F467-284F-4EF77CE8D8FD</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

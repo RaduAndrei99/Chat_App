@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0752BDE0-18B7-6033-45C4-FC5F7F2D6551" name="Relationship_settings">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>2AAB2E22-D0EE-9569-66E6-8EA3C2475083</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="nickname_user_1" id="AA226565-5FF5-C0DD-A5E1-60D90FD84393">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>CC793F92-A596-0133-EB9F-17091E8CCC21</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="nickname_user_2" id="DE055154-2EED-0A71-D54D-8BA94E941C27">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>F2BEF371-B4A8-FDDD-197E-D98051E10556</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<ownDataTypeParameters>30,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="relationship_id" id="23ED8DAB-B9CE-CA96-C637-5EB10E8B04BC">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>77A73489-4442-916A-7117-79737B4BD874</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>13</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B4D0B648-37CE-8007-6292-BC95A36F5DC4" referredColumn="6BA73607-EC0E-7A82-D72A-8BA461F95F25"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="81D47847-9B40-F769-90DC-3F6EA2E63080" name="Relationship_settings_PK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>10C68090-F3CC-DD89-CBBE-7BB75EC95212</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23ED8DAB-B9CE-CA96-C637-5EB10E8B04BC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F1756813-B5E7-284F-AFCF-1447A173BE2E" name="Relationship_settings_Friend_relationships_FK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>BAAAFA46-424A-B1D0-E4D0-43D9D3E6AB60</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23ED8DAB-B9CE-CA96-C637-5EB10E8B04BC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

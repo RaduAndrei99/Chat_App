@@ -1,0 +1,101 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AB57A559-E628-A865-86FC-47235070BEBD" name="Users">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>BDB79296-8287-D105-23CF-2DE46B7A12D9</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="user_id" id="2D6272A7-724C-2CFF-8EC0-AC4742576110">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>6D6F903E-A56E-E097-8044-457BB3E57EA8</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,11,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="user_name" id="74603050-FC28-E83F-B580-AE8F2BE16BEE">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>A2C95948-BE8F-F192-5DB6-47A665C7BCBD</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="user_password" id="D239AF9D-8A2D-DAFB-AF83-33AC34D493CE">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>1B805C4E-00CE-CF4C-D6A2-360965C47C46</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="is_active" id="6E343F70-E697-ABD5-7E29-02838E373E41">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>03AA5369-30C0-CC7D-CDC1-D528672D0B0F</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>is_active_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1 CHAR</dataTypeSize>
+<listOfValues>
+<valueDef value="F" description=""/>
+<valueDef value="T" description=""/>
+</listOfValues>
+<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created_at" id="98C52084-4318-6DF0-0B11-12D84C3704A4">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>59385BAD-AF26-AEBB-7169-0BE22D2DD4DC</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A2414093-5B7A-34CC-23BA-9F2C27DCD991" name="Users_PK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>C9641EFE-6AF2-7D7F-765C-0A118B898D8E</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2D6272A7-724C-2CFF-8EC0-AC4742576110"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="90EDBE70-772F-B8DC-DF29-5820F925AD79" name="Users_user_name_UN">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<generatorID>10DB683E-5364-6156-FF55-694A070EF309</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="74603050-FC28-E83F-B580-AE8F2BE16BEE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

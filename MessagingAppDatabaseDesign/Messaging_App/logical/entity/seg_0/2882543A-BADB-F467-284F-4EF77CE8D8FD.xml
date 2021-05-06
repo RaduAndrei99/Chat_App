@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="2882543A-BADB-F467-284F-4EF77CE8D8FD" name="User_informations">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:07:38 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="first_name" id="36AF1B19-EDD9-1A9D-24B0-CA1588A248A6">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:08:46 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="last_name" id="33400D3A-99C8-61E6-6535-B5B6C3E67F3D">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:09:46 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="email" id="B152E0B5-E8B4-A1AC-8CB1-74464CAB0E01">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:13:05 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<ownDataTypeParameters>40,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="birthdate" id="78FF5CAF-E07A-9F76-BBDA-8E7FEC71E1DE">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:09:58 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="user_id" id="635D8D11-CDD2-40B1-BB91-88F701B90AF3">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:11:15 UTC</createdTime>
+<generatorID>74195974-B424-9E45-A167-E82556D5804A</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<referedAttribute>6D6F903E-A56E-E097-8044-457BB3E57EA8</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,11,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="F3E47C52-5C12-F2F9-BC0B-F6EEED391009" name="User_informations PK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:12:48 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>635D8D11-CDD2-40B1-BB91-88F701B90AF3</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

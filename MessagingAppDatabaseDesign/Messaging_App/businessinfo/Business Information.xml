@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BusinessInfoDesign class="oracle.dbtools.crest.model.businessinfo.BusinessInfoDesign" name="Business Information" id="3B2572D9-4AB4-9DA5-FA96-899D8EF34B7F">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:03:01 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</BusinessInfoDesign>

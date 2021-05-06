@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_10" directorySegmentName="seg_0" id="BAAAFA46-424A-B1D0-E4D0-43D9D3E6AB60">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-05 17:01:29 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<sourcePk>4F2C5538-7A99-037A-D999-84449708EF17</sourcePk>
+<identifying>true</identifying>
+<nameOnSource>are</nameOnSource>
+<nameOnTarget>descrie</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>74815FD0-FBCB-A941-1569-BB6514257ED6</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>2AAB2E22-D0EE-9569-66E6-8EA3C2475083</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

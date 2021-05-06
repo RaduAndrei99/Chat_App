@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Messaging_App" id="58DEA00D-D97F-E3CF-7E2D-26E98ADA1C83" version="3.5">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:03:01 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>58DEA00D-D97F-E3CF-7E2D-26E98ADA1C83</designId>
+</OSDM_Design>

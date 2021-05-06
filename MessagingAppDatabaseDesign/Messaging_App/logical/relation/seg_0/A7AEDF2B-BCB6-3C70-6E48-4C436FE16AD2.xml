@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Conversations_Messages_fk" directorySegmentName="seg_0" id="A7AEDF2B-BCB6-3C70-6E48-4C436FE16AD2">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 10:57:06 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<sourcePk>93F8D4F0-3BB1-D89B-21CF-43576B7BEF85</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>contine</nameOnSource>
+<nameOnTarget>face parte din</nameOnTarget>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>B071BD6E-9A16-F6AF-2F6F-B4FED52023F5</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>2E0A9755-6D57-6F04-E87F-6E2F065DEE8A</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

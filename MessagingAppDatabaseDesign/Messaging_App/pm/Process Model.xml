@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="4511FAF4-326C-3369-76F8-E08497A08ED6">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-03 09:03:01 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</ProcessModel>
