@@ -13,6 +13,7 @@ namespace Chat_App.Views
     public partial class ChatView : BasicView
     {
         private static ChatView _instance;
+        private AddFriendView addFriendForm;
 
         public static ChatView Instance
         {
@@ -24,7 +25,7 @@ namespace Chat_App.Views
             }
         }
 
-        public ChatView()
+        private ChatView()
         {
             InitializeComponent();
         }
@@ -38,8 +39,38 @@ namespace Chat_App.Views
         {
             ListViewItem newMessage = new ListViewItem();
             newMessage.Text = textboxMessage.Text;
-            newMessage.BackColor = Color.Orange;
-            listviewChat.Items.Add(listviewChat.Columns[0].Name);
+            newMessage.ForeColor = Color.DarkOrange;
+            listviewChat.Items.Add(newMessage);
+        }
+
+        private void buttonAddFriend_Click(object sender, EventArgs e)
+        {
+            addFriendForm = AddFriendView.Instance;
+            addFriendForm.SetParentForm(this);
+            addFriendForm.Show();
+        }
+
+        public void AddFriendToList(string newFriendName)
+        {
+            ListViewItem newFriend = new ListViewItem();
+            newFriend.Text = newFriendName;
+            newFriend.ForeColor = Color.OrangeRed;
+            listviewFriends.Items.Add(newFriend);
+        }
+
+        private void listviewFriends_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedItem = listviewFriends.SelectedItems;
+            labelActiveFriend.Text = selectedItem[0].Text;
+            // clean up old chat, load in new chat messages
+            listviewChat.Clear();
+            textboxMessage.Clear();
+        }
+
+        private void ChatView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
         }
     }
 }

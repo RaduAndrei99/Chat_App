@@ -1,0 +1,15 @@
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\Chat App.exe.config
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\Chat App.exe
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\Chat App.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\MaterialSkin.dll
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Properties.Resources.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.csproj.GenerateResource.cache
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.csproj.CoreCompileInputs.cache
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.csproj.CopyComplete
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.exe
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.LogInControl.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.LogInView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.ChatView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.csprojAssemblyReference.cache
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.AddFriendView.resources
