@@ -8,8 +8,8 @@
 </engineerTo>
 <sourcePk>93F8D4F0-3BB1-D89B-21CF-43576B7BEF85</sourcePk>
 <identifying>false</identifying>
-<nameOnSource>contine</nameOnSource>
-<nameOnTarget>face parte din</nameOnTarget>
+<nameOnSource>contains</nameOnSource>
+<nameOnTarget>is part of</nameOnTarget>
 <optionalSource>true</optionalSource>
 <optionalTarget>false</optionalTarget>
 <sourceCardinality>1</sourceCardinality>

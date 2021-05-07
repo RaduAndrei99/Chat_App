@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="9A811ABD-B85E-C0F0-2FE5-795BF40BB87C" name="Application_settings">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 10:15:56 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="user_id" id="DD40C692-7071-C362-ED28-15B9AE88FD37">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 10:17:21 UTC</createdTime>
+<generatorID>163B4B6E-A2CB-33CE-8993-9F7EE3A5829E</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<referedAttribute>6D6F903E-A56E-E097-8044-457BB3E57EA8</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="hour_format" id="DC88ABDF-6311-7F2C-0319-97D28F49AB0B">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 10:43:46 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<constraintName>hour_format_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<listOfValues>
+<valueDef value="HH:mm" description=""/>
+<valueDef value="hh:mm tt" description=""/>
+</listOfValues>
+<defaultValue>hh:mm tt</defaultValue>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="date_format" id="56AFD58B-65F5-F3B3-DB95-A26376A27911">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 10:48:00 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<constraintName>date_format_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<listOfValues>
+<valueDef value="MM/dd/yyyy" description=""/>
+<valueDef value="MMMM/dd/yyyy" description=""/>
+<valueDef value="dd/MM/yyyy" description=""/>
+<valueDef value="dd/MMMM/yyyy" description=""/>
+</listOfValues>
+<defaultValue>MM/dd/yyyy</defaultValue>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="D70CFFC8-80ED-3A1C-E0E9-B355ACBB31BB" name="Application_settings PK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 10:17:32 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>DD40C692-7071-C362-ED28-15B9AE88FD37</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

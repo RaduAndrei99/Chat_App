@@ -1,6 +1,18 @@
+-- ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY HH24:MI:SS';
+-- ALTER SESSION SET TIME_ZONE='0:00';
+
+-- CHANGE DATE FORMAT
+--SELECT TO_CHAR(CREATED_AT, 'MM-DD-YYYY') FROM USERS;
+--SELECT to_char(CURRENT_TIMESTAMP at time zone '+03:00', 'MM-DD-YYYY hh24:mm:ss')from USERS;
+--SELECT CURRENT_TIMESTAMP from dual;
+
 -- Inserare user
-INSERT INTO Users VALUES(1, 'CCC29', '1234', 'F', (SELECT CURRENT_DATE FROM dual));
-INSERT INTO Users VALUES(2, 'BRA', '134679', 'F', (SELECT CURRENT_DATE FROM dual));
+INSERT INTO Users(user_id, user_name, user_password, is_active) VALUES(1, 'CCC29', '1234', 'F');
+INSERT INTO Users(user_id, user_name, user_password, is_active) VALUES(2, 'BRA', '134679', 'F');
+
+-- Inserare setari aplicatie
+INSERT INTO application_settings(Users_user_id) VALUES(1);
+INSERT INTO application_settings(Users_user_id) VALUES(2);
 
 -- Inregistrare user
 SELECT user_id FROM Users WHERE user_name = 'CCC29';

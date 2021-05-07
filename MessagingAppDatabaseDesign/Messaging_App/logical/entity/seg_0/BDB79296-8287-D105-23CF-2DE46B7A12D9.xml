@@ -35,10 +35,14 @@
 <engineerTo>
 <item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
 </engineerTo>
+<constraintName>user_name_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_name, &apos;^\S+$&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="user_password" id="1B805C4E-00CE-CF4C-D6A2-360965C47C46">
@@ -48,10 +52,14 @@
 <engineerTo>
 <item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
 </engineerTo>
+<constraintName>user_password_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_password, &apos;^\S+$&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="is_active" id="03AA5369-30C0-CC7D-CDC1-D528672D0B0F">
@@ -79,9 +87,11 @@
 <engineerTo>
 <item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
 </engineerTo>
+<constraintName>created_at_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT008</logicalDatatype>
+<defaultValue>CURRENT_DATE</defaultValue>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>

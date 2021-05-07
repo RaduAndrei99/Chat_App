@@ -26,13 +26,14 @@ namespace Model
             try
             {
                 string cmdString = $"SELECT COUNT(*) FROM users WHERE user_name = '{username}'";
-                OracleCommand query = new OracleCommand(cmdString, databaseConnection.Connection);
-
-                using ( OracleDataReader oracleDataReader = query.ExecuteReader())
+                using (OracleCommand query = new OracleCommand(cmdString, databaseConnection.Connection))
                 {
-                    if (oracleDataReader.Read() && oracleDataReader.GetInt32(0) == 1)
-                        return true;
-                }    
+                    using (OracleDataReader oracleDataReader = query.ExecuteReader())
+                    {
+                        if (oracleDataReader.Read() && oracleDataReader.GetInt32(0) == 1)
+                            return true;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -61,10 +62,12 @@ namespace Model
             {
                 string cmdString = $"INSERT INTO Users VALUES(12, '{username}', '{password}', 'F', (SELECT CURRENT_DATE FROM dual))";
 
-                OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection);
-                // oracleCommand.Parameters.Add("username", username);
-                // oracleCommand.Parameters.Add("password", password);
-                oracleCommand.ExecuteNonQuery();
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                {
+                    // oracleCommand.Parameters.Add("username", username);
+                    // oracleCommand.Parameters.Add("password", password);
+                    oracleCommand.ExecuteNonQuery();
+                }
             }
             catch(Exception ex)
             {

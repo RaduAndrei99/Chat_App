@@ -1,0 +1,91 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EE832AB3-FC56-3F4D-B7D0-265D33E9612B" name="Application_settings">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<generatorID>9A811ABD-B85E-C0F0-2FE5-795BF40BB87C</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Users_user_id" id="3ACF871A-A9EE-D059-9E71-5A7F2A6EC9CF">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<generatorID>DD40C692-7071-C362-ED28-15B9AE88FD37</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AD62DD5D-3ACA-BA6B-E407-124C1F307B9E" referredColumn="14C4A12C-B040-C09B-A52B-5AB640A976DA"/>
+</associations>
+</Column>
+<Column name="hour_format" id="1CEE22A1-CFAF-7E72-B460-E066AF5C96DF">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<generatorID>DC88ABDF-6311-7F2C-0319-97D28F49AB0B</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>hour_format_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<listOfValues>
+<valueDef value="HH:mm" description=""/>
+<valueDef value="hh:mm tt" description=""/>
+</listOfValues>
+<defaultValue>hh:mm tt</defaultValue>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date_format" id="3CDF5206-779E-1378-0402-B4D9CE77A501">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<generatorID>56AFD58B-65F5-F3B3-DB95-A26376A27911</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>date_format_ck</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+<listOfValues>
+<valueDef value="MM/dd/yyyy" description=""/>
+<valueDef value="MMMM/dd/yyyy" description=""/>
+<valueDef value="dd/MM/yyyy" description=""/>
+<valueDef value="dd/MMMM/yyyy" description=""/>
+</listOfValues>
+<defaultValue>MM/dd/yyyy</defaultValue>
+<ownDataTypeParameters>20,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="12E4B477-EE17-8A56-6778-1426B3FFA41C" name="Application_settings_PK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<generatorID>D70CFFC8-80ED-3A1C-E0E9-B355ACBB31BB</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3ACF871A-A9EE-D059-9E71-5A7F2A6EC9CF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5718134E-7EFD-1279-7923-A5850A5D6FC2" name="Application_settings_Users_FK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<generatorID>163B4B6E-A2CB-33CE-8993-9F7EE3A5829E</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3ACF871A-A9EE-D059-9E71-5A7F2A6EC9CF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

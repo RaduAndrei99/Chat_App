@@ -8,8 +8,8 @@
 </engineerTo>
 <sourcePk>C9641EFE-6AF2-7D7F-765C-0A118B898D8E</sourcePk>
 <identifying>false</identifying>
-<nameOnSource>trimite</nameOnSource>
-<nameOnTarget>apartine</nameOnTarget>
+<nameOnSource>has</nameOnSource>
+<nameOnTarget>belongs to</nameOnTarget>
 <optionalSource>true</optionalSource>
 <optionalTarget>false</optionalTarget>
 <sourceCardinality>1</sourceCardinality>

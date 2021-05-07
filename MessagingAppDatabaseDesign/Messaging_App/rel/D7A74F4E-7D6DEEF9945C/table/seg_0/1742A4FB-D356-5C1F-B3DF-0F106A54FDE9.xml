@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AB57A559-E628-A865-86FC-47235070BEBD" name="Users">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1742A4FB-D356-5C1F-B3DF-0F106A54FDE9" name="Users">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>BDB79296-8287-D105-23CF-2DE46B7A12D9</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="user_id" id="2D6272A7-724C-2CFF-8EC0-AC4742576110">
+<Column name="user_id" id="14C4A12C-B040-C09B-A52B-5AB640A976DA">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>6D6F903E-A56E-E097-8044-457BB3E57EA8</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -20,33 +20,41 @@
 <ownDataTypeParameters>,11,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="user_name" id="74603050-FC28-E83F-B580-AE8F2BE16BEE">
+<Column name="user_name" id="366F843C-2BB5-C735-34C5-467B0E03A120">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>A2C95948-BE8F-F192-5DB6-47A665C7BCBD</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>user_name_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_name, &apos;^\S+$&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="user_password" id="D239AF9D-8A2D-DAFB-AF83-33AC34D493CE">
+<Column name="user_password" id="45D2BF9C-44BF-6FCE-6525-E1AC8EF3A941">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>1B805C4E-00CE-CF4C-D6A2-360965C47C46</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>user_password_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_password, &apos;^\S+$&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="is_active" id="6E343F70-E697-ABD5-7E29-02838E373E41">
+<Column name="is_active" id="DEC8F145-57CE-AE44-CBAE-071413E81B54">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>03AA5369-30C0-CC7D-CDC1-D528672D0B0F</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <constraintName>is_active_ck</constraintName>
@@ -61,40 +69,42 @@
 <ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="created_at" id="98C52084-4318-6DF0-0B11-12D84C3704A4">
+<Column name="created_at" id="1B9D7C16-EAC5-69BF-D71B-D19D3FA5F2D2">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>59385BAD-AF26-AEBB-7169-0BE22D2DD4DC</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>created_at_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT008</logicalDatatype>
+<defaultValue>CURRENT_DATE</defaultValue>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="A2414093-5B7A-34CC-23BA-9F2C27DCD991" name="Users_PK">
+<ind_PK_UK id="3110D9BB-B4BC-F6C7-D746-F54C76E3CA1F" name="Users_PK">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>C9641EFE-6AF2-7D7F-765C-0A118B898D8E</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="2D6272A7-724C-2CFF-8EC0-AC4742576110"/>
+<colUsage columnID="14C4A12C-B040-C09B-A52B-5AB640A976DA"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="90EDBE70-772F-B8DC-DF29-5820F925AD79" name="Users_user_name_UN">
+<ind_PK_UK id="05FF55DD-03A5-721A-449B-5F69BA28521F" name="Users_user_name_UN">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-05 17:03:26 UTC</createdTime>
+<createdTime>2021-05-07 12:21:31 UTC</createdTime>
 <generatorID>10DB683E-5364-6156-FF55-694A070EF309</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <indexState>Unique Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="74603050-FC28-E83F-B580-AE8F2BE16BEE"/>
+<colUsage columnID="366F843C-2BB5-C735-34C5-467B0E03A120"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

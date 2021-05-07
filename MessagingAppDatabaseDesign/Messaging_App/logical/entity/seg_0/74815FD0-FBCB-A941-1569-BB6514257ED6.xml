@@ -56,7 +56,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>11</dataTypePrecision>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<ownDataTypeParameters>,11,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="status" id="BE4BF4E2-AAE2-A5FC-F497-9375CFE4F780">
 <createdBy>cosmi</createdBy>
