@@ -10,7 +10,7 @@ namespace Model.DatabaseConnection
 {
     public class OracleDatabaseConnection : IDatabaseConnection
     {
-        private OracleConnection conn = null;
+        private OracleConnection Conn = null;
         private string ConnectionString = String.Empty;
 
         private const string UserId = "stud_nume";
@@ -27,10 +27,10 @@ namespace Model.DatabaseConnection
         {
             try
             {
-                if (conn == null)
+                if (Conn == null)
                 {
-                    conn = new OracleConnection(ConnectionString);
-                    conn.Open();
+                    Conn = new OracleConnection(ConnectionString);
+                    Conn.Open();
                     Console.WriteLine("Connection opened");
                 }
             }
@@ -44,11 +44,11 @@ namespace Model.DatabaseConnection
         {
             try
             {
-                if (conn != null)
+                if (Conn != null)
                 {
-                    conn.Close();
+                    Conn.Close();
                     //conn.Dispose();
-                    conn = null;
+                    Conn = null;
                     Console.WriteLine("Connection closed");
                 }
             }
@@ -60,7 +60,7 @@ namespace Model.DatabaseConnection
 
         public OracleConnection Connection
         {
-            get { return conn; }
+            get { return Conn; }
         }
     }
 }

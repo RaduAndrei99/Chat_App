@@ -64,12 +64,26 @@
 <createdBy>cosmi</createdBy>
 <createdTime>2021-05-03 10:57:22 UTC</createdTime>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>E41E54AE-A9B7-8D65-4FF5-014A102064C7</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="BAF7178F-15BF-A696-0C14-85146750FB45" name="conversation_uk">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 18:11:07 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<newElementsIDs>964FF744-B564-AD38-BC2D-9DE6513C723E,C5E9E9BE-F9EA-53F2-53D4-CFED6EDDA360</newElementsIDs>
+<usedAttributes>
+<attributeRef>A522248D-F5DE-51CA-BF4F-1595F4ECD1E7</attributeRef>
+<attributeRef>3D0A074B-68C2-1123-836E-AAFD82FBC236</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

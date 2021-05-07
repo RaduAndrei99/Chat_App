@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1742A4FB-D356-5C1F-B3DF-0F106A54FDE9" name="Users">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="CC545695-5B96-2A6B-8EB1-AB81D471F330" name="Users">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>BDB79296-8287-D105-23CF-2DE46B7A12D9</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="user_id" id="14C4A12C-B040-C09B-A52B-5AB640A976DA">
+<Column name="user_id" id="3C5C46CE-D19F-6E42-E147-8429324E8944">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>6D6F903E-A56E-E097-8044-457BB3E57EA8</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -20,9 +20,9 @@
 <ownDataTypeParameters>,11,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="user_name" id="366F843C-2BB5-C735-34C5-467B0E03A120">
+<Column name="user_name" id="562EBA7F-F290-8407-1FFB-6CE1BB02218A">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>A2C95948-BE8F-F192-5DB6-47A665C7BCBD</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <constraintName>user_name_ck</constraintName>
@@ -36,9 +36,9 @@
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="user_password" id="45D2BF9C-44BF-6FCE-6525-E1AC8EF3A941">
+<Column name="user_password" id="708797E7-7164-86F6-B5C4-73C90502F69D">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>1B805C4E-00CE-CF4C-D6A2-360965C47C46</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <constraintName>user_password_ck</constraintName>
@@ -52,9 +52,9 @@
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="is_active" id="DEC8F145-57CE-AE44-CBAE-071413E81B54">
+<Column name="is_active" id="436F86BF-600D-C23E-6E8B-FC5158FE0C0F">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>03AA5369-30C0-CC7D-CDC1-D528672D0B0F</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <constraintName>is_active_ck</constraintName>
@@ -69,9 +69,9 @@
 <ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="created_at" id="1B9D7C16-EAC5-69BF-D71B-D19D3FA5F2D2">
+<Column name="created_at" id="36581E47-3138-C94C-4CE8-D0A5771B5D5F">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>59385BAD-AF26-AEBB-7169-0BE22D2DD4DC</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <constraintName>created_at_ck</constraintName>
@@ -84,27 +84,27 @@
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="3110D9BB-B4BC-F6C7-D746-F54C76E3CA1F" name="Users_PK">
+<ind_PK_UK id="50DA3F6B-7570-C173-6DCA-1D27DF557B66" name="Users_PK">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>C9641EFE-6AF2-7D7F-765C-0A118B898D8E</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="14C4A12C-B040-C09B-A52B-5AB640A976DA"/>
+<colUsage columnID="3C5C46CE-D19F-6E42-E147-8429324E8944"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="05FF55DD-03A5-721A-449B-5F69BA28521F" name="Users_user_name_UN">
+<ind_PK_UK id="00C46219-3F50-1451-7995-64DA60FFFFA8" name="Users_user_name_UN">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>10DB683E-5364-6156-FF55-694A070EF309</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <indexState>Unique Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="366F843C-2BB5-C735-34C5-467B0E03A120"/>
+<colUsage columnID="562EBA7F-F290-8407-1FFB-6CE1BB02218A"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

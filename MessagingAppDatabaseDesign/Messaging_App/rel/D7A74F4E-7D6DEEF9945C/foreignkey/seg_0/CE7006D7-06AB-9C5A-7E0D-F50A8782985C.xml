@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="CE7006D7-06AB-9C5A-7E0D-F50A8782985C" containerWithKeyObject="67290ADD-9EEC-A9BD-07A8-068B852C5759" localFKIndex="A54A28DB-7767-E132-235F-92FF21A34BAB" name="Application_settings_Users_FK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
+<generatorID>163B4B6E-A2CB-33CE-8993-9F7EE3A5829E</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<referredTableLongName>Users</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>CC545695-5B96-2A6B-8EB1-AB81D471F330</referredTableID>
+<keyObject>50DA3F6B-7570-C173-6DCA-1D27DF557B66</keyObject>
+<referredKeyID>50DA3F6B-7570-C173-6DCA-1D27DF557B66</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>user_id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

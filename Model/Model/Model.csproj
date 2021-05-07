@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commons\Constraints.cs" />
     <Compile Include="DatabaseConnection\IDatabaseConnection.cs" />
     <Compile Include="DatabaseConnection\OracleDatabaseConnection.cs" />
     <Compile Include="IModel.cs" />

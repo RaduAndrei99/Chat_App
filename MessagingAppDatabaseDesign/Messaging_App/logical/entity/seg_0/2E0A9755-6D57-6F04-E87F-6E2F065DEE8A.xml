@@ -81,7 +81,7 @@
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT015</logicalDatatype>
+<logicalDatatype>LOGDT008</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="seen_at" id="9030EC10-78D3-CC0D-5318-FCCD3D03F5E7">
@@ -133,8 +133,9 @@
 <createdBy>cosmi</createdBy>
 <createdTime>2021-05-03 10:57:22 UTC</createdTime>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

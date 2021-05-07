@@ -17,8 +17,7 @@ namespace ModelDevelopmentProject
 
             IModel oracleModel = new OracleDatabaseModel();
 
-            // oracleModel.AddNewUser("Cosminelul", "1234");
-            Console.WriteLine(oracleModel.CheckIfUserExists("Cosminelul"));
+            oracleModel.AddNewUser("Cosminelul", "1234");
 
         }
     }

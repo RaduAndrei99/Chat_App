@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1C7CA986-E603-045F-BF25-F8D1339D93A9" name="Friend_relationships">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="56E7A11F-A11C-6B3C-1D3D-8453923B631C" name="Friend_relationships">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>74815FD0-FBCB-A941-1569-BB6514257ED6</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="relationship_id" id="CB7827FD-EC54-A3CA-252C-C2AEF71DBD46">
+<Column name="relationship_id" id="5E456977-39A5-79F4-0924-E6E39A03A318">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>8E1C2DDF-16B0-FFF6-30F8-C028F94E29DE</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -20,9 +20,9 @@
 <ownDataTypeParameters>,13,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="Users_user_id" id="7D6838A6-D067-6B70-AED4-646C340A5629">
+<Column name="Users_user_id" id="1D1C01ED-ABC2-49AE-DA9F-491ED8ED838A">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>3DBDC384-0F5A-5783-61C9-482D8F6B08B2</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -33,12 +33,12 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="66B5FE9B-3A9B-1010-6881-D5D17DCC21C9" referredColumn="14C4A12C-B040-C09B-A52B-5AB640A976DA"/>
+<colAssociation fkAssociation="66FB3938-A836-7DE0-8799-940DFCB43EA6" referredColumn="3C5C46CE-D19F-6E42-E147-8429324E8944"/>
 </associations>
 </Column>
-<Column name="Users_user_id2" id="908C23B5-EB6E-55D0-1118-D58FC468459E">
+<Column name="Users_user_id2" id="80E764A9-92FE-7AA0-D932-77C0A31ECFF4">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>E9D089E8-5666-648D-347A-7EDB094524A3</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -49,12 +49,12 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="619291EF-94D0-508D-A8B0-82A1D570081B" referredColumn="14C4A12C-B040-C09B-A52B-5AB640A976DA"/>
+<colAssociation fkAssociation="84E1CC48-CDC2-5584-0E2B-132C16C1098D" referredColumn="3C5C46CE-D19F-6E42-E147-8429324E8944"/>
 </associations>
 </Column>
-<Column name="status" id="89E7421C-6555-2760-2E5F-60CC508D4710">
+<Column name="status" id="73263F67-1FEC-4E20-2A65-881F0D9A2AA9">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>BE4BF4E2-AAE2-A5FC-F497-9375CFE4F780</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <constraintName>friend_status_ck</constraintName>
@@ -66,43 +66,56 @@
 <valueDef value="friends" description=""/>
 <valueDef value="pending" description=""/>
 </listOfValues>
+<defaultValue>pending</defaultValue>
 <ownDataTypeParameters>10,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="A1103AC3-2E8A-4B19-99A8-CF27F48A30FD" name="Friend_relationships_PK">
+<ind_PK_UK id="843C60AA-A611-1928-B454-2DC99677CBEA" name="Friend_relationships_PK">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>4F2C5538-7A99-037A-D999-84449708EF17</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="CB7827FD-EC54-A3CA-252C-C2AEF71DBD46"/>
+<colUsage columnID="5E456977-39A5-79F4-0924-E6E39A03A318"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="B24D3D7D-91C6-E71C-1934-D49E6F084F4F" name="Friend_relationships_Users_FK">
+<ind_PK_UK id="7E6EEC74-465F-EE19-52CC-F717BC8D5BF1" name="Friend_relationships_UN">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
+<generatorID>4B0C44F0-3B47-9704-A302-E1D951E6A58A</generatorID>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1D1C01ED-ABC2-49AE-DA9F-491ED8ED838A"/>
+<colUsage columnID="80E764A9-92FE-7AA0-D932-77C0A31ECFF4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C3031E0E-B8BD-6CFA-11E0-D9116B70407C" name="Friend_relationships_Users_FK">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>F0DC117C-0B25-FD78-60DF-3632425ADD74</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="7D6838A6-D067-6B70-AED4-646C340A5629"/>
+<colUsage columnID="1D1C01ED-ABC2-49AE-DA9F-491ED8ED838A"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="A7E1B2D4-A916-45B4-042B-DECCC72A72D9" name="Friend_relationships_Users_FK2">
+<ind_PK_UK id="4342C782-7B85-905E-34D6-02A3C51D11F4" name="Friend_relationships_Users_FK2">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>5E43641A-2DC0-599C-63DA-256872CBEFBB</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="908C23B5-EB6E-55D0-1118-D58FC468459E"/>
+<colUsage columnID="80E764A9-92FE-7AA0-D932-77C0A31ECFF4"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

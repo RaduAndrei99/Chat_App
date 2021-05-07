@@ -48,10 +48,14 @@
 <engineerTo>
 <item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
 </engineerTo>
+<constraintName>email_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="regexp_like(email, &apos;[a-z0-9._%-]+@[a-z0-9._%-]+\.[a-z]{2,4}&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="birthdate" id="78FF5CAF-E07A-9F76-BBDA-8E7FEC71E1DE">

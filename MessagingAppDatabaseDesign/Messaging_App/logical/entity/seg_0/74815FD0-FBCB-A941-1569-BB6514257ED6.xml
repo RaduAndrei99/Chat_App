@@ -74,6 +74,7 @@
 <valueDef value="friends" description=""/>
 <valueDef value="pending" description=""/>
 </listOfValues>
+<defaultValue>pending</defaultValue>
 <ownDataTypeParameters>10,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
@@ -89,6 +90,19 @@
 <pk>true</pk>
 <usedAttributes>
 <attributeRef>8E1C2DDF-16B0-FFF6-30F8-C028F94E29DE</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="4B0C44F0-3B47-9704-A302-E1D951E6A58A" name="Friend_relationship_uk">
+<createdBy>cosmi</createdBy>
+<createdTime>2021-05-07 18:20:30 UTC</createdTime>
+<ownerDesignName>Messaging_App</ownerDesignName>
+<engineerTo>
+<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
+</engineerTo>
+<newElementsIDs>3DBDC384-0F5A-5783-61C9-482D8F6B08B2,E9D089E8-5666-648D-347A-7EDB094524A3</newElementsIDs>
+<usedAttributes>
+<attributeRef>3DBDC384-0F5A-5783-61C9-482D8F6B08B2</attributeRef>
+<attributeRef>E9D089E8-5666-648D-347A-7EDB094524A3</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>

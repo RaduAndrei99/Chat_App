@@ -1,16 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="9981BD51-9E99-D56C-AC91-1419CCBF5A33" name="Relationship_settings">
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="837EFB83-7D93-B094-0282-75B456757C3B" name="Relationship_settings">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>2AAB2E22-D0EE-9569-66E6-8EA3C2475083</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <allowColumnReorder>false</allowColumnReorder>
 <existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
 <parsed>true</parsed>
 <columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
-<Column name="nickname_user_1" id="900B0A5A-C809-EB13-B2B3-A5F9928442EE">
+<Column name="nickname_user_1" id="046E6060-18F3-4CDC-5250-352CA128DD05">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>CC793F92-A596-0133-EB9F-17091E8CCC21</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
@@ -21,9 +21,9 @@
 <ownDataTypeParameters>30,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="nickname_user_2" id="FCF5DC2E-5B6E-A17C-548D-AF15623D8EE7">
+<Column name="nickname_user_2" id="5A9459BE-5266-E991-4653-9F51AAA69F9E">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>F2BEF371-B4A8-FDDD-197E-D98051E10556</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <nullsAllowed>true</nullsAllowed>
@@ -34,9 +34,9 @@
 <ownDataTypeParameters>30,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="Friend_relationships_relationship_id" id="30CD63BD-FEB4-11FC-570A-DD8187637223">
+<Column name="Friend_relationships_id" id="84931F10-51ED-FEE7-025F-35B66639A916">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>77A73489-4442-916A-7117-79737B4BD874</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
@@ -47,32 +47,32 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="CBA0411E-8085-BE89-4344-1235DF76807C" referredColumn="CB7827FD-EC54-A3CA-252C-C2AEF71DBD46"/>
+<colAssociation fkAssociation="B27E728A-EC31-98C4-1889-B53640269DA2" referredColumn="5E456977-39A5-79F4-0924-E6E39A03A318"/>
 </associations>
 </Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
-<ind_PK_UK id="012F0AEC-68FB-5509-6C1C-284F84DCA3FF" name="Relationship_settings_PK">
+<ind_PK_UK id="3CBB76C4-8C25-4185-E425-D2EAF8DA7268" name="Relationship_settings_PK">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>10C68090-F3CC-DD89-CBBE-7BB75EC95212</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <pk>true</pk>
 <indexState>Primary Constraint</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="30CD63BD-FEB4-11FC-570A-DD8187637223"/>
+<colUsage columnID="84931F10-51ED-FEE7-025F-35B66639A916"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="FAC9BA81-ED8F-EA16-2C23-49A5DAD3105E" name="relationships_FK">
+<ind_PK_UK id="DDA297C4-CA5F-87FB-2C1A-84AD63C1AAFE" name="Relationships_id_FK">
 <createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 12:21:31 UTC</createdTime>
+<createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>BAAAFA46-424A-B1D0-E4D0-43D9D3E6AB60</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="30CD63BD-FEB4-11FC-570A-DD8187637223"/>
+<colUsage columnID="84931F10-51ED-FEE7-025F-35B66639A916"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>
