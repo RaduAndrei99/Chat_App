@@ -16,5 +16,6 @@ namespace Model
         void AddRelationshipSettings(string username1, string username2);
         void ChangeNickname(string fromUsername, string toUsername, string nickname);
         void StoreMessage(string senderUsername, string receiverUsername, string format, byte[] message_data, DateTime sentDate);
+        bool CheckUserCredentials(string username, string password);
     }
 }

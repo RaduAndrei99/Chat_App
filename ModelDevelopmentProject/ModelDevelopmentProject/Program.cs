@@ -14,11 +14,10 @@ namespace ModelDevelopmentProject
         static void Main(string[] args)
         {
             IDatabaseConnection database = new OracleDatabaseConnection();
-
             IModel oracleModel = new OracleDatabaseModel();
 
-            oracleModel.AddNewUser("Cosminelul", "1234");
-
+            bool result = oracleModel.CheckUserCredentials("CCC29", "1234");
+            Console.WriteLine(result);
         }
     }
 }

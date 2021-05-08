@@ -6,6 +6,9 @@
 --SELECT to_char(CURRENT_TIMESTAMP at time zone '+03:00', 'MM-DD-YYYY hh24:mm:ss')from USERS;
 --SELECT CURRENT_TIMESTAMP from dual;
 
+-- OracleParameter oracleParameter = new OracleParameter("username", OracleDbType.Varchar2);
+-- oracleParameter.Value = username;
+
 -- Inserare user
 INSERT INTO Users(user_name, user_password, is_active) VALUES('CCC29', '1234', 'F');
 INSERT INTO Users(user_name, user_password, is_active) VALUES('BRA', '134679', 'F');
@@ -49,3 +52,6 @@ SELECT user_id FROM Users WHERE user_name = 'BRA';
 
 SELECT conversation_id FROM Conversations WHERE (Users_user_id = 1 and Users_user_id2 = 2) or (Users_user_id = 2 and Users_user_id2 = 1);
 SELECT relationship_id FROM Friend_relationships WHERE (Users_user_id = 1 and Users_user_id2 = 2) or (Users_user_id = 2 and Users_user_id2 = 1);
+
+-- Verificare credentiale
+SELECT COUNT(*) FROM Users WHERE user_id = 1, and user_password = '1234';

@@ -18,6 +18,7 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>14</dataTypePrecision>
 <ownDataTypeParameters>,14,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="format" id="CEA60ACC-41C8-E490-3B6E-BE8BF3CC8F3A">
