@@ -115,13 +115,15 @@ namespace ChatAppClient
             _serverConnection.CloseConnection();
         }
 
-        public bool Register(string username, string password, string firstName, string lastName, string email, string birthdate)
+      
+
+        public void SendFriendRequest(string asker, string friend)
         {
             try
             {
                 Socket sender = _serverConnection.GetConnection();
 
-                sender.Send(Encoding.ASCII.GetBytes("register " + username  + " " + password + " "  + firstName + " " + lastName + " " + email + " " + birthdate +  " <EOF>"));
+                sender.Send(Encoding.ASCII.GetBytes("sendFriendRequest " + asker + " " + friend  + " <EOF>"));
 
             }
 
@@ -130,6 +132,27 @@ namespace ChatAppClient
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Server-ul nu raspunde.");
 
+            }
+        }
+
+        public bool Register(string username, string password, string firstName, string lastName, string email, string birthdate)
+        {
+    
+            try
+            {
+                Socket sender = _serverConnection.GetConnection();
+
+                sender.Send(Encoding.ASCII.GetBytes("register " + username + " " + password + " " + firstName + " " + lastName + " " + email + " " + birthdate + " <EOF>"));
+
+                return true;
+            }
+
+            catch (SocketException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Server-ul nu raspunde.");
+
+                return false;
             }
         }
     }
