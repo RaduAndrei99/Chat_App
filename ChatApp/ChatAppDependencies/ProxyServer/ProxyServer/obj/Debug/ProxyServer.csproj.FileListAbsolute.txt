@@ -1,0 +1,6 @@
+D:\Faculty\IP\Project\ChatApp\ChatAppDependencies\ProxyServer\ProxyServer\bin\Debug\ProxyServer.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppDependencies\ProxyServer\ProxyServer\bin\Debug\ProxyServer.pdb
+D:\Faculty\IP\Project\ChatApp\ChatAppDependencies\ProxyServer\ProxyServer\obj\Debug\ProxyServer.csprojAssemblyReference.cache
+D:\Faculty\IP\Project\ChatApp\ChatAppDependencies\ProxyServer\ProxyServer\obj\Debug\ProxyServer.csproj.CoreCompileInputs.cache
+D:\Faculty\IP\Project\ChatApp\ChatAppDependencies\ProxyServer\ProxyServer\obj\Debug\ProxyServer.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppDependencies\ProxyServer\ProxyServer\obj\Debug\ProxyServer.pdb

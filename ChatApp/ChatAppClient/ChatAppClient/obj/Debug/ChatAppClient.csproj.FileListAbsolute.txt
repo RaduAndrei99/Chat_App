@@ -1,0 +1,9 @@
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\ChatAppClient.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\ChatAppClient.pdb
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.csproj.CoreCompileInputs.cache
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.pdb
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\ProxyServer.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\ProxyServer.pdb
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.csprojAssemblyReference.cache
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.csproj.CopyComplete
