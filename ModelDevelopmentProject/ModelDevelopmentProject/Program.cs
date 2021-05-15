@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Model;
 using Model.DatabaseConnection;
+using Model.DataTransferObjects;
 using Oracle.ManagedDataAccess.Client;
 
 namespace ModelDevelopmentProject
@@ -16,8 +17,10 @@ namespace ModelDevelopmentProject
             IDatabaseConnection database = new OracleDatabaseConnection();
             IModel oracleModel = new OracleDatabaseModel();
 
-            bool result = oracleModel.CheckUserCredentials("CCC29", "1234");
-            Console.WriteLine(result);
+            List<MessageDTO> messages = null;
+            long lastMessageId = -1;
+
+            oracleModel.GetLastNMessagesFromConversation("CCC29", "Cosmin", -1, 5, out messages, out lastMessageId);
         }
     }
 }

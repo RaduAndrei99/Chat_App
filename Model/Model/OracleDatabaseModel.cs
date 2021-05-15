@@ -7,18 +7,19 @@ using Model.DatabaseConnection;
 using Oracle.ManagedDataAccess.Client;
 using System.Text.RegularExpressions;
 using Model.Commons;
+using Model.DataTransferObjects;
 
 namespace Model
 {
     public class OracleDatabaseModel : IModel
     {
-        IDatabaseConnection databaseConnection;
+        private IDatabaseConnection _databaseConnection;
         public OracleDatabaseModel()
         {
-            databaseConnection = new OracleDatabaseConnection();
+            _databaseConnection = new OracleDatabaseConnection();
         }
 
-        #region USER TABLE PERSISTENCY
+        #region USERS TABLE PERSISTENCY
 
         public void AddNewUser(string username, string password)
         {
@@ -31,11 +32,11 @@ namespace Model
             if (GetUsernameId(username) != -1)
                 throw new Exception($"Username {username} already exists.");
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"INSERT INTO Users(user_name, user_password, is_active) VALUES({username}, '{password}', 'F')";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                string cmdString = $"INSERT INTO Users(user_name, user_password) VALUES('{username}', '{password}')";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -47,17 +48,76 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void ChangeActiveStatus(string username, bool isActive)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            string activeStatus = isActive ? Constraints.BooleanTrueStatus : Constraints.BooleanFalseStatus;
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"UPDATE Users SET is_active = '{activeStatus}' WHERE user_id = {usernameId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void DeleteUser(string username)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"DELETE FROM Users WHERE user_id = {usernameId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
 
         private int GetUsernameId(string username)
         {
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"SELECT user_id FROM Users WHERE user_name = '{username}'";
-                using (OracleCommand query = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = query.ExecuteReader())
                     {
@@ -73,15 +133,43 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
             return -1;
         }
 
+        private string GetUsername(long usernameId)
+        {
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT user_name FROM Users WHERE user_id = {usernameId}";
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = query.ExecuteReader())
+                    {
+                        if (oracleDataReader.Read())
+                            return oracleDataReader.GetString(0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return "";
+        }
+
         #endregion
 
-        #region USER_INFORMATIONS TABLE PERSISTENCY
+        #region USER INFORMATIONS TABLE PERSISTENCY
 
         public void RegisterUser(string username, string firstname, string lastname, string email, DateTime birthdate)
         {
@@ -98,11 +186,11 @@ namespace Model
             /*if (CheckIfUserRegistrationExists(usernameId))
                 throw new Exception($"Username {username} registration already exists.");*/
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"INSERT INTO User_informations VALUES('{firstname}', '{lastname}', '{email}', TO_DATE('{birthdate.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), {usernameId})";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -121,18 +209,18 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
         }
 
         private bool CheckIfUserRegistrationExists(int usernameId)
         {
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"SELECT COUNT(*) FROM User_informations WHERE (Users_user_id = {usernameId})";
-                using (OracleCommand query = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = query.ExecuteReader())
                     {
@@ -148,7 +236,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
             return false;
@@ -167,11 +255,11 @@ namespace Model
             if (usernameId == -1)
                 throw new Exception($"Username {username} do not exists.");
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"INSERT INTO Application_settings(Users_user_id) VALUES({usernameId})";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -190,7 +278,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
 
@@ -217,11 +305,11 @@ namespace Model
             /*if (GetConversationId(usernameId1, usernameId2) != -1)
                 throw new Exception($"Conversation between {username1} and {username2} already exists.");*/
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"INSERT INTO Conversations(Users_user_id, Users_user_id2) VALUES({usernameId1}, {usernameId2})";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -240,17 +328,57 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void DeleteConversation(string username1, string username2)
+        {
+            if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username1}.");
+
+            if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username2}.");
+
+            int usernameId1 = GetUsernameId(username1);
+            if (usernameId1 == -1)
+                throw new Exception($"Username {username1} do not exists.");
+
+            int usernameId2 = GetUsernameId(username2);
+            if (usernameId2 == -1)
+                throw new Exception($"Username {username2} do not exists.");
+
+            int conversationId = GetConversationId(usernameId1, usernameId2);
+            if (conversationId == -1)
+                throw new Exception($"Conversation between {username1} and {username2} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"DELETE FROM Conversations WHERE conversation_id = {conversationId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
 
         private int GetConversationId(int usernameId1, int usernameId2)
         {
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"SELECT conversation_id FROM Conversations WHERE (Users_user_id = {usernameId1} and Users_user_id2 = {usernameId2}) or (Users_user_id = {usernameId2} and Users_user_id2 = {usernameId1})";
-                using (OracleCommand query = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = query.ExecuteReader())
                     {
@@ -266,7 +394,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
             return -1;
@@ -295,11 +423,11 @@ namespace Model
             /*if (GetFriendRelationshipId(fromUsernameId, toUsernameId) != -1)
                 throw new Exception($"Friend relationship between {fromUsername} and {toUsername} already exists.");*/
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"INSERT INTO Friend_relationships(Users_user_id, users_user_id2) VALUES({fromUsernameId}, {toUsernameId})";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -318,17 +446,97 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void AcceptFriendRequest(string username1, string username2)
+        {
+            if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username1}.");
+
+            if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username2}.");
+
+            int fromUsernameId = GetUsernameId(username1);
+            if (fromUsernameId == -1)
+                throw new Exception($"Username {username1} do not exists.");
+
+            int toUsernameId = GetUsernameId(username2);
+            if (toUsernameId == -1)
+                throw new Exception($"Username {username2} do not exists.");
+
+            int relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
+            if (relationshipId == -1)
+                throw new Exception($"Friend relationship between {username1} and {username2} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"UPDATE Friend_relationships SET status = '{Constraints.FriendshipFriendsStatus}' WHERE relationship_id = {relationshipId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void DeleteFriendRelationship(string username1, string username2)
+        {
+            if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username1}.");
+
+            if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username2}.");
+
+            int fromUsernameId = GetUsernameId(username1);
+            if (fromUsernameId == -1)
+                throw new Exception($"Username {username1} do not exists.");
+
+            int toUsernameId = GetUsernameId(username2);
+            if (toUsernameId == -1)
+                throw new Exception($"Username {username2} do not exists.");
+
+            int relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
+            if (relationshipId == -1)
+                throw new Exception($"Friend relationship between {username1} and {username2} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"DELETE FROM Friend_relationships WHERE relationship_id = {relationshipId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
 
         private int GetFriendRelationshipId(int usernameId1, int usernameId2)
         {
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"SELECT relationship_id FROM Friend_relationships WHERE (Users_user_id = {usernameId1} and Users_user_id2 = {usernameId2}) or (Users_user_id = {usernameId2} and Users_user_id2 = {usernameId1})";
-                using (OracleCommand query = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = query.ExecuteReader())
                     {
@@ -344,7 +552,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
             return -1;
@@ -352,13 +560,13 @@ namespace Model
 
         private int GetOrderInFriendRelationship(int usernameId, int relationshipId)
         {
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdStringPosition1 = $"SELECT COUNT(*) FROM Friend_relationships WHERE (Users_user_id = {usernameId} and relationship_id = {relationshipId})";
                 string cmdStringPosition2 = $"SELECT COUNT(*) FROM Friend_relationships WHERE (Users_user_id2 = {usernameId} and relationship_id = {relationshipId})";
                 
-                using (OracleCommand query = new OracleCommand(cmdStringPosition1, databaseConnection.Connection))
+                using (OracleCommand query = new OracleCommand(cmdStringPosition1, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = query.ExecuteReader())
                     {
@@ -367,7 +575,7 @@ namespace Model
                     }
                 }
 
-                using (OracleCommand query = new OracleCommand(cmdStringPosition2, databaseConnection.Connection))
+                using (OracleCommand query = new OracleCommand(cmdStringPosition2, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = query.ExecuteReader())
                     {
@@ -383,7 +591,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
             return -1;
@@ -413,11 +621,11 @@ namespace Model
             if (GetFriendRelationshipId(usernameId1, usernameId2) == -1)
                 throw new Exception($"Friend relationship between {username1} and {username2} do not exists.");
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"INSERT INTO Relationship_settings(Friend_relationships_id) VALUES({friendRelationshipId})";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -436,7 +644,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
 
@@ -463,7 +671,7 @@ namespace Model
             int userPosition = GetOrderInFriendRelationship(toUsernameId, relationshipId);
             nickname = nickname.Replace("\'", "''");
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = String.Empty;
@@ -476,7 +684,7 @@ namespace Model
                     cmdString = $"UPDATE Relationship_settings SET nickname_user_2 = '{nickname}' WHERE Friend_relationships_id = {relationshipId}";
                 }
 
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
                 }
@@ -488,7 +696,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
         
@@ -519,11 +727,11 @@ namespace Model
             if (conversationId == -1)
                 throw new Exception($"Conversation between {senderUsername} and {receiverUsername} do not exists.");
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"INSERT INTO Messages(format, message_data, seen, sent_at, seen_at, Users_user_id, Conversations_conversation_id) VALUES('{format}', :message_data, 'F', TO_DATE('{sentDate.ToString("MM/dd/yyyy HH:mm:ss")}', 'MM/DD/YYYY HH24:MI:SS'), NULL, {senderUsernameId}, {conversationId})";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using(OracleParameter param = new OracleParameter("message_data", OracleDbType.Blob))
                     {
@@ -541,7 +749,7 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
         }
 
@@ -561,11 +769,11 @@ namespace Model
             if (usernameId == -1)
                 throw new Exception($"Username {username} do not exists.");
 
-            databaseConnection.Connect();
+            uint connectionId = _databaseConnection.Connect();
             try
             {
                 string cmdString = $"SELECT COUNT(*) FROM Users WHERE user_id = {usernameId} and user_password = '{password}'";
-                using (OracleCommand oracleCommand = new OracleCommand(cmdString, databaseConnection.Connection))
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())
                     {
@@ -581,12 +789,102 @@ namespace Model
             }
             finally
             {
-                databaseConnection.CloseConnection();
+                _databaseConnection.CloseConnection(connectionId);
             }
 
             return false;
         }
 
+        public void GetLastNMessagesFromConversation(string username1, string username2, long fromMessageId, uint howManyMessages, out List<MessageDTO> messages, out long lastMessageId)
+        {
+            if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username1}.");
+
+            if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username2}.");
+
+            int usernameId1 = GetUsernameId(username1);
+            if (usernameId1 == -1)
+                throw new Exception($"Username {username1} do not exists.");
+
+            int usernameId2 = GetUsernameId(username2);
+            if (usernameId2 == -1)
+                throw new Exception($"Username {username2} do not exists.");
+
+            int conversationId = GetConversationId(usernameId1, usernameId2);
+            if (conversationId == -1)
+                throw new Exception($"Conversation between {username1} and {username2} do not exists.");
+
+            lastMessageId = -1;
+            messages = new List<MessageDTO>();
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = null;
+                if (fromMessageId > -1)
+                {
+                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {fromMessageId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
+                }
+                else if (fromMessageId == -1)
+                {
+                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
+                }
+                else
+                    throw new Exception("Invalid message id.");
+
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())
+                    { 
+                        const int BufferSize = 1024;
+                        while (oracleDataReader.Read())
+                        {
+                            List<byte[]> messageData = new List<byte[]>();
+                            byte[] dataBuffer = new byte[BufferSize];
+
+                            long readedBytes = -1;
+                            long startIndex = 0;
+
+                            lastMessageId = oracleDataReader.GetInt64(0);
+                            string format = oracleDataReader.GetString(1);
+                            bool seen = oracleDataReader.GetString(3) == Constraints.BooleanTrueStatus ? true : false;
+                            DateTime sentAt = oracleDataReader.GetDateTime(4);
+                            DateTime seenAt = oracleDataReader.IsDBNull(5)? new DateTime() : oracleDataReader.GetDateTime(5);
+                            long senderId = oracleDataReader.GetInt64(6);
+
+                            readedBytes = oracleDataReader.GetBytes(2, startIndex, dataBuffer, 0, BufferSize);
+                            while (readedBytes == BufferSize)
+                            {
+                                messageData.Add(dataBuffer);
+
+                                startIndex += BufferSize;
+                                readedBytes = oracleDataReader.GetBytes(2, startIndex, dataBuffer, 0, BufferSize);
+                            }
+
+                            // Iau ultimii bytes
+                            messageData.Add(dataBuffer);
+
+                            string senderUsername = GetUsername(senderId);
+                            messages.Add(new MessageDTO(format, messageData, seen, sentAt, seenAt, senderUsername));
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
         #endregion
+
+
     }
 }

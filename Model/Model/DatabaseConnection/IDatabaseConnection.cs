@@ -9,12 +9,8 @@ namespace Model.DatabaseConnection
 {
     public interface IDatabaseConnection
     {
-        void Connect();
-        void CloseConnection();
-
-        OracleConnection Connection
-        {
-            get;
-        }
+        uint Connect();
+        void CloseConnection(uint connection);
+        OracleConnection Connection(uint connection);
     }
 }

@@ -1,6 +1,5 @@
 C:\Chat_App\Model\Model\bin\Debug\Model.dll
 C:\Chat_App\Model\Model\bin\Debug\Model.pdb
-C:\Chat_App\Model\Model\obj\Debug\Model.csprojAssemblyReference.cache
 C:\Chat_App\Model\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
 C:\Chat_App\Model\Model\obj\Debug\Model.dll
 C:\Chat_App\Model\Model\obj\Debug\Model.pdb

@@ -10,8 +10,8 @@
 -- oracleParameter.Value = username;
 
 -- Inserare user
-INSERT INTO Users(user_name, user_password, is_active) VALUES('CCC29', '1234', 'F');
-INSERT INTO Users(user_name, user_password, is_active) VALUES('BRA', '134679', 'F');
+INSERT INTO Users(user_name, user_password) VALUES('CCC29', '1234');
+INSERT INTO Users(user_name, user_password) VALUES('BRA', '134679');
 
 -- Inserare setari aplicatie
 INSERT INTO Application_settings(Users_user_id) VALUES((SELECT user_id FROM Users WHERE user_name = 'CCC29'));
@@ -24,7 +24,7 @@ INSERT INTO User_informations VALUES('Cojocaru', 'Cosmin-Constantin', 'cosminccc
 INSERT INTO User_informations VALUES('Budeanu', 'Radu-Andrei', 'budeanuradu99@gmail.com', TO_DATE('29/10/1999', 'DD/MM/YYYY'), (SELECT user_id FROM Users WHERE user_name = 'BRA'));
 
 -- Adaugare prieten
-INSERT INTO Friend_relationships(Users_user_id, users_user_id2, status) VALUES((SELECT user_id FROM Users WHERE user_name = 'CCC29'), (SELECT user_id FROM Users WHERE user_name = 'BRA'));
+INSERT INTO Friend_relationships(Users_user_id, users_user_id2) VALUES((SELECT user_id FROM Users WHERE user_name = 'CCC29'), (SELECT user_id FROM Users WHERE user_name = 'BRA'));
 
 --Adaugare setari relatie
 INSERT INTO Relationship_settings(Friend_relationships_relationship_id) VALUES (1);
@@ -55,3 +55,9 @@ SELECT relationship_id FROM Friend_relationships WHERE (Users_user_id = 1 and Us
 
 -- Verificare credentiale
 SELECT COUNT(*) FROM Users WHERE user_id = 1, and user_password = '1234';
+
+-- Change is_active status
+UPDATE Users SET is_active = 'T' WHERE user_id = 1;
+
+-- Get messages
+SELECT * FROM Messages WHERE Conversations_conversation_id = 1 AND message_id < 25 AND ROWNUM <= 5 ORDER BY Message_id DESC;
