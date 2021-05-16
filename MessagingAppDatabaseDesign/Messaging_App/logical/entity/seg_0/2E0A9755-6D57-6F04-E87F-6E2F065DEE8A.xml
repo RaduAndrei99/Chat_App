@@ -54,24 +54,6 @@
 <logicalDatatype>LOGDT029</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="seen" id="EA9D90BD-E9FA-D8B1-480A-2AD5395EDB49">
-<createdBy>cosmi</createdBy>
-<createdTime>2021-05-03 17:21:27 UTC</createdTime>
-<ownerDesignName>Messaging_App</ownerDesignName>
-<engineerTo>
-<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
-</engineerTo>
-<constraintName>seen_ck</constraintName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT006</logicalDatatype>
-<dataTypeSize>1 CHAR</dataTypeSize>
-<listOfValues>
-<valueDef value="F" description=""/>
-<valueDef value="T" description=""/>
-</listOfValues>
-<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="sent_at" id="947FB1F2-9CD0-4608-84A1-23E20BD32DC1">
 <createdBy>cosmi</createdBy>
 <createdTime>2021-05-03 11:29:32 UTC</createdTime>
@@ -79,19 +61,6 @@
 <engineerTo>
 <item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
 </engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="seen_at" id="9030EC10-78D3-CC0D-5318-FCCD3D03F5E7">
-<createdBy>cosmi</createdBy>
-<createdTime>2021-05-03 17:20:46 UTC</createdTime>
-<ownerDesignName>Messaging_App</ownerDesignName>
-<engineerTo>
-<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT008</logicalDatatype>
@@ -110,7 +79,7 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>11</dataTypePrecision>
-<ownDataTypeParameters>,11,</ownDataTypeParameters>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="conversation_id" id="20A72E09-8146-CAE0-298E-797AEFD2E35B">
 <createdBy>cosmi</createdBy>

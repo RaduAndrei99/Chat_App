@@ -45,40 +45,11 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="seen" id="9296FD00-2FD2-D89D-70D5-C9A6F08568DD">
-<createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 19:57:28 UTC</createdTime>
-<generatorID>EA9D90BD-E9FA-D8B1-480A-2AD5395EDB49</generatorID>
-<ownerDesignName>Messaging_App</ownerDesignName>
-<constraintName>seen_ck</constraintName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT006</logicalDatatype>
-<dataTypeSize>1 CHAR</dataTypeSize>
-<listOfValues>
-<valueDef value="F" description=""/>
-<valueDef value="T" description=""/>
-</listOfValues>
-<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
 <Column name="sent_at" id="1B784D4C-D8C1-86D9-066C-69FAC5F2D707">
 <createdBy>cosmi</createdBy>
 <createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>947FB1F2-9CD0-4608-84A1-23E20BD32DC1</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT008</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<autoIncrementCycle>false</autoIncrementCycle>
-</Column>
-<Column name="seen_at" id="F2F0E479-3F83-D183-6932-91225098394A">
-<createdBy>cosmi</createdBy>
-<createdTime>2021-05-07 19:57:28 UTC</createdTime>
-<generatorID>9030EC10-78D3-CC0D-5318-FCCD3D03F5E7</generatorID>
-<ownerDesignName>Messaging_App</ownerDesignName>
-<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT008</logicalDatatype>

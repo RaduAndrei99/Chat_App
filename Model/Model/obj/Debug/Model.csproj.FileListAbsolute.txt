@@ -5,3 +5,4 @@ C:\Chat_App\Model\Model\obj\Debug\Model.dll
 C:\Chat_App\Model\Model\obj\Debug\Model.pdb
 C:\Chat_App\Model\Model\bin\Debug\Oracle.ManagedDataAccess.dll
 C:\Chat_App\Model\Model\obj\Debug\Model.csproj.CopyComplete
+C:\Chat_App\Model\Model\obj\Debug\Model.csprojAssemblyReference.cache

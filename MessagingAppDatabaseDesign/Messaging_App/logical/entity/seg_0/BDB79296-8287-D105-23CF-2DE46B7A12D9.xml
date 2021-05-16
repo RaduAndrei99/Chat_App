@@ -56,29 +56,11 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>40</dataTypeSize>
+<dataTypeSize>64</dataTypeSize>
 <checkConstraint>
 <implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_password, &apos;^\S+$&apos;)"/>
 </checkConstraint>
-<ownDataTypeParameters>40,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="is_active" id="03AA5369-30C0-CC7D-CDC1-D528672D0B0F">
-<createdBy>cosmi</createdBy>
-<createdTime>2021-05-03 12:31:04 UTC</createdTime>
-<ownerDesignName>Messaging_App</ownerDesignName>
-<engineerTo>
-<item key="D7A74F4E-E2F3-76D2-9AE5-7D6DEEF9945C" value="true"/>
-</engineerTo>
-<constraintName>is_active_ck</constraintName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT006</logicalDatatype>
-<dataTypeSize>1 CHAR</dataTypeSize>
-<listOfValues>
-<valueDef value="F" description=""/>
-<valueDef value="T" description=""/>
-</listOfValues>
-<ownDataTypeParameters>1 CHAR,,</ownDataTypeParameters>
+<ownDataTypeParameters>64,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="created_at" id="59385BAD-AF26-AEBB-7169-0BE22D2DD4DC">
 <createdBy>cosmi</createdBy>

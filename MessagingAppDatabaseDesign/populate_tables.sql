@@ -61,3 +61,17 @@ UPDATE Users SET is_active = 'T' WHERE user_id = 1;
 
 -- Get messages
 SELECT * FROM Messages WHERE Conversations_conversation_id = 1 AND message_id < 25 AND ROWNUM <= 5 ORDER BY Message_id DESC;
+
+--Update username
+UPDATE Users SET user_name = 'BRA' WHERE user_id = 1;
+
+-- Mark seen messages
+UPDATE Messages SET seen = 'T', seen_at = sysdate WHERE Conversations_conversation_id = 1 AND Users_user_id = 1 AND seen = 'F';
+
+-- Set datetime formats
+UPDATE Application_settings SET date_format = 'data' WHERE Users_user_id = 1;
+UPDATE Application_settings SET hour_format = 'time' WHERE Users_user_id = 1;
+
+-- Get datetime formats
+SELECT date_format FROM Application_settings WHERE Users_user_id = 1;
+SELECT hour_format FROM Application_settings WHERE Users_user_id = 1;

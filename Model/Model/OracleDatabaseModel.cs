@@ -27,7 +27,7 @@ namespace Model
                 throw new Exception($"Wrong username format for {username}.");
 
             if (!Regex.IsMatch(password, Constraints.PasswordRegex))
-                throw new Exception($"Wrong username format for {password}.");
+                throw new Exception($"Wrong password format for {password}.");
 
             if (GetUsernameId(username) != -1)
                 throw new Exception($"Username {username} already exists.");
@@ -41,7 +41,7 @@ namespace Model
                     oracleCommand.ExecuteNonQuery();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex);
                 Console.WriteLine(ex.StackTrace);
@@ -52,20 +52,22 @@ namespace Model
             }
         }
 
-        public void ChangeActiveStatus(string username, bool isActive)
+        public void ChangeUsername(string currentUsername, string newUsername)
         {
-            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+            if (!Regex.IsMatch(currentUsername, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {currentUsername}.");
 
-            int usernameId = GetUsernameId(username);
+            if (!Regex.IsMatch(newUsername, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {newUsername}.");
+
+            int usernameId = GetUsernameId(currentUsername);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new Exception($"Username {currentUsername} do not exists.");
 
-            string activeStatus = isActive ? Constraints.BooleanTrueStatus : Constraints.BooleanFalseStatus;
             uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"UPDATE Users SET is_active = '{activeStatus}' WHERE user_id = {usernameId}";
+                string cmdString = $"UPDATE Users SET user_name = '{newUsername}' WHERE user_id = {usernameId}";
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
@@ -73,8 +75,50 @@ namespace Model
             }
             catch (Exception ex)
             {
+                if (ex.Message.Contains("ORA-00001"))
+                {
+                    throw new Exception($"Username {newUsername} is already taken.");
+                }
+                else
+                {
+                    Console.WriteLine("Error: " + ex);
+                    Console.WriteLine(ex.StackTrace);
+                }
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+        }
+
+        public void ChangeUserPassword(string username, string newPassword)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            if (!Regex.IsMatch(newPassword, Constraints.PasswordRegex))
+                throw new Exception($"Wrong password format for {newPassword}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"UPDATE Users SET user_password = '{newPassword}' WHERE user_id = {usernameId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+
                 Console.WriteLine("Error: " + ex);
                 Console.WriteLine(ex.StackTrace);
+
             }
             finally
             {
@@ -126,7 +170,7 @@ namespace Model
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex);
                 Console.WriteLine(ex.StackTrace);
@@ -164,7 +208,7 @@ namespace Model
                 _databaseConnection.CloseConnection(connectionId);
             }
 
-            return "";
+            return null;
         }
 
         #endregion
@@ -266,7 +310,7 @@ namespace Model
             }
             catch (Exception ex)
             {
-                if(ex.Message.Contains("ORA-00001") && ex.Message.Contains("APPLICATION_SETTINGS_PK"))
+                if (ex.Message.Contains("ORA-00001") && ex.Message.Contains("APPLICATION_SETTINGS_PK"))
                 {
                     throw new Exception("Application settings entry already exists.");
                 }
@@ -275,6 +319,64 @@ namespace Model
                     Console.WriteLine("Error: " + ex);
                     Console.WriteLine(ex.StackTrace);
                 }
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void SetDateFormat(string username, DateFormat dateFormat)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"UPDATE Application_settings SET date_format = '{dateFormat}' WHERE Users_user_id = {usernameId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);   
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+        }
+
+        public void SetTimeFormat(string username, TimeFormat timeFormat)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"UPDATE Application_settings SET hour_format = '{timeFormat}' WHERE Users_user_id = {usernameId}";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    oracleCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
             }
             finally
             {
@@ -730,7 +832,7 @@ namespace Model
             uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"INSERT INTO Messages(format, message_data, seen, sent_at, seen_at, Users_user_id, Conversations_conversation_id) VALUES('{format}', :message_data, 'F', TO_DATE('{sentDate.ToString("MM/dd/yyyy HH:mm:ss")}', 'MM/DD/YYYY HH24:MI:SS'), NULL, {senderUsernameId}, {conversationId})";
+                string cmdString = $"INSERT INTO Messages(format, message_data, sent_at, Users_user_id, Conversations_conversation_id) VALUES('{format}', :message_data, TO_DATE('{sentDate.ToString("MM/dd/yyyy HH:mm:ss")}', 'MM/DD/YYYY HH24:MI:SS'), {senderUsernameId}, {conversationId})";
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using(OracleParameter param = new OracleParameter("message_data", OracleDbType.Blob))
@@ -752,7 +854,7 @@ namespace Model
                 _databaseConnection.CloseConnection(connectionId);
             }
         }
-
+    
         #endregion
 
         #region FUNCTIONALITY METHODS
@@ -763,7 +865,7 @@ namespace Model
                 throw new Exception($"Wrong username format for {username}.");
 
             if (!Regex.IsMatch(password, Constraints.PasswordRegex))
-                throw new Exception($"Wrong username format for {password}.");
+                throw new Exception($"Wrong password format for {password}.");
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
@@ -795,7 +897,7 @@ namespace Model
             return false;
         }
 
-        public void GetLastNMessagesFromConversation(string username1, string username2, long fromMessageId, uint howManyMessages, out List<MessageDTO> messages, out long lastMessageId)
+        public void GetLastNMessagesFromConversation(string username1, string username2, long bellowThisMessageId, uint howManyMessages, out List<MessageDTO> messages, out long lastMessageId)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
                 throw new Exception($"Wrong username format for {username1}.");
@@ -822,11 +924,11 @@ namespace Model
             try
             {
                 string cmdString = null;
-                if (fromMessageId > -1)
+                if (bellowThisMessageId > -1)
                 {
-                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {fromMessageId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
+                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {bellowThisMessageId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
                 }
-                else if (fromMessageId == -1)
+                else if (bellowThisMessageId == -1)
                 {
                     cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
                 }
@@ -837,7 +939,7 @@ namespace Model
                 {
                     using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())
                     { 
-                        const int BufferSize = 1024;
+                        const int BufferSize = 128;
                         while (oracleDataReader.Read())
                         {
                             List<byte[]> messageData = new List<byte[]>();
@@ -848,10 +950,8 @@ namespace Model
 
                             lastMessageId = oracleDataReader.GetInt64(0);
                             string format = oracleDataReader.GetString(1);
-                            bool seen = oracleDataReader.GetString(3) == Constraints.BooleanTrueStatus ? true : false;
-                            DateTime sentAt = oracleDataReader.GetDateTime(4);
-                            DateTime seenAt = oracleDataReader.IsDBNull(5)? new DateTime() : oracleDataReader.GetDateTime(5);
-                            long senderId = oracleDataReader.GetInt64(6);
+                            DateTime sentAt = oracleDataReader.GetDateTime(3);
+                            long senderId = oracleDataReader.GetInt64(4);
 
                             readedBytes = oracleDataReader.GetBytes(2, startIndex, dataBuffer, 0, BufferSize);
                             while (readedBytes == BufferSize)
@@ -863,10 +963,13 @@ namespace Model
                             }
 
                             // Iau ultimii bytes
+                            int lastIndex = Array.FindLastIndex(dataBuffer, b => b != 0);
+                            Array.Resize(ref dataBuffer, lastIndex + 1);
+
                             messageData.Add(dataBuffer);
 
                             string senderUsername = GetUsername(senderId);
-                            messages.Add(new MessageDTO(format, messageData, seen, sentAt, seenAt, senderUsername));
+                            messages.Add(new MessageDTO(format, messageData.SelectMany(it => it).ToArray(), sentAt, senderUsername));
                         }
 
                     }
@@ -883,8 +986,76 @@ namespace Model
             }
         }
 
-        #endregion
+        public DateFormat GetDateFormat(string username)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
 
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT date_format FROM Application_settings WHERE Users_user_id = {usernameId}";
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = query.ExecuteReader())
+                    {
+                        if (oracleDataReader.Read())
+                            return DateFormat.GetDateFormat(oracleDataReader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return null;
+        }
+        public TimeFormat GetTimeFormat(string username)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT hour_format FROM Application_settings WHERE Users_user_id = {usernameId}";
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = query.ExecuteReader())
+                    {
+                        if (oracleDataReader.Read())
+                            return TimeFormat.GetTimeFormat(oracleDataReader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return null;
+        }
+
+        #endregion
 
     }
 }
