@@ -19,14 +19,9 @@ namespace ModelDevelopmentProject
         {
             IModel oracleModel = new OracleDatabaseModel(UserId, Password, Hostname, Port, Sid, Pooling);
 
-            List<MessageDTO> messageDTOs = null;
-            long lastId = -1;
+            // oracleModel.ChangeNickname("CCC29", "BRA", "Cos");
 
-            List<String> list = oracleModel.GetReceivedPendingRequest("CCC29");
-
-            Console.WriteLine("asd");
-
-
+           Console.WriteLine(oracleModel.GetNicknameFromFriendRelationship("BRA", "CCC29"));
 
         }
     }

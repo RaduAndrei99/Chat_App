@@ -21,11 +21,18 @@ namespace Model
         private IDatabaseConnection _databaseConnection;
 
         /// <summary>
-        /// Constructorul implicit al clasei
+        /// Constructorul clasei. Acesta initializeaza datele conexiunii la baza de date oracle
         /// </summary>
-        public OracleDatabaseModel(in string userId, in string password, in string hostname, in string port, in string sid, in bool pooling = true)
+        /// <param name="databaseUsername">Numele utilizatorului bazei de date</param>
+        /// <param name="databaseUserPassword">Numele utilizatorului bazei de date</param>
+        /// <param name="hostname">Adresa IP al host-ului</param>
+        /// <param name="port">Port-ul pe care ruleaza baza de date</param>
+        /// <param name="sid">Sid-ul bazei de date</param>
+        /// <param name="pooling">Setarea care indica daca baza de date va face pooling la conexiuni sau nu</param>
+        /// <returns></returns>
+        public OracleDatabaseModel(in string databaseUsername, in string databaseUserPassword, in string hostname, in string port, in string sid, in bool pooling = true)
         {
-            _databaseConnection = new OracleDatabaseConnection(userId, password, hostname, port, sid, pooling);
+            _databaseConnection = new OracleDatabaseConnection(databaseUsername, databaseUserPassword, hostname, port, sid, pooling);
         }
 
         #region USERS TABLE PERSISTENCY
@@ -1283,6 +1290,65 @@ namespace Model
                     {
                         if (oracleDataReader.Read())
                             return TimeFormat.GetTimeFormat(oracleDataReader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Returneaza porecla unui utilizator dintr-o relatie de prietenie
+        /// </summary>
+        /// <param name="fromUsername">Numele de utilizator primei persoane</param>
+        /// <param name="friendUsername">Numele de utilizator al primei de a doua persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca sectiunea de setari a relatiei nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Returneaza porecla unui utilizator dintr-o relatie de prietenie sau null daca utilizatorului nu ii este asignata nici o porecla</returns>
+        public string GetNicknameFromFriendRelationship(string fromUsername, string friendUsername)
+        {
+            if (!Regex.IsMatch(fromUsername, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {fromUsername}.");
+
+            if (!Regex.IsMatch(friendUsername, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {friendUsername}.");
+
+            int fromUsernameId = GetUsernameId(fromUsername);
+            if (fromUsernameId == -1)
+                throw new Exception($"Username {fromUsername} do not exists.");
+
+            int friendUsernameId = GetUsernameId(friendUsername);
+            if (friendUsernameId == -1)
+                throw new Exception($"Username {friendUsername} do not exists.");
+
+            int relationshipId = GetFriendRelationshipId(fromUsernameId, friendUsernameId);
+            if (relationshipId == -1)
+                throw new Exception($"Friend relationship do not exists.");
+
+            int userPosition = GetOrderInFriendRelationship(friendUsernameId, relationshipId);
+
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT nickname_user_{userPosition} FROM relationship_settings WHERE friend_relationships_id = {relationshipId}";
+                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = query.ExecuteReader())
+                    {
+                        if (oracleDataReader.Read())
+                            return oracleDataReader.IsDBNull(0)? null : oracleDataReader.GetString(0);
                     }
                 }
             }

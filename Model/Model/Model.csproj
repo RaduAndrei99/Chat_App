@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commons\Constraints.cs" />
+    <Compile Include="Commons\Commons.cs" />
     <Compile Include="DataTransferObjects\MessageDTO.cs" />
     <Compile Include="DatabaseConnection\IDatabaseConnection.cs" />
     <Compile Include="DatabaseConnection\OracleDatabaseConnection.cs" />

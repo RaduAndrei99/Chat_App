@@ -35,23 +35,19 @@
         /// <returns>Formatul datei</returns>
         public static DateFormat GetDateFormat(string dateFormatAsString)
         {
-            switch(dateFormatAsString)
-            {
-                case "MM/dd/yyyy":
-                    return MonthDayYearDateFormat;
+            if (dateFormatAsString == MonthDayYearDateFormat.ToString())
+                return MonthDayYearDateFormat;
 
-                case "MMMM/dd/yyyy":
-                    return MonthNameDayYear;
+            if (dateFormatAsString == MonthNameDayYear.ToString())
+                return MonthDayYearDateFormat;
 
-                case "dd/MM/yyyy":
-                    return DayMonthYear;
+            if (dateFormatAsString == DayMonthYear.ToString())
+                return MonthDayYearDateFormat;
 
-                case "dd/MMMM/yyyy":
-                    return DayMonthNameYear;
+            if (dateFormatAsString == DayMonthNameYear.ToString())
+                return MonthDayYearDateFormat;
 
-                default:
-                    return null;
-            }
+            return null;
         }
     }
 
@@ -87,17 +83,13 @@
         /// <param name="timeFormatAsString">Formatul orei dat ca sir de caractere</param>
         public static TimeFormat GetTimeFormat(string timeFormatAsString)
         {
-            switch (timeFormatAsString)
-            {
-                case "HH:mm":
-                    return Hours24TimeFormat;
+            if (timeFormatAsString == Hours24TimeFormat.ToString())
+                return Hours24TimeFormat;
 
-                case "hh:mm tt":
-                    return Hours12TimeFormat;
+            if (timeFormatAsString == Hours12TimeFormat.ToString())
+                return Hours12TimeFormat;
 
-                default:
-                    return null;
-            }
+            return null;
         }
     }
 

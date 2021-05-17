@@ -84,3 +84,6 @@ SELECT user_name FROM Users u, Friend_relationships fr WHERE fr.users_user_id = 
 
 -- Waiting to accept
 SELECT user_name FROM Users u, Friend_relationships fr WHERE fr.users_user_id2 = 1 AND fr.users_user_id = u.user_id AND fr.status = 'pending' ORDER BY user_name;
+
+-- Get user nickname
+SELECT nickname_user_1 FROM relationship_settings WHERE friend_relationships_id = 1;

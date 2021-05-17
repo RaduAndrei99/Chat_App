@@ -45,6 +45,7 @@ namespace Model
         void GetLastNMessagesFromConversation(string username1, string username2, long bellowThisMessageId, uint howManyMessages, out List<MessageDTO> messages, out long lastMessageId);
         DateFormat GetDateFormat(string username);
         TimeFormat GetTimeFormat(string username);
+        string GetNicknameFromFriendRelationship(string fromUsername, string friendUsername);
         List<string> GetFriendList(string username);
         List<string> GetSentPendingRequests(string username);
         List<string> GetReceivedPendingRequest(string username);

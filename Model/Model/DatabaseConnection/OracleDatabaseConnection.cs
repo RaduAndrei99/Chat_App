@@ -10,19 +10,12 @@ namespace Model.DatabaseConnection
         private Dictionary<uint, OracleConnection> _connections;
         private string _connectionString = String.Empty;
 
-        private const string UserId = "stud_nume";
-        private const string Password = "stud_parola";
-        private const string Hostname = "localhost";
-        private const string Port = "1521";
-        private const string Sid = "xe";
-        private const string Pooling = "True";
-
-        public OracleDatabaseConnection(in string userId, in string password, in string hostname, in string port, in string sid, in bool pooling = true)
+        public OracleDatabaseConnection(in string databaseUsername, in string databaseUserPassword, in string hostname, in string port, in string sid, in bool pooling = true)
         {
             _connections = new Dictionary<uint, OracleConnection>();
 
             string poolingValue = (pooling == true) ? "True" : "False";
-            _connectionString = $"User Id={userId};Password={password};Data Source={hostname}:{port}/{sid};Pooling={poolingValue};";
+            _connectionString = $"User Id={databaseUsername};Password={databaseUserPassword};Data Source={hostname}:{port}/{sid};Pooling={poolingValue};";
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
