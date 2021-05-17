@@ -8,10 +8,16 @@ namespace ModelDevelopmentProject
 {
     class Program
     {
+        private const string UserId = "stud_nume";
+        private const string Password = "stud_parola";
+        private const string Hostname = "localhost";
+        private const string Port = "1521";
+        private const string Sid = "xe";
+        private const bool Pooling = true;
+
         static void Main(string[] args)
         {
-            IDatabaseConnection database = new OracleDatabaseConnection();
-            IModel oracleModel = new OracleDatabaseModel();
+            IModel oracleModel = new OracleDatabaseModel(UserId, Password, Hostname, Port, Sid, Pooling);
 
             List<MessageDTO> messageDTOs = null;
             long lastId = -1;

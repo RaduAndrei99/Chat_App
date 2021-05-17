@@ -17,10 +17,12 @@ namespace Model.DatabaseConnection
         private const string Sid = "xe";
         private const string Pooling = "True";
 
-        public OracleDatabaseConnection()
+        public OracleDatabaseConnection(in string userId, in string password, in string hostname, in string port, in string sid, in bool pooling = true)
         {
             _connections = new Dictionary<uint, OracleConnection>();
-            _connectionString = $"User Id={UserId};Password={Password};Data Source={Hostname}:{Port}/{Sid};Pooling={Pooling};";
+
+            string poolingValue = (pooling == true) ? "True" : "False";
+            _connectionString = $"User Id={userId};Password={password};Data Source={hostname}:{port}/{sid};Pooling={poolingValue};";
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

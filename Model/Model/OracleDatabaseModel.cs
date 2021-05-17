@@ -23,9 +23,9 @@ namespace Model
         /// <summary>
         /// Constructorul implicit al clasei
         /// </summary>
-        public OracleDatabaseModel()
+        public OracleDatabaseModel(in string userId, in string password, in string hostname, in string port, in string sid, in bool pooling = true)
         {
-            _databaseConnection = new OracleDatabaseConnection();
+            _databaseConnection = new OracleDatabaseConnection(userId, password, hostname, port, sid, pooling);
         }
 
         #region USERS TABLE PERSISTENCY
