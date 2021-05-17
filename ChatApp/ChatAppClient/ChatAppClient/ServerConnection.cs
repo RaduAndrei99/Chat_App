@@ -6,21 +6,22 @@ namespace ChatAppClient
 {
     public class ServerConnection
     {
-
-        private IPHostEntry _host;
-        private IPAddress _ipAddress;
         private IPEndPoint _remoteEP;
 
-
         /// <summary>
-        /// Socket-ul folosit pentru conexiunea cu server-ul.
+        /// Socket-ul folosit pentru conexiunea cu server-ul atunci cand se trimit mesaje.
         /// </summary>
         private Socket _sender;
 
         /// <summary>
+        /// Socket-ul folosit pentru conexiunea cu server-ul atunci cand se primesc mesaje dinspre server.
+        /// </summary>
+        private Socket _receiver;
+
+        /// <summary>
         /// IP-ul server-ului.
         /// </summary>
-        private const string ServerHost = "127.0.0.1";
+        private const string ServerHost = "192.168.0.220";
 
         /// <summary>
         /// Port-ul server-ului
@@ -48,14 +49,14 @@ namespace ChatAppClient
         {
             try
             {
-                _host = Dns.GetHostEntry(ServerHost);
-                _ipAddress = _host.AddressList[0];
-                _remoteEP = new IPEndPoint(_ipAddress, ServerPort);
+                IPAddress ipa = IPAddress.Parse(ServerHost);
+                _remoteEP = new IPEndPoint(ipa, ServerPort);
 
-                _sender = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
+                _sender = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.Tcp);
+                //_receiver = new Socket(_ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 _sender.Connect(_remoteEP);
+                //_receiver.Connect(_remoteEP);
 
                 Console.WriteLine("M-am conectat la server: " + _sender.RemoteEndPoint.ToString());
             }
@@ -79,12 +80,21 @@ namespace ChatAppClient
         }
 
         /// <summary>
-        /// Getter pentru obiectul de tip Socket.
+        /// Getter pentru obiectul de tip Socket pentru trimiterea de mesaje.
         /// </summary>
         /// <returns></returns>
-        public Socket GetConnection()
+        public Socket GetSenderConnection()
         {
             return _sender;
+        }
+
+        /// <summary>
+        /// Getter pentru obiectul de tip Socket pentru primirea de mesaje.
+        /// </summary>
+        /// <returns></returns>
+        public Socket GetReceiverConnection()
+        {
+            return _receiver;
         }
 
         /// <summary>
@@ -94,6 +104,9 @@ namespace ChatAppClient
         {
             _sender.Shutdown(SocketShutdown.Both);
             _sender.Close();
+
+            _receiver.Shutdown(SocketShutdown.Both);
+            _receiver.Close();
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Threading;
 using MainServerNs;
 using System.Collections.Generic;
 using Model;
+using ProtectionProxy;
+
 
 namespace ChatAppServer
 {
@@ -14,7 +16,7 @@ namespace ChatAppServer
         /// <summary>
         /// IP-ul pe care ruleaza server-ul
         /// </summary>
-        private string Host = "127.0.0.1";
+        private string Host = "192.168.0.220";
 
         /// <summary>
         /// Port-ul pe care ruleaza server-ul
@@ -29,15 +31,25 @@ namespace ChatAppServer
         /// <summary>
         /// Un dictionar folosit pentru gestiunea clientilor conectati la un moment dat.
         /// </summary>
-        private Dictionary<string, Socket> _userConnections;
+        private Dictionary<string, Socket> _loggedUserConnections;
+
+        private const string EncryptionPassword = "1234qwertasdfg1234";
+
+
+        private const string UserId = "radu";
+        private const string Password = "1991129";
+        private const string Hostname = "localhost";
+        private const string DBPort = "1521";
+        private const string Sid = "xe";
+        private const bool Pooling = true;
 
         /// <summary>
         /// Constructorul fara argumente al clasei ChatServer
         /// </summary>
         public ChatServer()
         {
-            _userConnections = new Dictionary<string, Socket>();
-            _model = new Model.OracleDatabaseModel();
+            _loggedUserConnections = new Dictionary<string, Socket>();
+            _model = new OracleDatabaseModel(UserId, Password, Hostname, DBPort, Sid, Pooling);
         }
 
         /// <summary>
@@ -54,6 +66,7 @@ namespace ChatAppServer
             }
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -83,6 +96,8 @@ namespace ChatAppServer
             string data = null;
             byte[] bytes = null;
 
+
+            Console.WriteLine("New client on: " + (IPEndPoint)handler.RemoteEndPoint);
             while (true)
             {
                 data = "";
@@ -96,7 +111,6 @@ namespace ChatAppServer
                         bytesRec = handler.Receive(bytes);
                         if(bytesRec == 0)
                         {
-
                             return;
                         }
 
@@ -110,11 +124,11 @@ namespace ChatAppServer
                 catch (SocketException e)
                 {
                     Console.WriteLine(e.ToString());
-                    Console.WriteLine("S-a deconectat un client.");
+                    Console.WriteLine("Client disconnected: " + (IPEndPoint)handler.RemoteEndPoint);
 
                     if (handler != null)
                     {
-                        _userConnections.Remove(userName);
+                        _loggedUserConnections.Remove(userName);
                         return;
                     }
 
@@ -122,128 +136,212 @@ namespace ChatAppServer
 
                 }
 
+                Console.WriteLine("Encrypted: " + data);
 
-                Console.WriteLine("Am primit: " + data);
+                string msg = Cryptography.Decrypt(data.Replace("<EOF>", ""), EncryptionPassword);
+                Console.WriteLine("Received: " + msg);
 
-                string message = data.Split(' ')[0];
+                string messageType = msg.Split(' ')[0];
 
-                switch (message)
+                switch (messageType)
                 {
-                    case "connect":
-                        {
-                            Console.WriteLine("S-a conectat un user.");
-                            string m = "Confirm <EOF>";
-                            Thread.Sleep(500);
-                            handler.Send(Encoding.ASCII.GetBytes(m));
 
-                            break;
-                        }
-
+                    //login USERNAME HASHED_PASSWORD
                     case "login":
-                        {
-                            userName = data.Split(' ')[1];
-                            string password = data.Split(' ')[2];
+                    {
+                        userName = msg.Split(' ')[1];
+                        string password = msg.Split(' ')[2];
 
-                            Console.WriteLine("**" + " " + userName + " " + password);
-                            if (Login(userName, password))
+                        Console.WriteLine("**" + " " + userName + " " + password);
+                        if (Login(userName, password))
+                        {
+                            if ((!_loggedUserConnections.ContainsKey(userName)))
                             {
-                                _userConnections.Add(userName, handler);
-                                handler.Send(Encoding.ASCII.GetBytes("CONFIRM <EOF>"));
+                                handler.Send(PrepareMessageToSend("CONFIRM"));
                             }
                             else
                             {
-                                handler.Send(Encoding.ASCII.GetBytes("ERROR <EOF>"));
-                            }
+                                handler.Send(PrepareMessageToSend("ERROR ALREADY_LOGGED_IN"));
 
-                            break;
+                            }
+                        }
+                        else
+                        {
+                            handler.Send(PrepareMessageToSend("ERROR FAILED_LOGIN"));
                         }
 
+                        break;
+                    }
+
+
+                case "openSocket":
+                    {
+                        if (userName != "")
+                        {
+                            if ((!_loggedUserConnections.ContainsKey(userName)))
+                            {
+                                _loggedUserConnections.Add(userName, handler);
+                            }
+                            else
+                            {
+                                handler.Send(PrepareMessageToSend("ERROR ALREADY_LOGGED_IN"));
+
+                            }
+                        }
+                        else
+                        {
+                            handler.Send(PrepareMessageToSend("ERROR PLEASE_LOG_IN"));
+                        }
+
+                        break;
+                        } 
+                    
+                    //logout
                     case "logout":
-                        {
-                            _userConnections.Remove(userName);
+                    {
+                        _loggedUserConnections.Remove(userName);
 
-                            handler.Shutdown(SocketShutdown.Both);
-                            handler.Close();
+                        handler.Shutdown(SocketShutdown.Both);
+                        handler.Close();
 
-                            return;
-                        }
+                        Console.WriteLine("Client logged out: " + (IPEndPoint)handler.RemoteEndPoint);
 
+
+                        return;
+                    }
+                    //sendMessage FROM TO MESSAGE
                     case "sendMessage":
+                    {
+                        string destinationUserName = msg.Split(' ')[2];
+                        string from = msg.Split(' ')[1];
+    
+                        string destinationMessage = msg.Substring((messageType + " " + from + " " +destinationUserName + " ").Length);
+                           
+                        //daca avem conectat deja user-ul destinatie, ii trimitem direct mesajul
+                        if (_loggedUserConnections.ContainsKey(destinationUserName))
                         {
-                            string destinationUserName = data.Split(' ')[1];
-                            string destinationMessage = data.Split(' ')[2];
+                            SendMessage(userName, destinationUserName, destinationMessage);
+                            Console.WriteLine("User " + destinationUserName + " is connected.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("User " + destinationUserName + " is not connected.");
+                        }
 
-                            //daca avem conectat deja user-ul destinatie, ii trimitem direct mesajul
-                            if (_userConnections.ContainsKey(destinationUserName))
-                            {
-                                SendMessage(destinationUserName, destinationMessage);
-                                Console.WriteLine("User-ul " + destinationUserName + " este conectat.");
-                            }
-                            else
-                            {
-                                Console.WriteLine("User-ul " + destinationUserName + " nu este conectat.");
-                            }
+                        //incercam sa cream conversatia, iar daca deja exista va arunca o exceptie
+                        try
+                        {
+                            _model.CreateConversation(userName, destinationUserName);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
 
-                            //incercam sa cream conversatia, iar daca deja exista va arunca o exceptie
-                            try
-                            {
-                                _model.CreateConversation(userName, destinationUserName);
-                            }
-                            catch (Exception e)
-                            {
-
-                            }
-
-                            //adaugam mesajul in baza de date
+                        //adaugam mesajul in baza de date
+                        try
+                        {
                             _model.StoreMessage(userName, destinationUserName, "txt", Encoding.ASCII.GetBytes(destinationMessage), DateTime.UtcNow);
-
-                            break;
                         }
+                        //eroare la inserarea in baza de date
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                        break;
+                    }
+                    
 
+                    //register USERNAME HASHED_PASSWORD FIRST_NAME LAST_NAME EMAIL BIRTHDATE
                     case "register":
+                    {
+                        string username = msg.Split(' ')[1];
+                        string pass = msg.Split(' ')[2];
+                        string firstName = msg.Split(' ')[3];
+                        string lastName = msg.Split(' ')[4];
+                        string email = msg.Split(' ')[5];
+                        string birthdate = msg.Split(' ')[6];
+
+                        if (Register(username, pass, firstName, lastName, email, birthdate))
                         {
-                            string username = data.Split(' ')[1];
-                            string pass = data.Split(' ')[2];
-                            string firstName = data.Split(' ')[3];
-                            string lastName = data.Split(' ')[4];
-                            string email = data.Split(' ')[5];
-                            string birthdate = data.Split(' ')[6];
-
-                            if (Register(username, pass, firstName, lastName, email, birthdate))
-                            {
-                                handler.Send(Encoding.ASCII.GetBytes("CONFIRM <EOF>"));
-                            }
-                            else
-                            {
-                                handler.Send(Encoding.ASCII.GetBytes("ERROR <EOF>"));
-                            }
-
-                            break;
+                            handler.Send(PrepareMessageToSend("CONFIRM"));
+                        }
+                        else
+                        {
+                            handler.Send(PrepareMessageToSend("ERROR"));
                         }
 
+                        break;
+                    }
+                    //addFriend FROM TO
                     case "addFriend":
+                    {
+                        string friend = msg.Split(' ')[2];
+                        _model.RegisterFriendRequest(userName, friend);
+
+                        if (_loggedUserConnections.ContainsKey(friend))
                         {
-
-                            string friend = data.Split(' ')[2];
-
                             SendFriendRequest(userName, friend);
-
-                            break;
                         }
+                        break;
+                    }
 
+                    //changeUsername FROM TO NICKNAME
                     case "changeUsername":
-                        {
-                            string friend = data.Split(' ')[2];
-                            string nickname = data.Split(' ')[3];
+                    {
+                        string friend = msg.Split(' ')[2];
+                        string nickname = msg.Split(' ')[3];
 
-                            _model.ChangeNickname(userName, friend, nickname);
-                            break;
-                        }
+                        ChangeFriendNickname(userName, friend, nickname);
+                        break;
+                    }
+
+                    //getMessages NUMBER_OF_MESSAGES USERNAME1 USERNAME2
+                    case "getMessages":
+                    {
+                        uint noOfMessages = uint.Parse(msg.Split(' ')[1]);
+                        string username2 = msg.Split(' ')[2];
+
+                        GetLastNMessages(userName, username2, noOfMessages);
+
+                        break;
+                    }
+
+                    //getFriendRequest 
+                    case "getFriendRequests":
+                    {
+                        GetFriendRequests(userName);
+                        break;
+                    }
+
+                    //acceptFriendRequest from
+                    case "acceptFriendRequest":
+                    {
+                        string from = msg.Split(' ')[2];
+
+                        AcceptFriendRequest(from, userName);
+                         _model.AddRelationshipSettings(from, userName);
+                        break;
+                    }
+
+                    case "changeNickname":
+                    {
+                        string user = msg.Split(' ')[1];
+                        string nickname = msg.Split(' ')[2];
+
+                        ChangeFriendNickname(userName, user, nickname);
+                        break;
+                    }
+
+                    case "getFriendsList":
+                    {
+                        GetFriendsList(userName);
+                        break;
+                    }
+
 
                 }
             }
-
-            Console.WriteLine("S-a inchis un socket");
         }
 
 
@@ -253,16 +351,16 @@ namespace ChatAppServer
         public void run()
         {
 
-            IPHostEntry host = Dns.GetHostEntry(Host);
-            IPAddress ipAddress = host.AddressList[0];
-            IPEndPoint localEndPoint = new IPEndPoint(ipAddress, Port);
+            IPAddress ipAddress = System.Net.Dns.GetHostAddresses(Host)[0];
+
+            Console.WriteLine(ipAddress);
 
             Socket handler = null;
             try
             {
-                Socket listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                Socket listener = new Socket( AddressFamily.InterNetwork,SocketType.Stream,ProtocolType.Tcp);
 
-                listener.Bind(localEndPoint);
+                listener.Bind(new IPEndPoint(ipAddress, Port));
 
                 listener.Listen(10);
 
@@ -290,11 +388,12 @@ namespace ChatAppServer
         /// </summary>
         /// <param name="destination"></param>
         /// <param name="message"></param>
-        public void SendMessage(string destination, string message)
+        public void SendMessage(string from, string destination, string message)
         {
             try
             {
-                _userConnections[destination].Send(Encoding.ASCII.GetBytes("message" + " " + message + "<EOF>"));
+                _loggedUserConnections[destination].Send(PrepareMessageToSend("message" + 
+                    " " + from + " " + message));
             }
             catch(Exception e)
             {
@@ -337,18 +436,99 @@ namespace ChatAppServer
         {
             try
             {
-                _model.RegisterFriendRequest(asker, friend);
-
-                if (_userConnections.ContainsKey(asker))
-                {
-                    _userConnections[asker].Send(Encoding.ASCII.GetBytes("friendRequest " + asker + " " + friend));
-                }
+                _loggedUserConnections[friend].Send(PrepareMessageToSend("friendRequest " + asker));             
             }
             catch(Exception e)
             {
 
             }
         }
- 
+
+        /// <summary>
+        /// Metoda care schimba nick-name-ul pentru un utilizator intr-o conversatie.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public byte[] PrepareMessageToSend(string message)
+        {
+            return Encoding.ASCII.GetBytes(Cryptography.Encrypt(message, EncryptionPassword) + "<EOF>");
+        }
+
+        public void ChangeFriendNickname(string from, string who, string nickname)
+        {
+            try
+            {
+                _model.ChangeNickname(from, who, nickname);
+            }
+            catch(Exception E)
+            {
+                _loggedUserConnections[from].Send(PrepareMessageToSend("ERROR UNABLE_TO_CHANGE_THE_NICKNAME"));
+            }
+        }
+
+        public void GetLastNMessages(string username1, string username2 , uint howManyMessages)
+        {
+            List<Model.DataTransferObjects.MessageDTO> messages;
+
+            long msgId;
+            _model.GetLastNMessagesFromConversation(username1, username2, -1, (uint)howManyMessages,out messages, out msgId);
+
+            for(int i=0;i<messages.Count;++i)
+            {
+                _loggedUserConnections[username1].Send(PrepareMessageToSend("storedMessage" + " " + username2 + " " + Encoding.ASCII.GetString(messages[i].MessageData, 0, messages[i].MessageData.Length)));
+                Thread.Sleep(10);
+            }
+        }
+
+        public void AcceptFriendRequest(string asker, string friend)
+        {
+            try
+            {
+                _model.AcceptFriendRequest(asker, friend);
+            }
+            catch (Exception E)
+            {
+                _loggedUserConnections[friend].Send(PrepareMessageToSend("ERROR UNABLE_TO_ACCEPT_THE_FRIEND_REQUEST"));
+            }
+        }
+
+        public void GetFriendRequests(string username)
+        {
+            try
+            {
+                List<string> requests = _model.GetReceivedPendingRequest(username);
+
+                foreach (string from in requests)
+                {
+                    //inversate
+                    SendFriendRequest(from, username);
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception E)
+            {
+                _loggedUserConnections[username].Send(PrepareMessageToSend("ERROR UNABLE_TO_GET_FRIEND_REQUESTS"));
+            }
+        }
+
+        public void GetFriendsList(string username)
+        {
+            try
+            {
+                List<string> friends = _model.GetFriendList(username);
+
+                foreach (string friend in friends)
+                {
+                    _loggedUserConnections[username].Send(PrepareMessageToSend("friend" + " " + friend));
+                    Thread.Sleep(10);
+                }
+            }
+            catch (Exception E)
+            {
+                _loggedUserConnections[username].Send(PrepareMessageToSend("ERROR UNABLE_TO_GET_FRIEND_LIST"));
+            }
+        }
+
+       
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ChatAppClient;
 using System;
+using System.Threading;
 
 namespace ChatClientTest
 {
@@ -12,16 +13,33 @@ namespace ChatClientTest
             Console.Write("Enter password: ");
             string password = Console.ReadLine();
 
-
             ProxyServer c = new ProxyServer();
+
             c.Login(username, password);
 
-            Console.Write("Send to: ");
-            string sendto = Console.ReadLine();
+            c.Run();
 
-            c.SendMessage(sendto, "HELLO_MA");
+
+            while (true)
+            {
+                
+                Console.Write("Send to: ");
+                string sendto = Console.ReadLine();
+
+                Console.Write("Message: ");
+                string msg = Console.ReadLine();
+                
+
+                c.SendMessage(username, sendto, msg);
+
+                c.GetLastNMessages(username, username, 10);
+                Thread.Sleep(100);
+                c.SendFriendRequest(username, sendto);
+
+
+            }
             // c.Logout("", "");
-            while (true) ;
+
             c.CloseServerConnection();
 
         }

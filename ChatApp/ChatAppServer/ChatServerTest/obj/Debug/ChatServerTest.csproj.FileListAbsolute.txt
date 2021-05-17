@@ -2,13 +2,13 @@ D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ChatServerT
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ChatServerTest.exe
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ChatServerTest.pdb
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ChatAppServer.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ProxyServer.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\Model.dll
+D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\Oracle.ManagedDataAccess.dll
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ChatAppServer.pdb
+D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ProxyServer.pdb
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\obj\Debug\ChatServerTest.csprojAssemblyReference.cache
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\obj\Debug\ChatServerTest.csproj.CoreCompileInputs.cache
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\obj\Debug\ChatServerTest.csproj.CopyComplete
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\obj\Debug\ChatServerTest.exe
 D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\obj\Debug\ChatServerTest.pdb
-D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ProxyServer.dll
-D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\ProxyServer.pdb
-D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\Model.dll
-D:\Faculty\IP\Project\ChatApp\ChatAppServer\ChatServerTest\bin\Debug\Oracle.ManagedDataAccess.dll
