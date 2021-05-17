@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model.DatabaseConnection;
 using Oracle.ManagedDataAccess.Client;
 using System.Text.RegularExpressions;
@@ -11,9 +9,20 @@ using Model.DataTransferObjects;
 
 namespace Model
 {
+    /// <summary>
+    /// Modelul aplicatiei pentru o baza de date Oracle
+    /// </summary>
     public class OracleDatabaseModel : IModel
     {
+
+        /// <summary>
+        /// Referinta generica la un obiect ce incapsuleaza conexiunea la baza de date
+        /// </summary>
         private IDatabaseConnection _databaseConnection;
+
+        /// <summary>
+        /// Constructorul implicit al clasei
+        /// </summary>
         public OracleDatabaseModel()
         {
             _databaseConnection = new OracleDatabaseConnection();
@@ -21,6 +30,17 @@ namespace Model
 
         #region USERS TABLE PERSISTENCY
 
+        /// <summary>
+        /// Adauga un nou utilizator in baza de date.
+        /// </summary>
+        /// <param name="username">Numele de utilizator al persoanei</param>
+        /// <param name="password">Parola utilizatorului</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul exista deja in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void AddNewUser(string username, string password)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -52,6 +72,17 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Modifica numele unui utilizatorului.
+        /// </summary>
+        /// <param name="currentUsername">Numele de utilizator actual al persoanei</param>
+        /// <param name="newUsername">Noul nume al utilizatorului</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void ChangeUsername(string currentUsername, string newUsername)
         {
             if (!Regex.IsMatch(currentUsername, Constraints.UsernameRegex))
@@ -92,6 +123,17 @@ namespace Model
 
         }
 
+        /// <summary>
+        /// Modifica parola unui utilizatorului.
+        /// </summary>
+        /// <param name="username">Numele de utilizator al persoanei</param>
+        /// <param name="newPassword">Noul nume al utilizatorului</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// </exception>
+        /// <returns></returns>
         public void ChangeUserPassword(string username, string newPassword)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -126,6 +168,16 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Sterge un utilizator din baza de date.
+        /// </summary>
+        /// <param name="username">Numele actual de utilizator al persoanei</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void DeleteUser(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -155,6 +207,14 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Returneaza id-ul unui utilizator.
+        /// </summary>
+        /// <param name="username">Numele de utilizator al persoanei</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// </exception>
+        /// <returns>Id-ul utilizatorului in caz de succes sau -1 in cazul in care utilizatorul nu exista in baza de date</returns>
         private int GetUsernameId(string username)
         {
             uint connectionId = _databaseConnection.Connect();
@@ -183,6 +243,11 @@ namespace Model
             return -1;
         }
 
+        /// <summary>
+        /// Returneaza numele de utilizator al persoanei.
+        /// </summary>
+        /// <param name="usernameId">Id-ul utilizatorului</param>
+        /// <returns>Numele utilizatorului in caz de succes sau null in caz de eroare</returns>
         private string GetUsername(long usernameId)
         {
             uint connectionId = _databaseConnection.Connect();
@@ -215,6 +280,20 @@ namespace Model
 
         #region USER INFORMATIONS TABLE PERSISTENCY
 
+        /// <summary>
+        /// Inregistreaza datele personale ale unui user in baza de date.
+        /// </summary>
+        /// <param name="username">Numele de utilizator la persoanei</param>
+        /// <param name="firstname">Prenumele de familie al utilizatorului</param>
+        /// <param name="lastname">Numele de familie al utilizatorului</param>
+        /// <param name="email">Adresa de email al utilizatorului</param>
+        /// <param name="birthdate">Data de nastere al utilizatorului</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca formatul adresei de email este gresit. See <see cref="Commons.Constraints.EmailRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void RegisterUser(string username, string firstname, string lastname, string email, DateTime birthdate)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -258,38 +337,19 @@ namespace Model
 
         }
 
-        private bool CheckIfUserRegistrationExists(int usernameId)
-        {
-            uint connectionId = _databaseConnection.Connect();
-            try
-            {
-                string cmdString = $"SELECT COUNT(*) FROM User_informations WHERE (Users_user_id = {usernameId})";
-                using (OracleCommand query = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
-                {
-                    using (OracleDataReader oracleDataReader = query.ExecuteReader())
-                    {
-                        if (oracleDataReader.Read() && oracleDataReader.GetInt32(0) == 1)
-                            return true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex);
-                Console.WriteLine(ex.StackTrace);
-            }
-            finally
-            {
-                _databaseConnection.CloseConnection(connectionId);
-            }
-
-            return false;
-        }
-
         #endregion
 
         #region APPLICAITON SETTINGS PERSISTENCY
 
+        /// <summary>
+        /// Adauga sectiunea cu setarile implicite ale aplicatiei pentru un utilizator.
+        /// </summary>
+        /// <param name="username">Numele de utilizator la persoanei</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void AddApplicationSettings(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -326,6 +386,16 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Seteaza formatul datei in baza de date.
+        /// </summary>
+        /// <param name="username">Numele de utilizator la persoanei</param>
+        /// <param name="dateFormat">Formatul datei</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void SetDateFormat(string username, DateFormat dateFormat)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -355,6 +425,16 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Seteaza formatul orei in baza de date.
+        /// </summary>
+        /// <param name="username">Numele de utilizator la persoanei</param>
+        /// <param name="timeFormat">Formatul orei</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void SetTimeFormat(string username, TimeFormat timeFormat)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -388,6 +468,17 @@ namespace Model
 
         #region CONVERSATION TABLE PERSISTENCY
 
+        /// <summary>
+        /// Creeaza o conversatie intre 2 utilizatori in baza de date.
+        /// </summary>
+        /// <param name="username1">Numele de utilizator primei persoane</param>
+        /// <param name="username2">Numele de utilizator al primei de a doua persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca conversatia exista deja in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void CreateConversation(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
@@ -434,6 +525,17 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Sterge o conversatie intre 2 utilizatori in baza de date.
+        /// </summary>
+        /// <param name="username1">Numele de utilizator primei persoane</param>
+        /// <param name="username2">Numele de utilizator al primei de a doua persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca conversatia exista deja in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void DeleteConversation(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
@@ -474,6 +576,16 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Returneaza id-ul unei conversatii intre 2 utilizatori.
+        /// </summary>
+        /// <param name="usernameId1">Id-ul primului utilizator</param>
+        /// <param name="usernameId2">Id-ul celui de al doilea utilizator</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Id-ul conversatiei in caz de succes sau -1 in cazul in care nu exista conversatia in baza de date</returns>
         private int GetConversationId(int usernameId1, int usernameId2)
         {
             uint connectionId = _databaseConnection.Connect();
@@ -506,6 +618,18 @@ namespace Model
 
         #region FRIEND RELATIONSHIP TABLE PERSISTENCY
 
+        /// <summary>
+        /// Inregistrarea o cerere de prietenie in baza de date
+        /// </summary>
+        /// <param name="fromUsername">Numele utilizatorului care trimite cererea</param>
+        /// <param name="toUsername">Numele utilizatorului care primeste cererea</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca relatia de prietenie exista deja in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void RegisterFriendRequest(string fromUsername, string toUsername)
         {
             if (!Regex.IsMatch(fromUsername, Constraints.UsernameRegex))
@@ -552,6 +676,17 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Modifica statusul cererii de prietenie dintre doi utilizatori
+        /// </summary>
+        /// <param name="username1">Numele unui utilizator din cerere</param>
+        /// <param name="username2">Numele celulalt utilizator din cerere</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca nu exista nu exista nici o cerere de prietenie inregistrata in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void AcceptFriendRequest(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
@@ -592,6 +727,17 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Sterge o cerere de prietenie dintre doi utilizatori
+        /// </summary>
+        /// <param name="username1">Numele unui utilizator din cerere</param>
+        /// <param name="username2">Numele celulalt utilizator din cerere</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca nu exista nu exista nici o cerere de prietenie inregistrata in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void DeleteFriendRelationship(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
@@ -632,6 +778,15 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Returneaza id-ul cererii de prietenie dintre doi utilizatori
+        /// </summary>
+        /// <param name="username1">Numele unui utilizator din cerere</param>
+        /// <param name="username2">Numele celulalt utilizator din cerere</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Id-ul conversatiei in caz de succes sau -1 in cazul in care nu exista relatia in baza dedate</returns>
         private int GetFriendRelationshipId(int usernameId1, int usernameId2)
         {
             uint connectionId = _databaseConnection.Connect();
@@ -660,6 +815,12 @@ namespace Model
             return -1;
         }
 
+        /// <summary>
+        /// Returneaza un numar de ordinde al utilizatorului din cererea de prietenie
+        /// </summary>
+        /// <param name="usernameId">Id-ul utilizatorului</param>
+        /// <param name="relationshipId">Id-ul relatiei de rietenie</param>
+        /// <returns>1 daca utilizatorul este cel care a initial cererea, 2 daca este utilizatorul care a primit cererea, -1 daca nu exista cererea de prietenie</returns>
         private int GetOrderInFriendRelationship(int usernameId, int relationshipId)
         {
             uint connectionId = _databaseConnection.Connect();
@@ -698,11 +859,22 @@ namespace Model
 
             return -1;
         }
-        
+
         #endregion
 
         #region RELATIONSHIP SETTINGS TABLE PERSISTENCY
-        
+
+        /// <summary>
+        /// Adauga sectiunea cu setarile relatiei de prietenie
+        /// </summary>
+        /// <param name="username1">Numele de utilizator al primei persoane</param>
+        /// <param name="username2">Numele de utilizator al primei de a doua persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca sectiunea de setari exista deja in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void AddRelationshipSettings(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
@@ -750,6 +922,19 @@ namespace Model
             }
         }
 
+
+        /// <summary>
+        /// Schimba un porecla unui utilizator dintr-o relatie de prietenie
+        /// </summary>
+        /// <param name="fromUsername">Numele de utilizator primei persoane</param>
+        /// <param name="toUsername">Numele de utilizator al primei de a doua persoane</param>
+        /// <param name="nickname">Porecla celui de al doilea utilizator</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca sectiunea de setari nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void ChangeNickname(string fromUsername, string toUsername, string nickname)
         {
             if (!Regex.IsMatch(fromUsername, Constraints.UsernameRegex))
@@ -801,11 +986,25 @@ namespace Model
                 _databaseConnection.CloseConnection(connectionId);
             }
         }
-        
+
         #endregion
 
         #region MESSAGES TABLE PERSISTENCY
 
+        /// <summary>
+        /// Stocheaza un mesaj in baza de date
+        /// </summary>
+        /// <param name="senderUsername">Numele de utilizator al persoanei care trimite mesajul</param>
+        /// <param name="receiverUsername">Numele de utilizator al persoanei care primeste mesajul</param>
+        /// <param name="format">Formatul/Extensia mesajului</param>
+        /// <param name="message_data">Corpul mesajului</param>
+        /// <param name="sentDate">Data de trimitere a mesajului</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca conversatia dintre cele doua persoane nu exista in baza de date</para>
+        /// </exception>
+        /// <returns></returns>
         public void StoreMessage(string senderUsername, string receiverUsername, string format, byte[] message_data, DateTime sentDate)
         {
             if (!Regex.IsMatch(senderUsername, Constraints.UsernameRegex))
@@ -854,11 +1053,22 @@ namespace Model
                 _databaseConnection.CloseConnection(connectionId);
             }
         }
-    
+
         #endregion
 
         #region FUNCTIONALITY METHODS
 
+        /// <summary>
+        /// Verifica credentialele unui utilizator
+        /// </summary>
+        /// <param name="username">Numele de utilizator al persoanei</param>
+        /// <param name="password">Parola unui utilizator</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>True daca datele utilizatorului sunt corecte sau False daca nu</returns>
         public bool CheckUserCredentials(string username, string password)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -897,6 +1107,21 @@ namespace Model
             return false;
         }
 
+        /// <summary>
+        /// Returneaza un numar de mesaje din baza de date
+        /// </summary>
+        /// <param name="username1">Numele unui utilizator al unei conversatiei</param>
+        /// <param name="username2">Numele celuilat utilizator din conversatie</param>
+        /// <param name="bellowThisMessageId">Id-ul mesajului sub care se incepe citirea mesajelor din baza de date</param>
+        /// <param name="howManyMessages">Numarul de mesaje citite</param>
+        /// <param name="messages">Lista de obiecte MessageDTO care contine datele mesajelor. See <see cref="DataTransferObjects.MessageDTO"/></param>
+        /// <param name="lastMessageId">Id-ul ultimului mesaj citit din baza de date</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// <para>Arunca exceptie daca conversatie dintre cele 2 persoane nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Parametrul messages si parametrul lastMessageId</returns>
         public void GetLastNMessagesFromConversation(string username1, string username2, long bellowThisMessageId, uint howManyMessages, out List<MessageDTO> messages, out long lastMessageId)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
@@ -986,6 +1211,15 @@ namespace Model
             }
         }
 
+        /// <summary>
+        /// Returneaza formatul datei aplicatiei unui utilizator
+        /// </summary>
+        /// <param name="username">Numele de utilizator al unei persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Formatul datei incapsulat intr-un obiect</returns>
         public DateFormat GetDateFormat(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -1020,6 +1254,16 @@ namespace Model
 
             return null;
         }
+
+        /// <summary>
+        /// Returneaza formatul orei aplicatiei unui utilizator
+        /// </summary>
+        /// <param name="username">Numele de utilizator al unei persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Formatul orei incapsulat intr-un obiect</returns>
         public TimeFormat GetTimeFormat(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
@@ -1053,6 +1297,141 @@ namespace Model
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Returneaza lista numelor de utilizator a prietenilor unui utilizator
+        /// </summary>
+        /// <param name="username">Numele de utilizator al unei persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Lista cu numele prietenilor</returns>
+        public List<string> GetFriendList(string username)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            List<string> friendList = new List<string>();
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT user_name FROM Users u, Friend_relationships fr WHERE (fr.users_user_id = u.user_id OR fr.users_user_id2 = u.user_id) AND u.user_id != {usernameId} AND fr.status = '{Constraints.FriendshipFriendsStatus}' ORDER BY user_name";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())
+                    {
+                        while (oracleDataReader.Read())
+                            friendList.Add(oracleDataReader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return friendList;
+        }
+
+        /// <summary>
+        /// Returneaza lista numelor de utilizator carora un utilizator le-a trimis o cerere si care inca nu este acceptata
+        /// </summary>
+        /// <param name="username">Numele de utilizator al unei persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Lista numelor de utilizator carora un utilizator le-a trimis o cerere si care inca nu este acceptata</returns>
+        public List<string> GetSentPendingRequests(string username)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            List<string> sentPendingRequests = new List<string>();
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT user_name FROM Users u, Friend_relationships fr WHERE fr.users_user_id = {usernameId} AND fr.users_user_id2 = u.user_id AND fr.status = '{Constraints.FriendshipPendingStatus}' ORDER BY user_name";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())
+                    {
+                        while (oracleDataReader.Read())
+                            sentPendingRequests.Add(oracleDataReader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return sentPendingRequests;
+        }
+
+        /// <summary>
+        /// Returneaza lista numelor de utilizator de la care un utilizator a primit o cerere de prietenie si care inca nu este acceptata
+        /// </summary>
+        /// <param name="username">Numele de utilizator al unei persoane</param>
+        /// <exception cref="System.Exception">
+        /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
+        /// </exception>
+        /// <returns>Lista numelor de utilizator de la care un utilizator a primit o cerere de prietenie si care inca nu este acceptata</returns>
+        public List<string> GetReceivedPendingRequest(string username)
+        {
+            if (!Regex.IsMatch(username, Constraints.UsernameRegex))
+                throw new Exception($"Wrong username format for {username}.");
+
+            int usernameId = GetUsernameId(username);
+            if (usernameId == -1)
+                throw new Exception($"Username {username} do not exists.");
+
+            List<string> waitingRequests = new List<string>();
+            uint connectionId = _databaseConnection.Connect();
+            try
+            {
+                string cmdString = $"SELECT user_name FROM Users u, Friend_relationships fr WHERE fr.users_user_id2 = {usernameId} AND fr.users_user_id = u.user_id AND fr.status = '{Constraints.FriendshipPendingStatus}' ORDER BY user_name";
+                using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
+                {
+                    using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())
+                    {
+                        while (oracleDataReader.Read())
+                            waitingRequests.Add(oracleDataReader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex);
+                Console.WriteLine(ex.StackTrace);
+            }
+            finally
+            {
+                _databaseConnection.CloseConnection(connectionId);
+            }
+
+            return waitingRequests;
         }
 
         #endregion
