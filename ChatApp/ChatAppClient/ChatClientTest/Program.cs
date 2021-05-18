@@ -26,14 +26,6 @@ namespace ChatClientTest
                 Console.Write("Send to: ");
                 string sendto = Console.ReadLine();
 
-                Console.Write("Message: ");
-                string msg = Console.ReadLine();
-                
-
-                c.SendMessage(username, sendto, msg);
-
-                c.GetLastNMessages(username, username, 10);
-                Thread.Sleep(100);
                 c.SendFriendRequest(username, sendto);
 
 

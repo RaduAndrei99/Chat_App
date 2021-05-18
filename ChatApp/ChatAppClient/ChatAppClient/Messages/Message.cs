@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace ChatAppClient.Messages
 {
+ 
+    /// <summary>
+    /// Clasa folosita pentru a abstractiza notiunea de mesaj.
+    /// </summary>
     class Message
     {
+        /// <summary>
+        /// Atribut ce arata daca mesajul a fost vazut de catre destinatar.
+        /// </summary>
         private bool _seen;
         public bool Seen
         {
@@ -16,6 +23,10 @@ namespace ChatAppClient.Messages
                 return _seen;
             }
         }
+
+        /// <summary>
+        /// Mesajul reprezentat ca string.
+        /// </summary>
         private int _message;
         public int Msg
         {
@@ -30,6 +41,9 @@ namespace ChatAppClient.Messages
             }
         }
 
+        /// <summary>
+        /// Utilizatorul care a trimis mesajul.
+        /// </summary>
         private string _from;
         public string From
         {
@@ -37,8 +51,17 @@ namespace ChatAppClient.Messages
             {
                 return _from;
             }
+
+            set
+            {
+                _from = value;
+            }
         }
 
+
+        /// <summary>
+        /// Data la care a fost trimis mesajul.
+        /// </summary>
         private DateTime _timestamp;
         public DateTime Timestamp
         {
@@ -46,9 +69,15 @@ namespace ChatAppClient.Messages
             {
                 return _timestamp;
             }
+            set
+            {
+                _timestamp = value; 
+            }
         }
 
-
+        /// <summary>
+        /// Constructorul obiectului Message
+        /// </summary>
         public Message()
         {
             _seen = false;

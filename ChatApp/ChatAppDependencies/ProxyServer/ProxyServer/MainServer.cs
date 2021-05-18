@@ -1,10 +1,10 @@
 ﻿
 namespace MainServerNs
 {
-    public interface MainServer
+    public interface IPresenterServer
     {
         bool Login(string username, string password);
-        void Logout(string username, string password);
+        void Logout(string username );
         void SendMessage(string from, string destination, string message);
         bool Register(string username, string password, string firstName, string lastName, string email, string birthdate);
         void SendFriendRequest(string asker, string friend);
@@ -14,6 +14,5 @@ namespace MainServerNs
         void GetLastNMessages(string username1, string username2, uint howManyMessages);
         void GetFriendRequests(string username);
         void GetFriendsList(string username);
-
     }
 }

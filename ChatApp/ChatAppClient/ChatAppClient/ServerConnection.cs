@@ -4,6 +4,10 @@ using System.Net.Sockets;
 
 namespace ChatAppClient
 {
+
+    /// <summary>
+    /// Clasa implementata ca un SIngleton, folosita pentru a gestiona conexiunea catre server.
+    /// </summary>
     public class ServerConnection
     {
         private IPEndPoint _remoteEP;
