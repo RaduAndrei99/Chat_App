@@ -13,7 +13,7 @@ namespace Chat_App.Views
     public partial class ChatView : BasicView
     {
         private static ChatView _instance;
-        private AddFriendView addFriendForm;
+        private AddFriendView _addFriendForm;
 
         public static ChatView Instance
         {
@@ -28,6 +28,7 @@ namespace Chat_App.Views
         private ChatView()
         {
             InitializeComponent();
+            _addFriendForm = AddFriendView.Instance;
         }
 
         private void ChatView_Load(object sender, EventArgs e)
@@ -45,9 +46,8 @@ namespace Chat_App.Views
 
         private void buttonAddFriend_Click(object sender, EventArgs e)
         {
-            addFriendForm = AddFriendView.Instance;
-            addFriendForm.SetParentForm(this);
-            addFriendForm.Show();
+            _addFriendForm.SetParentForm(this);
+            _addFriendForm.Show();
         }
 
         public void AddFriendToList(string newFriendName)

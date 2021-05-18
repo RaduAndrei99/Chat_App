@@ -20,12 +20,15 @@ namespace Chat_App.Views
         {
             InitializeComponent();
             _parentForm = parentForm;
+            _chatForm = ChatView.Instance;
+            _settingsForm = SettingsView.Instance;
+            _chatForm.StartPosition = FormStartPosition.CenterScreen;
+            _settingsForm.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void buttonLogIn_Click(object sender, EventArgs e)
         {
             // check if valid user
-            _chatForm.StartPosition = FormStartPosition.CenterScreen;
             // move below line to log out
             _chatForm.FormClosing += delegate { _parentForm.Show(); };
             _chatForm.Show();
@@ -34,7 +37,6 @@ namespace Chat_App.Views
 
         private void buttonSettings_Click(object sender, EventArgs e)
         {
-            _settingsForm.StartPosition = FormStartPosition.CenterScreen;
             _parentForm.FormClosing += delegate { _settingsForm.Close(); };
             _settingsForm.Show();
         }
