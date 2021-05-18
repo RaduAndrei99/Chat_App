@@ -72,5 +72,28 @@ namespace Chat_App.Views
             this.Hide();
             e.Cancel = true;
         }
+
+        private void listviewFriends_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var selectedItem = listviewFriends.SelectedItems;
+            labelActiveFriend.Text = selectedItem[0].Text;
+            // clean up old chat, load in new chat messages
+            listviewChat.Clear();
+            textboxMessage.Clear();
+        }
+
+        private void buttonLogout_Click(object sender, EventArgs e)
+        {
+            // log user out
+            this.Close();
+        }
+
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            var form = SettingsView.Instance;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            this.FormClosing += delegate { form.Close(); };
+            form.Show();
+        }
     }
 }

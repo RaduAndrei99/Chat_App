@@ -13,6 +13,9 @@ namespace Chat_App.Views
     public partial class LogInControl : UserControl
     {
         private BasicView _parentForm;
+        private BasicView _chatForm = ChatView.Instance;
+        private BasicView _settingsForm = SettingsView.Instance;
+
         public LogInControl(BasicView parentForm)
         {
             InitializeComponent();
@@ -22,12 +25,18 @@ namespace Chat_App.Views
         private void buttonLogIn_Click(object sender, EventArgs e)
         {
             // check if valid user
-            var form = ChatView.Instance;
-            form.StartPosition = FormStartPosition.CenterScreen;
+            _chatForm.StartPosition = FormStartPosition.CenterScreen;
             // move below line to log out
-            form.FormClosing += delegate { _parentForm.Show(); };
-            form.Show();
+            _chatForm.FormClosing += delegate { _parentForm.Show(); };
+            _chatForm.Show();
             _parentForm.Hide();
+        }
+
+        private void buttonSettings_Click(object sender, EventArgs e)
+        {
+            _settingsForm.StartPosition = FormStartPosition.CenterScreen;
+            _parentForm.FormClosing += delegate { _settingsForm.Close(); };
+            _settingsForm.Show();
         }
     }
 }

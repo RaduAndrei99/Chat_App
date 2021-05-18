@@ -37,6 +37,7 @@
             this.textboxPassword = new System.Windows.Forms.TextBox();
             this.buttonLogIn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonRegister = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.buttonSettings = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureUser)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@
             // 
             this.labelUsername.Depth = 0;
             this.labelUsername.Font = new System.Drawing.Font("Roboto", 11F);
-            this.labelUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.labelUsername.Location = new System.Drawing.Point(120, 250);
             this.labelUsername.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelUsername.Name = "labelUsername";
@@ -67,7 +68,7 @@
             // 
             this.labelPassword.Depth = 0;
             this.labelPassword.Font = new System.Drawing.Font("Roboto", 11F);
-            this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.labelPassword.Location = new System.Drawing.Point(120, 310);
             this.labelPassword.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelPassword.Name = "labelPassword";
@@ -103,12 +104,13 @@
             // buttonLogIn
             // 
             this.buttonLogIn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonLogIn.AutoSize = true;
             this.buttonLogIn.Depth = 0;
-            this.buttonLogIn.Location = new System.Drawing.Point(150, 381);
+            this.buttonLogIn.Location = new System.Drawing.Point(150, 370);
             this.buttonLogIn.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonLogIn.Name = "buttonLogIn";
             this.buttonLogIn.Primary = true;
-            this.buttonLogIn.Size = new System.Drawing.Size(100, 30);
+            this.buttonLogIn.Size = new System.Drawing.Size(95, 30);
             this.buttonLogIn.TabIndex = 5;
             this.buttonLogIn.Text = "Log In";
             this.buttonLogIn.UseVisualStyleBackColor = true;
@@ -117,20 +119,37 @@
             // buttonRegister
             // 
             this.buttonRegister.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonRegister.AutoSize = true;
             this.buttonRegister.Depth = 0;
-            this.buttonRegister.Location = new System.Drawing.Point(150, 427);
+            this.buttonRegister.Location = new System.Drawing.Point(150, 406);
             this.buttonRegister.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonRegister.Name = "buttonRegister";
             this.buttonRegister.Primary = true;
-            this.buttonRegister.Size = new System.Drawing.Size(100, 30);
+            this.buttonRegister.Size = new System.Drawing.Size(95, 30);
             this.buttonRegister.TabIndex = 6;
             this.buttonRegister.Text = "Register";
             this.buttonRegister.UseVisualStyleBackColor = true;
+            // 
+            // buttonSettings
+            // 
+            this.buttonSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonSettings.AutoSize = true;
+            this.buttonSettings.Depth = 0;
+            this.buttonSettings.Location = new System.Drawing.Point(150, 442);
+            this.buttonSettings.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonSettings.Name = "buttonSettings";
+            this.buttonSettings.Primary = true;
+            this.buttonSettings.Size = new System.Drawing.Size(95, 30);
+            this.buttonSettings.TabIndex = 7;
+            this.buttonSettings.Text = "Settings";
+            this.buttonSettings.UseVisualStyleBackColor = true;
+            this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
             // LogInControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonSettings);
             this.Controls.Add(this.buttonRegister);
             this.Controls.Add(this.buttonLogIn);
             this.Controls.Add(this.textboxPassword);
@@ -156,5 +175,6 @@
         private System.Windows.Forms.TextBox textboxPassword;
         private MaterialSkin.Controls.MaterialRaisedButton buttonLogIn;
         private MaterialSkin.Controls.MaterialRaisedButton buttonRegister;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonSettings;
     }
 }

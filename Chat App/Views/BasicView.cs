@@ -14,7 +14,7 @@ namespace Chat_App.Views
 {
     public partial class BasicView : MaterialForm
     {
-        private readonly MaterialSkinManager _manager;
+        protected readonly MaterialSkinManager _manager;
         public BasicView()
         {
             InitializeComponent();

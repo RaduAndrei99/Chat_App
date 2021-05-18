@@ -13,3 +13,4 @@ C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.LogInView.resources
 C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.ChatView.resources
 C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat App.csprojAssemblyReference.cache
 C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.AddFriendView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.SettingsView.resources
