@@ -6,6 +6,10 @@ using Oracle.ManagedDataAccess.Client;
 using System.Text.RegularExpressions;
 using Model.Commons;
 using Model.DataTransferObjects;
+using Model.Exceptions;
+using Model.Exceptions.DoNotExistsExceptions;
+using Model.Exceptions.WrongFormatExceptions;
+using Model.Exceptions.AlreadyExistsExceptions;
 
 namespace Model
 {
@@ -51,13 +55,10 @@ namespace Model
         public void AddNewUser(string username, string password)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             if (!Regex.IsMatch(password, Constraints.PasswordRegex))
-                throw new Exception($"Wrong password format for {password}.");
-
-            if (GetUsernameId(username) != -1)
-                throw new Exception($"Username {username} already exists.");
+                throw new WrongPasswordFormatException(password);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -70,8 +71,15 @@ namespace Model
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: " + ex);
-                Console.WriteLine(ex.StackTrace);
+                if (ex.Message.Contains("ORA-00001"))
+                {
+                    throw new UserAlreadyExistsException(username);
+                }
+                else
+                {
+                    Console.WriteLine("Error: " + ex);
+                    Console.WriteLine(ex.StackTrace);
+                }
             }
             finally
             {
@@ -93,14 +101,14 @@ namespace Model
         public void ChangeUsername(string currentUsername, string newUsername)
         {
             if (!Regex.IsMatch(currentUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {currentUsername}.");
+                throw new WrongUsernameFormatException(currentUsername);
 
             if (!Regex.IsMatch(newUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {newUsername}.");
+                throw new WrongUsernameFormatException(newUsername);
 
             int usernameId = GetUsernameId(currentUsername);
             if (usernameId == -1)
-                throw new Exception($"Username {currentUsername} do not exists.");
+                throw new UserDoNotExistsException(currentUsername);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -115,7 +123,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    throw new Exception($"Username {newUsername} is already taken.");
+                    throw new UserAlreadyExistsException(newUsername);
                 }
                 else
                 {
@@ -144,14 +152,14 @@ namespace Model
         public void ChangeUserPassword(string username, string newPassword)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             if (!Regex.IsMatch(newPassword, Constraints.PasswordRegex))
-                throw new Exception($"Wrong password format for {newPassword}.");
+                throw new WrongPasswordFormatException(newPassword);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -164,10 +172,8 @@ namespace Model
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Error: " + ex);
                 Console.WriteLine(ex.StackTrace);
-
             }
             finally
             {
@@ -188,11 +194,11 @@ namespace Model
         public void DeleteUser(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -304,17 +310,14 @@ namespace Model
         public void RegisterUser(string username, string firstname, string lastname, string email, DateTime birthdate)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             if (!Regex.IsMatch(email, Constraints.EmailRegex))
-                throw new Exception($"Wrong email format for {email}.");
+                throw new WrongEmailFormatException(email);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
-
-            /*if (CheckIfUserRegistrationExists(usernameId))
-                throw new Exception($"Username {username} registration already exists.");*/
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -329,7 +332,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    throw new Exception($"Username {username} registration already exists.");
+                    throw new UserRegistrationAlreadyExistsException(username);
                 }
                 else
                 {
@@ -360,11 +363,11 @@ namespace Model
         public void AddApplicationSettings(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -379,7 +382,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001") && ex.Message.Contains("APPLICATION_SETTINGS_PK"))
                 {
-                    throw new Exception("Application settings entry already exists.");
+                    throw new ApplicationSettingsAlreadyExistsException(username);
                 }
                 else
                 {
@@ -406,11 +409,11 @@ namespace Model
         public void SetDateFormat(string username, DateFormat dateFormat)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -445,11 +448,11 @@ namespace Model
         public void SetTimeFormat(string username, TimeFormat timeFormat)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -489,21 +492,18 @@ namespace Model
         public void CreateConversation(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username1}.");
+                throw new WrongUsernameFormatException(username1);
 
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username2}.");
+                throw new WrongUsernameFormatException(username2);
 
             int usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
-                throw new Exception($"Username {username1} do not exists.");
+                throw new UserDoNotExistsException(username1);
 
             int usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
-                throw new Exception($"Username {username2} do not exists.");
-
-            /*if (GetConversationId(usernameId1, usernameId2) != -1)
-                throw new Exception($"Conversation between {username1} and {username2} already exists.");*/
+                throw new UserDoNotExistsException(username2);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -518,7 +518,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    throw new Exception($"Conversation between {username1} and {username2} already exists.");
+                    throw new ConversationAlreadyExistsException(username1, username2);
                 }
                 else
                 {
@@ -546,22 +546,22 @@ namespace Model
         public void DeleteConversation(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username1}.");
+                throw new WrongUsernameFormatException(username1);
 
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username2}.");
+                throw new WrongUsernameFormatException(username2);
 
             int usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
-                throw new Exception($"Username {username1} do not exists.");
+                throw new UserDoNotExistsException(username1);
 
             int usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
-                throw new Exception($"Username {username2} do not exists.");
+                throw new UserDoNotExistsException(username2);
 
             int conversationId = GetConversationId(usernameId1, usernameId2);
             if (conversationId == -1)
-                throw new Exception($"Conversation between {username1} and {username2} do not exists.");
+                throw new ConversationDoNotExistsException(username1, username2);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -653,9 +653,6 @@ namespace Model
             if (toUsernameId == -1)
                 throw new Exception($"Username {toUsername} do not exists.");
 
-            /*if (GetFriendRelationshipId(fromUsernameId, toUsernameId) != -1)
-                throw new Exception($"Friend relationship between {fromUsername} and {toUsername} already exists.");*/
-
             uint connectionId = _databaseConnection.Connect();
             try
             {
@@ -669,7 +666,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    throw new Exception($"Friend relationship between {fromUsername} and {toUsername} already exists.");
+                    throw new FriendRelationshipAlreadyExistsException(fromUsername, toUsername);
                 }
                 else
                 {
@@ -697,22 +694,22 @@ namespace Model
         public void AcceptFriendRequest(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username1}.");
+                throw new WrongUsernameFormatException(username1);
 
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username2}.");
+                throw new WrongUsernameFormatException(username2);
 
-            int fromUsernameId = GetUsernameId(username1);
-            if (fromUsernameId == -1)
-                throw new Exception($"Username {username1} do not exists.");
+            int username1Id = GetUsernameId(username1);
+            if (username1Id == -1)
+                throw new UserDoNotExistsException(username1);
 
-            int toUsernameId = GetUsernameId(username2);
-            if (toUsernameId == -1)
-                throw new Exception($"Username {username2} do not exists.");
+            int username2Id = GetUsernameId(username2);
+            if (username2Id == -1)
+                throw new UserDoNotExistsException(username2);
 
-            int relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
+            int relationshipId = GetFriendRelationshipId(username1Id, username2Id);
             if (relationshipId == -1)
-                throw new Exception($"Friend relationship between {username1} and {username2} do not exists.");
+                throw new FriendRelationshipDoNotExistsException(username1, username2);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -748,22 +745,22 @@ namespace Model
         public void DeleteFriendRelationship(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username1}.");
+                throw new WrongUsernameFormatException(username1);
 
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username2}.");
+                throw new WrongUsernameFormatException(username2);
 
-            int fromUsernameId = GetUsernameId(username1);
-            if (fromUsernameId == -1)
-                throw new Exception($"Username {username1} do not exists.");
+            int username1Id = GetUsernameId(username1);
+            if (username1Id == -1)
+                throw new UserDoNotExistsException(username1);
 
-            int toUsernameId = GetUsernameId(username2);
-            if (toUsernameId == -1)
-                throw new Exception($"Username {username2} do not exists.");
+            int username2Id = GetUsernameId(username2);
+            if (username2Id == -1)
+                throw new UserDoNotExistsException(username2);
 
-            int relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
+            int relationshipId = GetFriendRelationshipId(username1Id, username2Id);
             if (relationshipId == -1)
-                throw new Exception($"Friend relationship between {username1} and {username2} do not exists.");
+                throw new FriendRelationshipDoNotExistsException(username1, username2);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -885,22 +882,22 @@ namespace Model
         public void AddRelationshipSettings(string username1, string username2)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username1}.");
+                throw new WrongUsernameFormatException(username1);
 
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username2}.");
+                throw new WrongUsernameFormatException(username2);
 
             int usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
-                throw new Exception($"Username {username1} do not exists.");
+                throw new UserDoNotExistsException(username1);
 
             int usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
-                throw new Exception($"Username {username2} do not exists.");
+                throw new UserDoNotExistsException(username2);
 
             int friendRelationshipId = GetFriendRelationshipId(usernameId1, usernameId2);
             if (GetFriendRelationshipId(usernameId1, usernameId2) == -1)
-                throw new Exception($"Friend relationship between {username1} and {username2} do not exists.");
+                throw new FriendRelationshipDoNotExistsException(username1, username2);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -915,7 +912,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    throw new Exception($"Relationship settings entry between {username1} and {username2} already exists.");
+                    throw new FriendRelationshipAlreadyExistsException(username1, username2);
                 }
                 else
                 {
@@ -945,22 +942,22 @@ namespace Model
         public void ChangeNickname(string fromUsername, string toUsername, string nickname)
         {
             if (!Regex.IsMatch(fromUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {fromUsername}.");
+                throw new WrongUsernameFormatException(fromUsername);
 
             if (!Regex.IsMatch(toUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {toUsername}.");
+                throw new WrongUsernameFormatException(toUsername);
 
             int fromUsernameId = GetUsernameId(fromUsername);
             if (fromUsernameId == -1)
-                throw new Exception($"Username {fromUsername} do not exists.");
+                throw new UserDoNotExistsException(fromUsername);
 
             int toUsernameId = GetUsernameId(toUsername);
             if (toUsernameId == -1)
-                throw new Exception($"Username {toUsername} do not exists.");
+                throw new UserDoNotExistsException(toUsername);
 
             int relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
             if (relationshipId == -1)
-                throw new Exception($"Friend relationship do not exists.");
+                throw new FriendRelationshipDoNotExistsException(fromUsername, toUsername);
 
             int userPosition = GetOrderInFriendRelationship(toUsernameId, relationshipId);
             nickname = nickname.Replace("\'", "''");
@@ -1015,25 +1012,25 @@ namespace Model
         public void StoreMessage(string senderUsername, string receiverUsername, string format, byte[] message_data, DateTime sentDate)
         {
             if (!Regex.IsMatch(senderUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {senderUsername}.");
+                throw new WrongUsernameFormatException(senderUsername);
 
             if (!Regex.IsMatch(receiverUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {receiverUsername}.");
+                throw new WrongUsernameFormatException(receiverUsername);
 
             if (!Regex.IsMatch(format, Constraints.FormatRegex))
-                throw new Exception($"Wrong message/attachment format for {format}.");
+                throw new WrongMessageFormatFormatException(format);
 
             int senderUsernameId = GetUsernameId(senderUsername);
             if (senderUsernameId == -1)
-                throw new Exception($"Username {senderUsername} do not exists.");
+                throw new UserDoNotExistsException(senderUsername);
 
             int receiverUsernameId = GetUsernameId(receiverUsername);
             if (receiverUsernameId == -1)
-                throw new Exception($"Username {receiverUsername} do not exists.");
+                throw new UserDoNotExistsException(receiverUsername);
 
             int conversationId = GetConversationId(senderUsernameId, receiverUsernameId);
             if (conversationId == -1)
-                throw new Exception($"Conversation between {senderUsername} and {receiverUsername} do not exists.");
+                throw new ConversationDoNotExistsException(senderUsername, receiverUsername);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -1079,14 +1076,14 @@ namespace Model
         public bool CheckUserCredentials(string username, string password)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             if (!Regex.IsMatch(password, Constraints.PasswordRegex))
-                throw new Exception($"Wrong password format for {password}.");
+                throw new WrongPasswordFormatException(password);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -1132,22 +1129,22 @@ namespace Model
         public void GetLastNMessagesFromConversation(string username1, string username2, long bellowThisMessageId, uint howManyMessages, out List<MessageDTO> messages, out long lastMessageId)
         {
             if (!Regex.IsMatch(username1, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username1}.");
+                throw new WrongUsernameFormatException(username1);
 
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username2}.");
+                throw new WrongUsernameFormatException(username2);
 
             int usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
-                throw new Exception($"Username {username1} do not exists.");
+                throw new UserDoNotExistsException(username1);
 
             int usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
-                throw new Exception($"Username {username2} do not exists.");
+                throw new UserDoNotExistsException(username2);
 
             int conversationId = GetConversationId(usernameId1, usernameId2);
             if (conversationId == -1)
-                throw new Exception($"Conversation between {username1} and {username2} do not exists.");
+                throw new ConversationDoNotExistsException(username1, username2);
 
             lastMessageId = -1;
             messages = new List<MessageDTO>();
@@ -1230,11 +1227,11 @@ namespace Model
         public DateFormat GetDateFormat(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -1274,11 +1271,11 @@ namespace Model
         public TimeFormat GetTimeFormat(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             uint connectionId = _databaseConnection.Connect();
             try
@@ -1320,22 +1317,22 @@ namespace Model
         public string GetNicknameFromFriendRelationship(string fromUsername, string friendUsername)
         {
             if (!Regex.IsMatch(fromUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {fromUsername}.");
+                throw new WrongUsernameFormatException(fromUsername);
 
             if (!Regex.IsMatch(friendUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {friendUsername}.");
+                throw new WrongUsernameFormatException(friendUsername);
 
             int fromUsernameId = GetUsernameId(fromUsername);
             if (fromUsernameId == -1)
-                throw new Exception($"Username {fromUsername} do not exists.");
+                throw new UserDoNotExistsException(fromUsername);
 
             int friendUsernameId = GetUsernameId(friendUsername);
             if (friendUsernameId == -1)
-                throw new Exception($"Username {friendUsername} do not exists.");
+                throw new UserDoNotExistsException(friendUsername);
 
             int relationshipId = GetFriendRelationshipId(fromUsernameId, friendUsernameId);
             if (relationshipId == -1)
-                throw new Exception($"Friend relationship do not exists.");
+                throw new FriendRelationshipDoNotExistsException(fromUsername, friendUsername);
 
             int userPosition = GetOrderInFriendRelationship(friendUsernameId, relationshipId);
 
@@ -1377,11 +1374,11 @@ namespace Model
         public List<string> GetFriendList(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             List<string> friendList = new List<string>();
             uint connectionId = _databaseConnection.Connect();
@@ -1422,11 +1419,11 @@ namespace Model
         public List<string> GetSentPendingRequests(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             List<string> sentPendingRequests = new List<string>();
             uint connectionId = _databaseConnection.Connect();
@@ -1467,11 +1464,11 @@ namespace Model
         public List<string> GetReceivedPendingRequest(string username)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {username}.");
+                throw new WrongUsernameFormatException(username);
 
             int usernameId = GetUsernameId(username);
             if (usernameId == -1)
-                throw new Exception($"Username {username} do not exists.");
+                throw new UserDoNotExistsException(username);
 
             List<string> waitingRequests = new List<string>();
             uint connectionId = _databaseConnection.Connect();

@@ -45,9 +45,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commons\Commons.cs" />
+    <Compile Include="Commons\DateTime.cs" />
+    <Compile Include="Commons\TimeFormat.cs" />
     <Compile Include="DataTransferObjects\MessageDTO.cs" />
     <Compile Include="DatabaseConnection\IDatabaseConnection.cs" />
     <Compile Include="DatabaseConnection\OracleDatabaseConnection.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\AlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\ApplicationSettingsAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\ConversationAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\FriendRelationshipAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\RelationshipSettingsAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\UserAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\AlreadyExistsExceptions\UserRegistrationAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\DoNotExistsExceptions\DoNotExistsException.cs" />
+    <Compile Include="Exceptions\DoNotExistsExceptions\ConversationDoNotExistsException.cs" />
+    <Compile Include="Exceptions\DoNotExistsExceptions\FriendRelationshipDoNotExistsException.cs" />
+    <Compile Include="Exceptions\DoNotExistsExceptions\RelationshipSettingsDoNotExistsException.cs" />
+    <Compile Include="Exceptions\DoNotExistsExceptions\UserDoNotExistsException.cs" />
+    <Compile Include="Exceptions\DoNotExistsExceptions\UserRegistrationDoNotExistsException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongEmailFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongMessageFormatFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongPasswordFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongUsernameFormatException.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="OracleDatabaseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

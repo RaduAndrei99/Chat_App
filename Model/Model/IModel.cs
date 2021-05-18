@@ -9,6 +9,9 @@ using static Model.Commons.Constraints;
 
 namespace Model
 {
+    /// <summary>
+    /// Interfata modelului din modelul de proiectare MODEL - VIEW - PRESENTER
+    /// </summary>
     public interface IModel
     {
         void AddNewUser(string username, string password);

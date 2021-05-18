@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Model;
 using Model.DatabaseConnection;
 using Model.DataTransferObjects;
+using Model.Exceptions;
+using Model.Exceptions.AlreadyExistsExceptions;
+using Model.Exceptions.DoNotExistsExceptions;
 
 namespace ModelDevelopmentProject
 {
@@ -19,9 +22,15 @@ namespace ModelDevelopmentProject
         {
             IModel oracleModel = new OracleDatabaseModel(UserId, Password, Hostname, Port, Sid, Pooling);
 
-            // oracleModel.ChangeNickname("CCC29", "BRA", "Cos");
-
-           Console.WriteLine(oracleModel.GetNicknameFromFriendRelationship("BRA", "CCC29"));
+            try
+            {
+                oracleModel.AddNewUser("CCC29", "12346");
+            }
+            catch(UserAlreadyExistsException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
 
         }
     }
