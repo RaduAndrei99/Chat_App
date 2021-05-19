@@ -28,7 +28,7 @@ namespace Chat_App.Views
             }
         }
 
-        public SettingsView() : base()
+        private SettingsView() : base()
         {
             InitializeComponent();
         }

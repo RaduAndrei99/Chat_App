@@ -14,6 +14,7 @@ namespace Chat_App.Views
     {
         private static ChatView _instance;
         private AddFriendView _addFriendForm;
+        private FriendRequestsView _friendRequestsForm;
 
         public static ChatView Instance
         {
@@ -29,6 +30,7 @@ namespace Chat_App.Views
         {
             InitializeComponent();
             _addFriendForm = AddFriendView.Instance;
+            _friendRequestsForm = FriendRequestsView.Instance;
         }
 
         private void ChatView_Load(object sender, EventArgs e)
@@ -91,6 +93,14 @@ namespace Chat_App.Views
         private void buttonSettings_Click(object sender, EventArgs e)
         {
             var form = SettingsView.Instance;
+            form.StartPosition = FormStartPosition.CenterScreen;
+            this.FormClosing += delegate { form.Close(); };
+            form.Show();
+        }
+
+        private void buttonFriendRequests_Click(object sender, EventArgs e)
+        {
+            var form = FriendRequestsView.Instance;
             form.StartPosition = FormStartPosition.CenterScreen;
             this.FormClosing += delegate { form.Close(); };
             form.Show();

@@ -78,6 +78,12 @@
     <Compile Include="Helper Control\LogInControl.Designer.cs">
       <DependentUpon>LogInControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\FriendRequestsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FriendRequestsView.Designer.cs">
+      <DependentUpon>FriendRequestsView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\LogInView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Helper Control\LogInControl.resx">
       <DependentUpon>LogInControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FriendRequestsView.resx">
+      <DependentUpon>FriendRequestsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LogInView.resx">
       <DependentUpon>LogInView.cs</DependentUpon>
