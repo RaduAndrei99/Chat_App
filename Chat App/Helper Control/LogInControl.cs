@@ -67,13 +67,10 @@ namespace Chat_App.Views
             _parentForm.ChatForm.Show();
             _parentForm.Hide();*/
 
-            string username = textboxUsername.Text;
-            string password = textboxPassword.Text;
-
             // verify if user and password are correct
-            if (IsValidUsername(username) && IsValidPassword(password))
+            if (IsValidUsername(Username) && IsValidPassword(Password))
             {
-                if (!ChatApp.Instance.Presenter.Login(username, password))
+                if (!ChatApp.Instance.Presenter.Login(Username, Password))
                     labelErrorMessage.Text = "Server not responding...";
             }
             else

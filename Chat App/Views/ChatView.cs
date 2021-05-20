@@ -12,10 +12,16 @@ namespace Chat_App.Views
 {
     public partial class ChatView : BasicView
     {
+        /// <summary>
+        /// Referință pentru implementarea șablonului de singleton.
+        /// </summary>
         private static ChatView _instance;
         private AddFriendView _addFriendForm;
         private FriendRequestsView _friendRequestsForm;
 
+        /// <summary>
+        /// Proprietate publică pentru accesul la instanța unică.
+        /// </summary>
         public static ChatView Instance
         {
             get
@@ -23,6 +29,28 @@ namespace Chat_App.Views
                 if (_instance == null)
                     _instance = new ChatView();
                 return _instance;
+            }
+        }
+
+        /// <summary>
+        /// Proprietate publică pentru accesul listei de prieteni.
+        /// </summary>
+        public ListView FriendList
+        {
+            get
+            {
+                return listviewFriends;
+            }
+        }
+
+        /// <summary>
+        /// Proprietate publică pentru accesul chatului.
+        /// </summary>
+        public ListView Chat
+        {
+            get
+            {
+                return listviewChat;
             }
         }
 
