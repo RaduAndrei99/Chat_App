@@ -2,14 +2,7 @@
 using ChatAppClient;
 using MainServerNs;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace Chat_App
 {
@@ -69,7 +62,6 @@ namespace Chat_App
         private ChatApp()
         {
             InitializeComponent();
-            SetPresenter(new ProxyServer());
             _loginForm = LogInView.Instance;
             _chatForm = ChatView.Instance;
             _loginForm.Show();
@@ -134,5 +126,7 @@ namespace Chat_App
         {
             throw new NotImplementedException();
         }
+
+
     }
 }
