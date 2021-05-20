@@ -70,8 +70,9 @@ namespace Chat_App.Views
             // verify if user and password are correct
             if (IsValidUsername(Username) && IsValidPassword(Password))
             {
-                if (!ChatApp.Instance.Presenter.Login(Username, Password))
-                    labelErrorMessage.Text = "Server not responding...";
+                /*if (!ChatApp.Instance.Presenter.Login(Username, Password))
+                    labelErrorMessage.Text = "Server not responding...";*/
+                ChatApp.Instance.Presenter.Login(Username, Password);
             }
             else
             {

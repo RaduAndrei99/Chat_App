@@ -2,7 +2,9 @@
 using ChatAppClient;
 using MainServerNs;
 using System;
-
+using ChatAppClient.Messages;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Chat_App
 {
@@ -67,34 +69,9 @@ namespace Chat_App
             _loginForm.Show();
         }
 
-        public void AddFriendRequest(string username)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddMessageToChat(string message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Login()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Logout()
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetPresenter(IPresenterServer presenter)
         {
             _presenter = presenter;
-        }
-
-        public void ShowErrorMessage(string message)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -109,17 +86,11 @@ namespace Chat_App
 
         public void AddMessageToChat(ChatAppClient.Messages.Message message)
         {
-            throw new NotImplementedException();
-        }
+            ListViewItem newMessage = new ListViewItem();
+            newMessage.Text = message.Msg;
+            newMessage.ForeColor = Color.DarkOrange;
 
-        public void AddFriendList(string[] friends)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeFriendStatus(bool status)
-        {
-            throw new NotImplementedException();
+            _chatForm.Chat.Items.Add(newMessage);
         }
 
         public void FriendHasSeen(string username)
@@ -127,6 +98,14 @@ namespace Chat_App
             throw new NotImplementedException();
         }
 
+        public void AddFriendList(string friend)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void ChangeFriendStatus(string username, bool status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

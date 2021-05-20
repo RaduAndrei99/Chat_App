@@ -18,6 +18,7 @@ namespace Chat_App
         private static LogInView _instance;
         private BasicView _chatForm;
         private BasicView _settingsForm;
+        private LogInControl _control;
 
         public static LogInView Instance
         {
@@ -45,9 +46,18 @@ namespace Chat_App
             }
         }
 
+        public LogInControl Control
+        {
+            get
+            {
+                return _control;
+            }
+        }
+
         private LogInView() : base()
         {
             InitializeComponent();
+            _control = new LogInControl(this);
             _chatForm = ChatView.Instance;
             _settingsForm = SettingsView.Instance;
             _chatForm.StartPosition = FormStartPosition.CenterScreen;
@@ -57,7 +67,7 @@ namespace Chat_App
         private void LogIn_Load(object sender, EventArgs e)
         {
             _instance = this;
-            panelUser.Controls.Add(new LogInControl(this));
+            panelUser.Controls.Add(_control);
         }
 
         private void LogInView_FormClosing(object sender, FormClosingEventArgs e)

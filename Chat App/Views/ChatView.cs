@@ -16,7 +16,15 @@ namespace Chat_App.Views
         /// Referință pentru implementarea șablonului de singleton.
         /// </summary>
         private static ChatView _instance;
+
+        /// <summary>
+        /// Referință către form-ul pentru adăugarea unui prieten.
+        /// </summary>
         private AddFriendView _addFriendForm;
+
+        /// <summary>
+        /// Referință către form-ul care arată lista de cereri de prietenie în așteptare.
+        /// </summary>
         private FriendRequestsView _friendRequestsForm;
 
         /// <summary>
@@ -54,6 +62,17 @@ namespace Chat_App.Views
             }
         }
 
+        public string SelectedFriend
+        {
+            get
+            {
+                return listviewChat.SelectedItems[0].Text;
+            }
+        }
+
+        /// <summary>
+        /// Constructor privat.
+        /// </summary>
         private ChatView()
         {
             InitializeComponent();
@@ -61,10 +80,17 @@ namespace Chat_App.Views
             _friendRequestsForm = FriendRequestsView.Instance;
         }
 
+
+        /// <summary>
+        /// Metodă ce se apelează odată cu încărcarea formului.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChatView_Load(object sender, EventArgs e)
         {
             _instance = this;
         }
+
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
@@ -72,6 +98,7 @@ namespace Chat_App.Views
             newMessage.Text = textboxMessage.Text;
             newMessage.ForeColor = Color.DarkOrange;
             listviewChat.Items.Add(newMessage);
+            ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, SelectedFriend, textboxMessage.Text);
         }
 
         private void buttonAddFriend_Click(object sender, EventArgs e)
