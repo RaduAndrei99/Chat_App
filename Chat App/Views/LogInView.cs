@@ -16,6 +16,8 @@ namespace Chat_App
     public partial class LogInView : BasicView
     {
         private static LogInView _instance;
+        private BasicView _chatForm;
+        private BasicView _settingsForm;
 
         public static LogInView Instance
         {
@@ -27,9 +29,29 @@ namespace Chat_App
             }
         }
 
+        public BasicView ChatForm
+        {
+            get
+            {
+                return _chatForm;
+            }
+        }
+
+        public BasicView SettingsForm
+        {
+            get
+            {
+                return _settingsForm;
+            }
+        }
+
         private LogInView() : base()
         {
             InitializeComponent();
+            _chatForm = ChatView.Instance;
+            _settingsForm = SettingsView.Instance;
+            _chatForm.StartPosition = FormStartPosition.CenterScreen;
+            _settingsForm.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void LogIn_Load(object sender, EventArgs e)
