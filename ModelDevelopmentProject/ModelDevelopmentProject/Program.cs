@@ -21,17 +21,6 @@ namespace ModelDevelopmentProject
         static void Main(string[] args)
         {
             IModel oracleModel = new OracleDatabaseModel(UserId, Password, Hostname, Port, Sid, Pooling);
-
-            try
-            {
-                oracleModel.AddNewUser("CCC29", "12346");
-            }
-            catch(UserAlreadyExistsException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            
-
         }
     }
 }

@@ -52,11 +52,11 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>40</dataTypeSize>
+<dataTypeSize>60</dataTypeSize>
 <checkConstraint>
 <implementationDef dbType="Generic Constraint" definition="regexp_like(email, &apos;[a-z0-9._%-]+@[a-z0-9._%-]+\.[a-z]{2,4}&apos;)"/>
 </checkConstraint>
-<ownDataTypeParameters>40,,</ownDataTypeParameters>
+<ownDataTypeParameters>60,,</ownDataTypeParameters>
 </Attribute>
 <Attribute name="birthdate" id="78FF5CAF-E07A-9F76-BBDA-8E7FEC71E1DE">
 <createdBy>cosmi</createdBy>

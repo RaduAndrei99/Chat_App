@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Model.Exceptions.WrongFormatExceptions
 {
     [Serializable]
-    class WrongPasswordFormatException : WrongFormatException
+    public class WrongPasswordFormatException : WrongFormatException
     {
         public WrongPasswordFormatException(string password) : base($"Wrong password format for {password}.")
         {

@@ -41,11 +41,11 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>40</dataTypeSize>
+<dataTypeSize>60</dataTypeSize>
 <checkConstraint>
 <implementationDef dbType="Generic Constraint" definition="regexp_like(email, &apos;[a-z0-9._%-]+@[a-z0-9._%-]+\.[a-z]{2,4}&apos;)"/>
 </checkConstraint>
-<ownDataTypeParameters>40,,</ownDataTypeParameters>
+<ownDataTypeParameters>60,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="birthdate" id="2C4DCD45-8EAA-1B3B-E4C8-86CD0AE5BC1B">

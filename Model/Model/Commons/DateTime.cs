@@ -44,13 +44,13 @@ namespace Model.Commons
                 return MonthDayYearDateFormat;
 
             if (dateFormatAsString == MonthNameDayYear.ToString())
-                return MonthDayYearDateFormat;
+                return MonthNameDayYear;
 
             if (dateFormatAsString == DayMonthYear.ToString())
-                return MonthDayYearDateFormat;
+                return DayMonthYear;
 
             if (dateFormatAsString == DayMonthNameYear.ToString())
-                return MonthDayYearDateFormat;
+                return DayMonthNameYear;
 
             return null;
         }

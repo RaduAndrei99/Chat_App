@@ -106,7 +106,7 @@ namespace Model
             if (!Regex.IsMatch(newUsername, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(newUsername);
 
-            int usernameId = GetUsernameId(currentUsername);
+            long usernameId = GetUsernameId(currentUsername);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(currentUsername);
 
@@ -157,7 +157,7 @@ namespace Model
             if (!Regex.IsMatch(newPassword, Constraints.PasswordRegex))
                 throw new WrongPasswordFormatException(newPassword);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -196,7 +196,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -228,7 +228,7 @@ namespace Model
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// </exception>
         /// <returns>Id-ul utilizatorului in caz de succes sau -1 in cazul in care utilizatorul nu exista in baza de date</returns>
-        private int GetUsernameId(string username)
+        private long GetUsernameId(string username)
         {
             uint connectionId = _databaseConnection.Connect();
             try
@@ -315,7 +315,7 @@ namespace Model
             if (!Regex.IsMatch(email, Constraints.EmailRegex))
                 throw new WrongEmailFormatException(email);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -365,7 +365,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -411,7 +411,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -450,7 +450,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -481,8 +481,8 @@ namespace Model
         /// <summary>
         /// Creeaza o conversatie intre 2 utilizatori in baza de date.
         /// </summary>
-        /// <param name="username1">Numele de utilizator primei persoane</param>
-        /// <param name="username2">Numele de utilizator al primei de a doua persoane</param>
+        /// <param name="username1">Numele de utilizator al primei persoane</param>
+        /// <param name="username2">Numele de utilizator celei de a doua persoane</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
@@ -497,11 +497,11 @@ namespace Model
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username2);
 
-            int usernameId1 = GetUsernameId(username1);
+            long usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
                 throw new UserDoNotExistsException(username1);
 
-            int usernameId2 = GetUsernameId(username2);
+            long usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
                 throw new UserDoNotExistsException(username2);
 
@@ -535,8 +535,8 @@ namespace Model
         /// <summary>
         /// Sterge o conversatie intre 2 utilizatori in baza de date.
         /// </summary>
-        /// <param name="username1">Numele de utilizator primei persoane</param>
-        /// <param name="username2">Numele de utilizator al primei de a doua persoane</param>
+        /// <param name="username1">Numele de utilizator al primei persoane</param>
+        /// <param name="username2">Numele de utilizator celei de a doua persoane</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
@@ -551,15 +551,15 @@ namespace Model
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username2);
 
-            int usernameId1 = GetUsernameId(username1);
+            long usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
                 throw new UserDoNotExistsException(username1);
 
-            int usernameId2 = GetUsernameId(username2);
+            long usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
                 throw new UserDoNotExistsException(username2);
 
-            int conversationId = GetConversationId(usernameId1, usernameId2);
+            long conversationId = GetConversationId(usernameId1, usernameId2);
             if (conversationId == -1)
                 throw new ConversationDoNotExistsException(username1, username2);
 
@@ -593,7 +593,7 @@ namespace Model
         /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
         /// </exception>
         /// <returns>Id-ul conversatiei in caz de succes sau -1 in cazul in care nu exista conversatia in baza de date</returns>
-        private int GetConversationId(int usernameId1, int usernameId2)
+        private long GetConversationId(long usernameId1, long usernameId2)
         {
             uint connectionId = _databaseConnection.Connect();
             try
@@ -645,11 +645,11 @@ namespace Model
             if (!Regex.IsMatch(toUsername, Constraints.UsernameRegex))
                 throw new Exception($"Wrong username format for {toUsername}.");
 
-            int fromUsernameId = GetUsernameId(fromUsername);
+            long fromUsernameId = GetUsernameId(fromUsername);
             if (fromUsernameId == -1)
                 throw new Exception($"Username {fromUsername} do not exists.");
 
-            int toUsernameId = GetUsernameId(toUsername);
+            long toUsernameId = GetUsernameId(toUsername);
             if (toUsernameId == -1)
                 throw new Exception($"Username {toUsername} do not exists.");
 
@@ -699,15 +699,15 @@ namespace Model
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username2);
 
-            int username1Id = GetUsernameId(username1);
+            long username1Id = GetUsernameId(username1);
             if (username1Id == -1)
                 throw new UserDoNotExistsException(username1);
 
-            int username2Id = GetUsernameId(username2);
+            long username2Id = GetUsernameId(username2);
             if (username2Id == -1)
                 throw new UserDoNotExistsException(username2);
 
-            int relationshipId = GetFriendRelationshipId(username1Id, username2Id);
+            long relationshipId = GetFriendRelationshipId(username1Id, username2Id);
             if (relationshipId == -1)
                 throw new FriendRelationshipDoNotExistsException(username1, username2);
 
@@ -750,15 +750,15 @@ namespace Model
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username2);
 
-            int username1Id = GetUsernameId(username1);
+            long username1Id = GetUsernameId(username1);
             if (username1Id == -1)
                 throw new UserDoNotExistsException(username1);
 
-            int username2Id = GetUsernameId(username2);
+            long username2Id = GetUsernameId(username2);
             if (username2Id == -1)
                 throw new UserDoNotExistsException(username2);
 
-            int relationshipId = GetFriendRelationshipId(username1Id, username2Id);
+            long relationshipId = GetFriendRelationshipId(username1Id, username2Id);
             if (relationshipId == -1)
                 throw new FriendRelationshipDoNotExistsException(username1, username2);
 
@@ -791,7 +791,7 @@ namespace Model
         /// <para>Arunca exceptie daca unul din utilizatori nu exista in baza de date</para>
         /// </exception>
         /// <returns>Id-ul conversatiei in caz de succes sau -1 in cazul in care nu exista relatia in baza dedate</returns>
-        private int GetFriendRelationshipId(int usernameId1, int usernameId2)
+        private long GetFriendRelationshipId(long usernameId1, long usernameId2)
         {
             uint connectionId = _databaseConnection.Connect();
             try
@@ -824,8 +824,8 @@ namespace Model
         /// </summary>
         /// <param name="usernameId">Id-ul utilizatorului</param>
         /// <param name="relationshipId">Id-ul relatiei de rietenie</param>
-        /// <returns>1 daca utilizatorul este cel care a initial cererea, 2 daca este utilizatorul care a primit cererea, -1 daca nu exista cererea de prietenie</returns>
-        private int GetOrderInFriendRelationship(int usernameId, int relationshipId)
+        /// <returns>1 daca utilizatorul este cel care a initial cererea, 2 daca este utilizatorul care a primit cererea, -1 daca nu exista seciunea de setari a relatiei de prietenie</returns>
+        private int GetOrderInFriendRelationship(long usernameId, long relationshipId)
         {
             uint connectionId = _databaseConnection.Connect();
             try
@@ -872,7 +872,7 @@ namespace Model
         /// Adauga sectiunea cu setarile relatiei de prietenie
         /// </summary>
         /// <param name="username1">Numele de utilizator al primei persoane</param>
-        /// <param name="username2">Numele de utilizator al primei de a doua persoane</param>
+        /// <param name="username2">Numele de utilizator celei de a doua persoane</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
@@ -887,15 +887,15 @@ namespace Model
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username2);
 
-            int usernameId1 = GetUsernameId(username1);
+            long usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
                 throw new UserDoNotExistsException(username1);
 
-            int usernameId2 = GetUsernameId(username2);
+            long usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
                 throw new UserDoNotExistsException(username2);
 
-            int friendRelationshipId = GetFriendRelationshipId(usernameId1, usernameId2);
+            long friendRelationshipId = GetFriendRelationshipId(usernameId1, usernameId2);
             if (GetFriendRelationshipId(usernameId1, usernameId2) == -1)
                 throw new FriendRelationshipDoNotExistsException(username1, username2);
 
@@ -912,7 +912,7 @@ namespace Model
             {
                 if (ex.Message.Contains("ORA-00001"))
                 {
-                    throw new FriendRelationshipAlreadyExistsException(username1, username2);
+                    throw new RelationshipSettingsAlreadyExistsException(username1, username2);
                 }
                 else
                 {
@@ -930,8 +930,8 @@ namespace Model
         /// <summary>
         /// Schimba un porecla unui utilizator dintr-o relatie de prietenie
         /// </summary>
-        /// <param name="fromUsername">Numele de utilizator primei persoane</param>
-        /// <param name="toUsername">Numele de utilizator al primei de a doua persoane</param>
+        /// <param name="fromUsername">Numele de utilizator al primei persoane</param>
+        /// <param name="toUsername">Numele de utilizator celei de a doua persoane</param>
         /// <param name="nickname">Porecla celui de al doilea utilizator</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
@@ -947,15 +947,15 @@ namespace Model
             if (!Regex.IsMatch(toUsername, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(toUsername);
 
-            int fromUsernameId = GetUsernameId(fromUsername);
+            long fromUsernameId = GetUsernameId(fromUsername);
             if (fromUsernameId == -1)
                 throw new UserDoNotExistsException(fromUsername);
 
-            int toUsernameId = GetUsernameId(toUsername);
+            long toUsernameId = GetUsernameId(toUsername);
             if (toUsernameId == -1)
                 throw new UserDoNotExistsException(toUsername);
 
-            int relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
+            long relationshipId = GetFriendRelationshipId(fromUsernameId, toUsernameId);
             if (relationshipId == -1)
                 throw new FriendRelationshipDoNotExistsException(fromUsername, toUsername);
 
@@ -977,7 +977,8 @@ namespace Model
 
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
-                    oracleCommand.ExecuteNonQuery();
+                    if (oracleCommand.ExecuteNonQuery() == 0)
+                        throw new RelationshipSettingsDoNotExistsException(fromUsername, toUsername);
                 }
             }
             catch (Exception ex)
@@ -1020,15 +1021,15 @@ namespace Model
             if (!Regex.IsMatch(format, Constraints.FormatRegex))
                 throw new WrongMessageFormatFormatException(format);
 
-            int senderUsernameId = GetUsernameId(senderUsername);
+            long senderUsernameId = GetUsernameId(senderUsername);
             if (senderUsernameId == -1)
                 throw new UserDoNotExistsException(senderUsername);
 
-            int receiverUsernameId = GetUsernameId(receiverUsername);
+            long receiverUsernameId = GetUsernameId(receiverUsername);
             if (receiverUsernameId == -1)
                 throw new UserDoNotExistsException(receiverUsername);
 
-            int conversationId = GetConversationId(senderUsernameId, receiverUsernameId);
+            long conversationId = GetConversationId(senderUsernameId, receiverUsernameId);
             if (conversationId == -1)
                 throw new ConversationDoNotExistsException(senderUsername, receiverUsername);
 
@@ -1081,7 +1082,7 @@ namespace Model
             if (!Regex.IsMatch(password, Constraints.PasswordRegex))
                 throw new WrongPasswordFormatException(password);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -1134,15 +1135,15 @@ namespace Model
             if (!Regex.IsMatch(username2, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username2);
 
-            int usernameId1 = GetUsernameId(username1);
+            long usernameId1 = GetUsernameId(username1);
             if (usernameId1 == -1)
                 throw new UserDoNotExistsException(username1);
 
-            int usernameId2 = GetUsernameId(username2);
+            long usernameId2 = GetUsernameId(username2);
             if (usernameId2 == -1)
                 throw new UserDoNotExistsException(username2);
 
-            int conversationId = GetConversationId(usernameId1, usernameId2);
+            long conversationId = GetConversationId(usernameId1, usernameId2);
             if (conversationId == -1)
                 throw new ConversationDoNotExistsException(username1, username2);
 
@@ -1229,7 +1230,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -1273,7 +1274,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -1306,8 +1307,8 @@ namespace Model
         /// <summary>
         /// Returneaza porecla unui utilizator dintr-o relatie de prietenie
         /// </summary>
-        /// <param name="fromUsername">Numele de utilizator primei persoane</param>
-        /// <param name="friendUsername">Numele de utilizator al primei de a doua persoane</param>
+        /// <param name="fromUsername">Numele de utilizator al primei persoane</param>
+        /// <param name="friendUsername">Numele de utilizator celei de a doua persoane</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
@@ -1322,15 +1323,15 @@ namespace Model
             if (!Regex.IsMatch(friendUsername, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(friendUsername);
 
-            int fromUsernameId = GetUsernameId(fromUsername);
+            long fromUsernameId = GetUsernameId(fromUsername);
             if (fromUsernameId == -1)
                 throw new UserDoNotExistsException(fromUsername);
 
-            int friendUsernameId = GetUsernameId(friendUsername);
+            long friendUsernameId = GetUsernameId(friendUsername);
             if (friendUsernameId == -1)
                 throw new UserDoNotExistsException(friendUsername);
 
-            int relationshipId = GetFriendRelationshipId(fromUsernameId, friendUsernameId);
+            long relationshipId = GetFriendRelationshipId(fromUsernameId, friendUsernameId);
             if (relationshipId == -1)
                 throw new FriendRelationshipDoNotExistsException(fromUsername, friendUsername);
 
@@ -1376,7 +1377,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -1421,7 +1422,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 
@@ -1466,7 +1467,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            int usernameId = GetUsernameId(username);
+            long usernameId = GetUsernameId(username);
             if (usernameId == -1)
                 throw new UserDoNotExistsException(username);
 

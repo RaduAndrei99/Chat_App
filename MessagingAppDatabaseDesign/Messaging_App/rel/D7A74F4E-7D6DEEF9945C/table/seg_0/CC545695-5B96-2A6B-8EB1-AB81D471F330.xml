@@ -32,7 +32,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
 <checkConstraint>
-<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_name, &apos;^\S+$&apos;)"/>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(user_name, &apos;^\w{8,16}$&apos;)"/>
 </checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
