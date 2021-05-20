@@ -33,11 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChatAppClient">
+      <HintPath>.\ChatAppClient.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialSkin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MaterialSkin.0.2.1\lib\MaterialSkin.dll</HintPath>
     </Reference>
+    <Reference Include="Model">
+      <HintPath>.\Model.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="ProxyServer">
+      <HintPath>.\ProxyServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -51,9 +60,18 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="View">
+      <HintPath>.\View.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChatApp.Designer.cs">
+      <DependentUpon>ChatApp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddFriendView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +122,9 @@
     <Compile Include="Views\SettingsView.Designer.cs">
       <DependentUpon>SettingsView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ChatApp.resx">
+      <DependentUpon>ChatApp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

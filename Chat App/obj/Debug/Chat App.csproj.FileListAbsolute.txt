@@ -32,3 +32,9 @@ C:\facultate\IP\Proiect\Chat App\obj\Debug\Chat App.csproj.CoreCompileInputs.cac
 C:\facultate\IP\Proiect\Chat App\obj\Debug\Chat App.csproj.CopyComplete
 C:\facultate\IP\Proiect\Chat App\obj\Debug\Chat App.exe
 C:\facultate\IP\Proiect\Chat App\obj\Debug\Chat App.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\ChatAppClient.dll
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\Model.dll
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\ProxyServer.dll
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.RegisterView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.ChatApp.resources
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\View.dll

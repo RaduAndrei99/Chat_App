@@ -40,7 +40,7 @@
             this.panelUser.Size = new System.Drawing.Size(400, 500);
             this.panelUser.TabIndex = 0;
             // 
-            // LogIn
+            // LogInView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -48,9 +48,10 @@
             this.Controls.Add(this.panelUser);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "LogIn";
+            this.Name = "LogInView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Log In";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogInView_FormClosing);
             this.Load += new System.EventHandler(this.LogIn_Load);
             this.ResumeLayout(false);
 

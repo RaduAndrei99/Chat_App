@@ -59,5 +59,10 @@ namespace Chat_App
             _instance = this;
             panelUser.Controls.Add(new LogInControl(this));
         }
+
+        private void LogInView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ChatApp.Instance.Close();
+        }
     }
 }

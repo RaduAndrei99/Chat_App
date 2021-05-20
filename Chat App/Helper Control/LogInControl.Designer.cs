@@ -38,6 +38,7 @@
             this.buttonLogIn = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonRegister = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonSettings = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.labelErrorMessage = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureUser)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,10 +146,24 @@
             this.buttonSettings.UseVisualStyleBackColor = true;
             this.buttonSettings.Click += new System.EventHandler(this.buttonSettings_Click);
             // 
+            // labelErrorMessage
+            // 
+            this.labelErrorMessage.Depth = 0;
+            this.labelErrorMessage.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.labelErrorMessage.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.labelErrorMessage.Location = new System.Drawing.Point(3, 225);
+            this.labelErrorMessage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelErrorMessage.Name = "labelErrorMessage";
+            this.labelErrorMessage.Size = new System.Drawing.Size(394, 25);
+            this.labelErrorMessage.TabIndex = 8;
+            this.labelErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // LogInControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.labelErrorMessage);
             this.Controls.Add(this.buttonSettings);
             this.Controls.Add(this.buttonRegister);
             this.Controls.Add(this.buttonLogIn);
@@ -176,5 +191,6 @@
         private MaterialSkin.Controls.MaterialRaisedButton buttonLogIn;
         private MaterialSkin.Controls.MaterialRaisedButton buttonRegister;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSettings;
+        private MaterialSkin.Controls.MaterialLabel labelErrorMessage;
     }
 }

@@ -1,0 +1,23 @@
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\Chat App.exe.config
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\Chat App.exe
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\Chat App.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\ChatAppClient.dll
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\MaterialSkin.dll
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\Model.dll
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\ProxyServer.dll
+C:\facultate\anul III\IP\Proiect\Chat App\bin\Release\View.dll
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat App.csprojAssemblyReference.cache
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.ChatApp.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Properties.Resources.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Views.AddFriendView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Views.ChatView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Views.LogInControl.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Views.FriendRequestsView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.LogInView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Views.RegisterView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat_App.Views.SettingsView.resources
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat App.csproj.GenerateResource.cache
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat App.csproj.CoreCompileInputs.cache
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat App.csproj.CopyComplete
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat App.exe
+C:\facultate\anul III\IP\Proiect\Chat App\obj\Release\Chat App.pdb
