@@ -10,7 +10,7 @@ namespace ChatAppClient.Messages
     /// <summary>
     /// Clasa folosita pentru a abstractiza notiunea de mesaj.
     /// </summary>
-    class Message
+    public class Message
     {
         /// <summary>
         /// Atribut ce arata daca mesajul a fost vazut de catre destinatar.

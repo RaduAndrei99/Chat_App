@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChatAppClient
 {
-    class Friend
+    public class Friend
     {
         /// <summary>
         /// Mesajele dintr-o conversatie cu un prieten
