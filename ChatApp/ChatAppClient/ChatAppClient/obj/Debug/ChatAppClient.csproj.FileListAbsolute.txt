@@ -7,3 +7,4 @@ D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\ProxyServer.
 D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\ProxyServer.pdb
 D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.csproj.CopyComplete
 D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\obj\Debug\ChatAppClient.csprojAssemblyReference.cache
+D:\Faculty\IP\Project\ChatApp\ChatAppClient\ChatAppClient\bin\Debug\View.dll

@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using MainServerNs;
 using ProtectionProxy;
+using Chat_App.Views;
 
 namespace ChatAppClient
 {
@@ -24,22 +25,19 @@ namespace ChatAppClient
 
         private bool _isRunning;
 
-        //TODO
-        /*
-        //private IView _view;
+   
+        private IView _view;
+
+        /// <summary>
+        /// Constructorul cu argumente al clasei ProxyServer.
+        /// </summary>
+        /// <param name="view"></param>
         public ProxyServer(IView view)
         {
             _serverConnection = ServerConnection.GetInstance();
             _view = view;
         }
-        */
 
-        public ProxyServer()
-        {
-            _serverConnection = ServerConnection.GetInstance();
-
-            _isRunning = true;
-        }
 
         /// <summary>
         /// Metoda folosita pentru a realiza operatia de logare al sserver.
@@ -47,34 +45,14 @@ namespace ChatAppClient
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public bool Login(string username, string password)
+        public void Login(string username, string password)
         {
             try
             {
                 Socket sender = _serverConnection.GetSenderConnection();
 
-                string receivedData = "";
-
                 sender.Send(PrepareMessageToSend("login " + username + " " +  password ));
 
-                receivedData = "";
-                while (true)
-                {
-
-                    byte[] bytes = new byte[1024];
-                    int bytesRec = sender.Receive(bytes);
-                    receivedData += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (receivedData.IndexOf("<EOF>") > -1)
-                    {
-                        break;
-                    }
-                }
-
-                string msg = Cryptography.Decrypt(receivedData.Replace("<EOF>", ""), EncryptionPassword);
-                Console.WriteLine("Received: " + msg);
-
-
-                return true;
             }
 
             catch (SocketException e)
@@ -82,14 +60,11 @@ namespace ChatAppClient
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Server-ul nu raspunde.");
 
-
-                return false;
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
 
-                return false;
             }
         }
 
@@ -183,7 +158,7 @@ namespace ChatAppClient
         /// <param name="email"></param>
         /// <param name="birthdate"></param>
         /// <returns>True daca operatiunea s-a realizat cu succes, false in caz contrar.</returns>
-        public bool Register(string username, string password, string firstName, string lastName, string email, string birthdate)
+        public void Register(string username, string password, string firstName, string lastName, string email, string birthdate)
         {
             try
             {
@@ -191,15 +166,12 @@ namespace ChatAppClient
 
                 sender.Send(PrepareMessageToSend("register " + username + " " + password + " " + firstName + " " + lastName + " " + email + " " + birthdate ));
 
-                return true;
             }
 
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The server is not responding");
-
-                return false;
             }
         }
 
@@ -273,6 +245,15 @@ namespace ChatAppClient
                     {
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("friend " + friend + " is online.");
+
+                        break;
+                    }
+
+                    case "confirmLogin":
+                    {
+                        string error = msg.Split(' ')[1];
+
+                        _view.Login();
 
                         break;
                     }

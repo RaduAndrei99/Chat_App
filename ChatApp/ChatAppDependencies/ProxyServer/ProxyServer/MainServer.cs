@@ -3,10 +3,10 @@ namespace MainServerNs
 {
     public interface IPresenterServer
     {
-        bool Login(string username, string password);
+        void Login(string username, string password);
         void Logout(string username );
         void SendMessage(string from, string destination, string message);
-        bool Register(string username, string password, string firstName, string lastName, string email, string birthdate);
+        void Register(string username, string password, string firstName, string lastName, string email, string birthdate);
         void SendFriendRequest(string asker, string friend);
         void AcceptFriendRequest(string asker, string friend);
         byte[] PrepareMessageToSend(string message);
