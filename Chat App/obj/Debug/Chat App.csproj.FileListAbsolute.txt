@@ -38,3 +38,26 @@ C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\ProxyServer.dll
 C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.Views.RegisterView.resources
 C:\facultate\anul III\IP\Proiect\Chat App\obj\Debug\Chat_App.ChatApp.resources
 C:\facultate\anul III\IP\Proiect\Chat App\bin\Debug\View.dll
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat App.csprojAssemblyReference.cache
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.ChatApp.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Properties.Resources.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Views.AddFriendView.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Views.ChatView.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Views.LogInControl.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Views.FriendRequestsView.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.LogInView.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Views.RegisterView.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat_App.Views.SettingsView.resources
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat App.csproj.GenerateResource.cache
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat App.csproj.CoreCompileInputs.cache
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat App.exe
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat App.pdb
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\Chat App.exe.config
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\Chat App.exe
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\Chat App.pdb
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\ChatAppClient.dll
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\MaterialSkin.dll
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\Model.dll
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\ProxyServer.dll
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\bin\Debug\View.dll
+C:\Users\budea\Desktop\Chat_App-main_GG\Chat App\obj\Debug\Chat App.csproj.CopyComplete

@@ -1,11 +1,9 @@
-﻿using Chat_App.Views;
+﻿
+using System;
+using System.Windows.Forms;
+
 using ChatAppClient;
 using MainServerNs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Chat_App
 {
@@ -17,9 +15,12 @@ namespace Chat_App
         [STAThread]
         static void Main()
         {
-            //ChatApp.Instance.SetPresenter(new ProxyServer());
-            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            IPresenterServer presenter = new ProxyServer(ChatApp.Instance);
+            ChatApp.Instance.SetPresenter(presenter);
+
+            Application.EnableVisualStyles();
             Application.Run(ChatApp.Instance);
         }
     }
