@@ -41,11 +41,13 @@ namespace Chat_App.Views
         private void radioButtonDark_Click(object sender, EventArgs e)
         {
             _manager.Theme = MaterialSkinManager.Themes.DARK;
+            LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_white_48dp;
         }
 
         private void radioButtonWhite_Click(object sender, EventArgs e)
         {
             _manager.Theme = MaterialSkinManager.Themes.LIGHT;
+            LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_black_48dp;
         }
 
         private void radioButtonOrange_Click(object sender, EventArgs e)

@@ -56,6 +56,17 @@ namespace Chat_App.Views
         }
 
         /// <summary>
+        /// Proprietate publică pentru a schimba imaginea din form-ul de log in.
+        /// </summary>
+        public PictureBox Image
+        {
+            get
+            {
+                return pictureUser;
+            }
+        }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="parentForm">Form-ul părinte care conține controlul.</param>

@@ -63,6 +63,16 @@ namespace Chat_App.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap outline_account_circle_black_48dp {
+            get {
+                object obj = ResourceManager.GetObject("outline_account_circle_black_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap outline_account_circle_white_48dp {
             get {
                 object obj = ResourceManager.GetObject("outline_account_circle_white_48dp", resourceCulture);
