@@ -42,6 +42,8 @@
             this.buttonLogout = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonFriendRequests = new MaterialSkin.Controls.MaterialRaisedButton();
             this.labelErrorMessage = new MaterialSkin.Controls.MaterialLabel();
+            this.richtextboxChat = new System.Windows.Forms.RichTextBox();
+            this.friendsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listviewChat
@@ -50,15 +52,17 @@
             this.listviewChat.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnLeft,
             this.columnRight});
+            this.listviewChat.Enabled = false;
             this.listviewChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listviewChat.GridLines = true;
             this.listviewChat.HideSelection = false;
-            this.listviewChat.Location = new System.Drawing.Point(190, 120);
+            this.listviewChat.Location = new System.Drawing.Point(190, 127);
             this.listviewChat.Name = "listviewChat";
-            this.listviewChat.Size = new System.Drawing.Size(594, 264);
+            this.listviewChat.Size = new System.Drawing.Size(594, 257);
             this.listviewChat.TabIndex = 0;
             this.listviewChat.UseCompatibleStateImageBehavior = false;
             this.listviewChat.View = System.Windows.Forms.View.List;
+            this.listviewChat.Visible = false;
             // 
             // columnLeft
             // 
@@ -98,7 +102,7 @@
             // 
             this.buttonAddFriend.AutoSize = true;
             this.buttonAddFriend.Depth = 0;
-            this.buttonAddFriend.Location = new System.Drawing.Point(13, 134);
+            this.buttonAddFriend.Location = new System.Drawing.Point(12, 127);
             this.buttonAddFriend.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonAddFriend.Name = "buttonAddFriend";
             this.buttonAddFriend.Primary = true;
@@ -113,7 +117,7 @@
             this.labelActiveFriend.Depth = 0;
             this.labelActiveFriend.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelActiveFriend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.labelActiveFriend.Location = new System.Drawing.Point(187, 84);
+            this.labelActiveFriend.Location = new System.Drawing.Point(200, 84);
             this.labelActiveFriend.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelActiveFriend.Name = "labelActiveFriend";
             this.labelActiveFriend.Size = new System.Drawing.Size(150, 30);
@@ -132,12 +136,16 @@
             // 
             // listviewFriends
             // 
+            this.listviewFriends.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.friendsColumn});
+            this.listviewFriends.FullRowSelect = true;
             this.listviewFriends.HideSelection = false;
-            this.listviewFriends.Location = new System.Drawing.Point(13, 177);
+            this.listviewFriends.Location = new System.Drawing.Point(13, 170);
             this.listviewFriends.Name = "listviewFriends";
-            this.listviewFriends.Size = new System.Drawing.Size(136, 243);
+            this.listviewFriends.Size = new System.Drawing.Size(136, 250);
             this.listviewFriends.TabIndex = 7;
             this.listviewFriends.UseCompatibleStateImageBehavior = false;
+            this.listviewFriends.View = System.Windows.Forms.View.List;
             this.listviewFriends.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listviewFriends_MouseDoubleClick);
             // 
             // buttonSettings
@@ -173,7 +181,7 @@
             // 
             this.buttonFriendRequests.AutoSize = true;
             this.buttonFriendRequests.Depth = 0;
-            this.buttonFriendRequests.Location = new System.Drawing.Point(12, 91);
+            this.buttonFriendRequests.Location = new System.Drawing.Point(12, 84);
             this.buttonFriendRequests.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonFriendRequests.Name = "buttonFriendRequests";
             this.buttonFriendRequests.Primary = true;
@@ -195,11 +203,26 @@
             this.labelErrorMessage.TabIndex = 11;
             this.labelErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // richtextboxChat
+            // 
+            this.richtextboxChat.Location = new System.Drawing.Point(190, 127);
+            this.richtextboxChat.Name = "richtextboxChat";
+            this.richtextboxChat.ReadOnly = true;
+            this.richtextboxChat.Size = new System.Drawing.Size(594, 257);
+            this.richtextboxChat.TabIndex = 12;
+            this.richtextboxChat.Text = "";
+            // 
+            // friendsColumn
+            // 
+            this.friendsColumn.Text = "";
+            this.friendsColumn.Width = 250;
+            // 
             // ChatView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.richtextboxChat);
             this.Controls.Add(this.labelErrorMessage);
             this.Controls.Add(this.buttonFriendRequests);
             this.Controls.Add(this.buttonLogout);
@@ -237,5 +260,7 @@
         private MaterialSkin.Controls.MaterialRaisedButton buttonLogout;
         private MaterialSkin.Controls.MaterialRaisedButton buttonFriendRequests;
         private MaterialSkin.Controls.MaterialLabel labelErrorMessage;
+        private System.Windows.Forms.RichTextBox richtextboxChat;
+        private System.Windows.Forms.ColumnHeader friendsColumn;
     }
 }

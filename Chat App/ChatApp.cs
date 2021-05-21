@@ -67,6 +67,7 @@ namespace Chat_App
             _loginForm = LogInView.Instance;
             _chatForm = ChatView.Instance;
             _loginForm.Show();
+            //_chatForm.Show();
         }
 
         public void SetPresenter(IPresenterServer presenter)
@@ -86,11 +87,17 @@ namespace Chat_App
 
         public void AddMessageToChat(ChatAppClient.Messages.Message message)
         {
-            ListViewItem newMessage = new ListViewItem();
+            /*ListViewItem newMessage = new ListViewItem();
             newMessage.Text = message.Msg;
-            newMessage.ForeColor = Color.DarkOrange;
+            newMessage.ForeColor = Color.DarkOrange;*/
 
-            _chatForm.Chat.Items.Add(newMessage);
+            _chatForm.Chat.Text += message.Timestamp.ToString();
+            /*if (message.Seen)
+                _chatForm.Chat.Text += "[Seen]";
+            else
+                _chatForm.Chat.Text += "[Not Seen]";*/
+            _chatForm.Chat.Text += message.Msg + '\n';
+            //_chatForm.Chat.Items.Add(newMessage);
         }
 
         public void FriendHasSeen(string username)
@@ -108,7 +115,7 @@ namespace Chat_App
 
         public void ChangeFriendStatus(string username, bool status)
         {
-            foreach (ListViewItem friend in _chatForm.Chat.SelectedItems)
+            foreach (ListViewItem friend in _chatForm.FriendList.SelectedItems)
             {
                 if (friend.Text.Contains(username))
                 {

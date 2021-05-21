@@ -54,11 +54,11 @@ namespace Chat_App.Views
         /// <summary>
         /// Proprietate publică pentru accesul chatului.
         /// </summary>
-        public ListView Chat
+        public RichTextBox Chat
         {
             get
             {
-                return listviewChat;
+                return richtextboxChat;
             }
         }
 
@@ -69,7 +69,7 @@ namespace Chat_App.Views
         {
             get
             {
-                return listviewChat.SelectedItems[0].Text;
+                return listviewFriends.Items[0].Text;
             }
         }
 
@@ -108,11 +108,13 @@ namespace Chat_App.Views
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            ListViewItem newMessage = new ListViewItem();
+            /*ListViewItem newMessage = new ListViewItem();
             newMessage.Text = textboxMessage.Text;
             newMessage.ForeColor = Color.DarkOrange;
-            listviewChat.Items.Add(newMessage);
-            ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, SelectedFriend, textboxMessage.Text);
+            listviewChat.Items.Add(newMessage);*/
+            Chat.Text += "[Not Seen]" + textboxMessage.Text + '\n';
+           
+           ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, SelectedFriend, textboxMessage.Text);
         }
 
         private void buttonAddFriend_Click(object sender, EventArgs e)
@@ -134,7 +136,7 @@ namespace Chat_App.Views
             var selectedItem = listviewFriends.SelectedItems;
             labelActiveFriend.Text = selectedItem[0].Text;
             // clean up old chat, load in new chat messages
-            listviewChat.Clear();
+            Chat.Text = "";
             textboxMessage.Clear();
         }
 
@@ -146,11 +148,18 @@ namespace Chat_App.Views
 
         private void listviewFriends_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var selectedItem = listviewFriends.SelectedItems;
-            labelActiveFriend.Text = selectedItem[0].Text;
-            // clean up old chat, load in new chat messages
-            listviewChat.Clear();
-            textboxMessage.Clear();
+            try
+            {
+                var selectedItem = listviewFriends.SelectedItems;
+                labelActiveFriend.Text = selectedItem[0].Text;
+                // clean up old chat, load in new chat messages
+                Chat.Clear();
+                textboxMessage.Clear();
+            }
+            catch
+            {
+                // do something
+            }
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
