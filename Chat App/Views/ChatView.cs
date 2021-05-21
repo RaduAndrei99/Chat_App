@@ -62,11 +62,25 @@ namespace Chat_App.Views
             }
         }
 
+        /// <summary>
+        /// Proprietate publică pentru accesul prietenului selectat și al cărui chat este deschis.
+        /// </summary>
         public string SelectedFriend
         {
             get
             {
                 return listviewChat.SelectedItems[0].Text;
+            }
+        }
+
+        /// <summary>
+        /// Proprietate publică pentru acessul mesajului de eroare.
+        /// </summary>
+        public Label ErrorLabel
+        {
+            get
+            {
+                return labelErrorMessage;
             }
         }
 
@@ -142,7 +156,7 @@ namespace Chat_App.Views
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             // log user out
-            this.Close();
+            ChatApp.Instance.Presenter.Logout(LogInView.Instance.Control.Username);
         }
 
         private void buttonSettings_Click(object sender, EventArgs e)
@@ -159,6 +173,14 @@ namespace Chat_App.Views
             form.StartPosition = FormStartPosition.CenterScreen;
             this.FormClosing += delegate { form.Close(); };
             form.Show();
+        }
+
+        public void ClearChat()
+        {
+            listviewChat.Clear();
+            listviewFriends.Clear();
+            textboxMessage.Clear();
+            _friendRequestsForm.FriendRequests.Clear();
         }
     }
 }

@@ -41,6 +41,7 @@
             this.buttonSettings = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonLogout = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonFriendRequests = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.labelErrorMessage = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // listviewChat
@@ -182,11 +183,24 @@
             this.buttonFriendRequests.UseVisualStyleBackColor = true;
             this.buttonFriendRequests.Click += new System.EventHandler(this.buttonFriendRequests_Click);
             // 
+            // labelErrorMessage
+            // 
+            this.labelErrorMessage.Depth = 0;
+            this.labelErrorMessage.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.labelErrorMessage.Location = new System.Drawing.Point(12, 423);
+            this.labelErrorMessage.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelErrorMessage.Name = "labelErrorMessage";
+            this.labelErrorMessage.Size = new System.Drawing.Size(776, 18);
+            this.labelErrorMessage.TabIndex = 11;
+            this.labelErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // ChatView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelErrorMessage);
             this.Controls.Add(this.buttonFriendRequests);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.buttonSettings);
@@ -222,5 +236,6 @@
         private MaterialSkin.Controls.MaterialRaisedButton buttonSettings;
         private MaterialSkin.Controls.MaterialRaisedButton buttonLogout;
         private MaterialSkin.Controls.MaterialRaisedButton buttonFriendRequests;
+        private MaterialSkin.Controls.MaterialLabel labelErrorMessage;
     }
 }

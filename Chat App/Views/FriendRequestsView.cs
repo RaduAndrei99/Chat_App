@@ -24,6 +24,14 @@ namespace Chat_App.Views
             }
         }
 
+        public ListView FriendRequests
+        {
+            get
+            {
+                return listviewFriendRequests;
+            }
+        }
+
         private FriendRequestsView()
         {
             InitializeComponent();

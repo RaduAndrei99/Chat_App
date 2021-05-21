@@ -45,6 +45,17 @@ namespace Chat_App.Views
         }
 
         /// <summary>
+        /// Proprietate publică pentru mesajul de eroare.
+        /// </summary>
+        public Label ErrorLabel
+        {
+            get
+            {
+                return labelErrorMessage;
+            }
+        }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="parentForm">Form-ul părinte care conține controlul.</param>
@@ -72,6 +83,8 @@ namespace Chat_App.Views
             {
                 /*if (!ChatApp.Instance.Presenter.Login(Username, Password))
                     labelErrorMessage.Text = "Server not responding...";*/
+                // clear previous chat
+                ChatView.Instance.ClearChat();
                 ChatApp.Instance.Presenter.Login(Username, Password);
             }
             else
@@ -89,6 +102,17 @@ namespace Chat_App.Views
         {
             _parentForm.FormClosing += delegate { _parentForm.SettingsForm.Close(); };
             _parentForm.SettingsForm.Show();
+        }
+
+        /// <summary>
+        /// Afișează meniul de înregistrare.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonRegister_Click(object sender, EventArgs e)
+        {
+            _parentForm.FormClosing += delegate { _parentForm.RegisterForm.Close(); };
+            _parentForm.RegisterForm.Show();
         }
 
         /// <summary>

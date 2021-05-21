@@ -18,6 +18,7 @@ namespace Chat_App
         private static LogInView _instance;
         private BasicView _chatForm;
         private BasicView _settingsForm;
+        private BasicView _registerForm;
         private LogInControl _control;
 
         public static LogInView Instance
@@ -46,6 +47,14 @@ namespace Chat_App
             }
         }
 
+        public BasicView RegisterForm
+        {
+            get
+            {
+                return _registerForm;
+            }
+        }
+
         public LogInControl Control
         {
             get
@@ -60,6 +69,7 @@ namespace Chat_App
             _control = new LogInControl(this);
             _chatForm = ChatView.Instance;
             _settingsForm = SettingsView.Instance;
+            _registerForm = RegisterView.Instance;
             _chatForm.StartPosition = FormStartPosition.CenterScreen;
             _settingsForm.StartPosition = FormStartPosition.CenterScreen;
         }

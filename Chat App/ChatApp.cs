@@ -100,32 +100,58 @@ namespace Chat_App
 
         public void AddFriendList(string friend)
         {
-            throw new NotImplementedException();
+            ListViewItem newFriend = new ListViewItem();
+            newFriend.Text = friend;
+            newFriend.ForeColor = Color.OrangeRed;
+            _chatForm.FriendList.Items.Add(newFriend);
         }
 
         public void ChangeFriendStatus(string username, bool status)
         {
-            throw new NotImplementedException();
+            foreach (ListViewItem friend in _chatForm.Chat.SelectedItems)
+            {
+                if (friend.Text.Contains(username))
+                {
+                    if (status)
+                    {
+                        // set online
+                        friend.Text.Replace("[Offline]", "[Online]");
+                    }
+                    else
+                    {
+                        // set offline
+                        friend.Text.Replace("[Online]", "[Offline]");
+                    }
+                }
+            }
         }
 
         public void Login()
         {
-            throw new NotImplementedException();
+            _loginForm.Hide();
+            _presenter.GetFriendsList(_loginForm.Control.Username);
+            _chatForm.Show();
         }
 
         public void Logout()
         {
-            throw new NotImplementedException();
+            _chatForm.Hide();
+            _loginForm.Show();
         }
 
         public void AddFriendRequest(string username)
         {
-            throw new NotImplementedException();
+            ListViewItem newFriend = new ListViewItem();
+            newFriend.Text = username;
+            newFriend.ForeColor = Color.Orange;
+            FriendRequestsView.Instance.FriendRequests.Items.Add(newFriend);
         }
 
         public void ShowErrorMessage(string message)
         {
-            throw new NotImplementedException();
+            // this might need to be changed in the future
+            _loginForm.Control.ErrorLabel.Text = message;
+            _chatForm.ErrorLabel.Text = message;
         }
     }
 }
