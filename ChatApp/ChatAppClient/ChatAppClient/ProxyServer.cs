@@ -5,7 +5,7 @@ using System.Threading;
 using MainServerNs;
 using ProtectionProxy;
 using Chat_App.Views;
-
+using System.Windows.Forms;
 
 namespace ChatAppClient
 {
@@ -224,11 +224,12 @@ namespace ChatAppClient
                         Console.WriteLine(from + ": " + message);
 
                         Messages.Message messageObject = new Messages.Message();
-                        messageObject.Msg = msg;
+                        messageObject.Msg = message;
                         messageObject.From = from;
+
                         //TODO timestamp pt mesaj
 
-                        _view.AddMessageToChat(messageObject);
+                        ((Form)_view).Invoke((Action<Messages.Message>)_view.AddMessageToChat, messageObject);
 
                         break;
                     }
@@ -247,7 +248,7 @@ namespace ChatAppClient
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("Friend request from: " + friend);
 
-                        _view.AddFriendRequest(friend);
+                        ((Form)_view).Invoke((Action<string>)_view.AddFriendRequest, friend);
 
                         break;
                     }
@@ -257,8 +258,8 @@ namespace ChatAppClient
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("Friend: " + friend);
 
-                        //TODO - string, nu lista
-                         _view.AddFriendList(friend);
+                        ((Form)_view).Invoke((Action<string>)_view.AddFriendList, friend);
+
                         break;
                     }
 
@@ -267,21 +268,20 @@ namespace ChatAppClient
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("friend " + friend + " is online.");
 
-                        _view.ChangeFriendStatus(friend, true);
+                        ((Form)_view).Invoke((Action<string, bool>)_view.ChangeFriendStatus, friend, true);
+
                         break;
                     }
 
                     case "confirmLogin":
-                    { 
-                        ((Form)_view)
-                        Console.WriteLine("test");
+                    {
+                        ((Form)_view).Invoke((Action)_view.Login);
                         break;
                     }
 
                     case "confirmLogout":
                     {
-
-                        _view.Logout();
+                        ((Form)_view).Invoke((Action)_view.Logout);
 
                         break;
                     }
@@ -292,7 +292,7 @@ namespace ChatAppClient
                         string error = msg.Split(' ')[1];
 
                         Console.WriteLine("ERROR: " + error);
-                         _view.ShowErrorMessage(error);
+                        ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, error);
                         break;
                     }
                 }
