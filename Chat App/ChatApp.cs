@@ -107,5 +107,25 @@ namespace Chat_App
         {
             throw new NotImplementedException();
         }
+
+        public void Login()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Logout()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddFriendRequest(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowErrorMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
