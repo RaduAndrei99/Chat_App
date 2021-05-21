@@ -6,6 +6,7 @@ using MainServerNs;
 using ProtectionProxy;
 using Chat_App.Views;
 
+
 namespace ChatAppClient
 {
     /// <summary>
@@ -45,13 +46,15 @@ namespace ChatAppClient
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public void Login(string username, string password)
+        public bool Login(string username, string password)
         {
             try
             {
                 Socket sender = _serverConnection.GetSenderConnection();
 
                 sender.Send(PrepareMessageToSend("login " + username + " " +  password ));
+
+                return true;
 
             }
 
@@ -60,11 +63,12 @@ namespace ChatAppClient
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Server-ul nu raspunde.");
 
+                return false;
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-
+                return false;
             }
         }
 
@@ -158,7 +162,7 @@ namespace ChatAppClient
         /// <param name="email"></param>
         /// <param name="birthdate"></param>
         /// <returns>True daca operatiunea s-a realizat cu succes, false in caz contrar.</returns>
-        public void Register(string username, string password, string firstName, string lastName, string email, string birthdate)
+        public bool Register(string username, string password, string firstName, string lastName, string email, string birthdate)
         {
             try
             {
@@ -166,12 +170,15 @@ namespace ChatAppClient
 
                 sender.Send(PrepareMessageToSend("register " + username + " " + password + " " + firstName + " " + lastName + " " + email + " " + birthdate ));
 
+                return true;
             }
 
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine("The server is not responding");
+
+                return false;
             }
         }
 
@@ -184,6 +191,8 @@ namespace ChatAppClient
             Socket sender = _serverConnection.GetSenderConnection();
 
             string receivedData;
+
+            _isRunning = true;
 
             Console.WriteLine("I'm waiting for messages from the server...");
 
@@ -213,6 +222,14 @@ namespace ChatAppClient
                         string message = msg.Substring((msgType + " " + from + " ").Length);
 
                         Console.WriteLine(from + ": " + message);
+
+                        Messages.Message messageObject = new Messages.Message();
+                        messageObject.Msg = msg;
+                        messageObject.From = from;
+                        //TODO timestamp pt mesaj
+
+                        _view.AddMessageToChat(messageObject);
+
                         break;
                     }
 
@@ -230,6 +247,8 @@ namespace ChatAppClient
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("Friend request from: " + friend);
 
+                        _view.AddFriendRequest(friend);
+
                         break;
                     }
 
@@ -238,6 +257,8 @@ namespace ChatAppClient
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("Friend: " + friend);
 
+                        //TODO - string, nu lista
+                         _view.AddFriendList(friend);
                         break;
                     }
 
@@ -246,28 +267,38 @@ namespace ChatAppClient
                         string friend = msg.Split(' ')[1];
                         Console.WriteLine("friend " + friend + " is online.");
 
+                        _view.ChangeFriendStatus(friend, true);
                         break;
                     }
 
                     case "confirmLogin":
-                    {
-                        string error = msg.Split(' ')[1];
+                    { 
+                        ((Form)_view)
+                        Console.WriteLine("test");
+                        break;
+                    }
 
-                        _view.Login();
+                    case "confirmLogout":
+                    {
+
+                        _view.Logout();
 
                         break;
                     }
+
 
                     case "ERROR":
                     {
                         string error = msg.Split(' ')[1];
 
                         Console.WriteLine("ERROR: " + error);
-
+                         _view.ShowErrorMessage(error);
                         break;
                     }
                 }
             }
+
+            Console.WriteLine("done");
         }
 
         /// <summary>

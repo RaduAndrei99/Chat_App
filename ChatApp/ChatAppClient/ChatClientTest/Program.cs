@@ -1,6 +1,5 @@
 ﻿using ChatAppClient;
 using System;
-using System.Threading;
 
 namespace ChatClientTest
 {
@@ -13,11 +12,12 @@ namespace ChatClientTest
             Console.Write("Enter password: ");
             string password = Console.ReadLine();
 
-            ProxyServer c = new ProxyServer();
+            ProxyServer c = new ProxyServer(null);
 
             c.Login(username, password);
 
             c.Run();
+
 
 
             while (true)
@@ -31,8 +31,6 @@ namespace ChatClientTest
 
             }
             // c.Logout("", "");
-
-            c.CloseServerConnection();
 
         }
     }

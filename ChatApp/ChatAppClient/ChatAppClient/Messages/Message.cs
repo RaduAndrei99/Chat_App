@@ -27,8 +27,8 @@ namespace ChatAppClient.Messages
         /// <summary>
         /// Mesajul reprezentat ca string.
         /// </summary>
-        private int _message;
-        public int Msg
+        private string _message;
+        public string Msg
         {
             get 
             {

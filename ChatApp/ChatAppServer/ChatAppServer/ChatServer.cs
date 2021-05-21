@@ -19,7 +19,8 @@ namespace ChatAppServer
         /// <summary>
         /// IP-ul pe care ruleaza server-ul
         /// </summary>
-        private string Host = "192.168.0.220";
+        // private string Host = "192.168.0.220";
+        private string Host = "127.0.0.1";
 
         /// <summary>
         /// Port-ul pe care ruleaza server-ul
@@ -84,6 +85,9 @@ namespace ChatAppServer
         /// <param name="password"></param>
         public void Logout(string username)
         {
+            _loggedUserConnections[username].Send(PrepareMessageToSend("confirmLogout"));
+            Thread.Sleep(100);
+
             _loggedUserConnections[username].Shutdown(SocketShutdown.Both);
             _loggedUserConnections[username].Close();
 
@@ -187,7 +191,7 @@ namespace ChatAppServer
                         {
                             if (!_loggedUserConnections.ContainsKey(userName))
                             {
-                                handler.Send(PrepareMessageToSend("CONFIRM"));
+                                handler.Send(PrepareMessageToSend("confirmLogin"));
                                 _loggedUserConnections.Add(userName, handler);
 
 
@@ -551,6 +555,5 @@ namespace ChatAppServer
             }
         }
 
-       
     }
 }

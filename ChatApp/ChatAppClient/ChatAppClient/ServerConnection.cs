@@ -17,15 +17,12 @@ namespace ChatAppClient
         /// </summary>
         private Socket _sender;
 
-        /// <summary>
-        /// Socket-ul folosit pentru conexiunea cu server-ul atunci cand se primesc mesaje dinspre server.
-        /// </summary>
-        private Socket _receiver;
 
         /// <summary>
         /// IP-ul server-ului.
         /// </summary>
-        private const string ServerHost = "192.168.0.220";
+        //private const string ServerHost = "192.168.0.220";
+        private const string ServerHost = "127.0.0.1";
 
         /// <summary>
         /// Port-ul server-ului
@@ -92,14 +89,6 @@ namespace ChatAppClient
             return _sender;
         }
 
-        /// <summary>
-        /// Getter pentru obiectul de tip Socket pentru primirea de mesaje.
-        /// </summary>
-        /// <returns></returns>
-        public Socket GetReceiverConnection()
-        {
-            return _receiver;
-        }
 
         /// <summary>
         /// Metoda folosita pentru a inchide conexiunea cu server-ul.
@@ -109,8 +98,6 @@ namespace ChatAppClient
             _sender.Shutdown(SocketShutdown.Both);
             _sender.Close();
 
-            _receiver.Shutdown(SocketShutdown.Both);
-            _receiver.Close();
         }
     }
 }

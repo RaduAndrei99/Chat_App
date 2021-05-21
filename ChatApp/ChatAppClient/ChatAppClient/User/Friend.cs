@@ -13,12 +13,16 @@ namespace ChatAppClient
         /// <summary>
         /// Variabila care indica daca prietenul este online;
         /// </summary>
-        private bool isOnline;
+        private bool _isOnline;
         public bool Online
         {
             get
             {
-                return isOnline;
+                return _isOnline;
+            }
+            set
+            {
+                _isOnline = value;
             }
         }
 
