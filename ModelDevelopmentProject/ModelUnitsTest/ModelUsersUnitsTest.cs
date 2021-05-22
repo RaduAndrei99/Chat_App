@@ -10,12 +10,11 @@ namespace ModelUnitsTest
     [TestClass]
     public class ModelUsersUnitsTest
     {
-        private IModel _oracleModel = null;
-        private Random _random = null;
+        private IModel _oracleModel;
+        private Random _random;
 
-        private string _username1 = String.Empty;
-        private string _username2 = String.Empty;
-        private const string _password = "1234";
+        private string _username;
+        private string _password;
 
         [TestInitialize]
         public void ModelUnitTestInit()
@@ -23,17 +22,15 @@ namespace ModelUnitsTest
             _oracleModel = new OracleDatabaseModel(Commons.UserId, Commons.Password, Commons.Hostname, Commons.Port, Commons.Sid, Commons.Pooling);
             _random = new Random(DateTime.Now.Millisecond);
 
-            _username1 = $"TestUser{_random.Next(1000, 10000)}";
-            _username2 = $"TestUser{_random.Next(1000, 10000)}";
+            _username = $"TestUser{_random.Next(1000, 10000)}";
+            _password = "1234";
         }
-
 
         [TestMethod]
         public void AddNewUser()
         {
-            _oracleModel.AddNewUser(_username1, _password);
+            _oracleModel.AddNewUser(_username, _password);
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(WrongUsernameFormatException))]
@@ -42,13 +39,12 @@ namespace ModelUnitsTest
             _oracleModel.AddNewUser("Cosmin Cosmin", _password);
         }
 
-
         [TestMethod]
         [ExpectedException(typeof(WrongPasswordFormatException))]
         public void WrongPasswordFormatTest()
         {
             const string password = "134 67 \n9";
-            _oracleModel.AddNewUser(_username1, password);
+            _oracleModel.AddNewUser(_username, password);
         }
 
         [TestMethod]
@@ -56,8 +52,8 @@ namespace ModelUnitsTest
         public void AddTheSameUserTest()
         {
             const string password = "134679";
-            _oracleModel.AddNewUser(_username1, password);
-            _oracleModel.AddNewUser(_username1, password);
+            _oracleModel.AddNewUser(_username, password);
+            _oracleModel.AddNewUser(_username, password);
         }
 
 
@@ -66,8 +62,7 @@ namespace ModelUnitsTest
         {
             try
             {
-                _oracleModel.DeleteUser(_username1);
-                _oracleModel.DeleteUser(_username2);
+                _oracleModel.DeleteUser(_username);
             }
             catch(UserDoNotExistsException ex)
             {

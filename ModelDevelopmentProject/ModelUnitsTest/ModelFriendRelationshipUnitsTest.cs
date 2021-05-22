@@ -14,12 +14,12 @@ namespace ModelUnitsTest
     [TestClass]
     public class ModelFriendRelationshipUnitsTest
     {
-        private IModel _oracleModel = null;
-        private Random _random = null;
+        private IModel _oracleModel;
+        private Random _random;
 
-        private string _username1 = String.Empty;
-        private string _username2 = String.Empty;
-        private const string _password = "1234";
+        private string _username1;
+        private string _username2;
+        private string _password;
 
         [TestInitialize]
         public void ModelFriendRelationshipUnitsTestInit()
@@ -29,18 +29,17 @@ namespace ModelUnitsTest
 
             _username1 = $"TestUser{_random.Next(1000, 10000)}";
             _username2 = $"TestUser{_random.Next(1000, 10000)}";
+            _password = "1234";
 
             _oracleModel.AddNewUser(_username1, _password);
             _oracleModel.AddNewUser(_username2, _password);
         }
-
 
         [TestMethod]
         public void SendFriendRequestTest()
         {
             _oracleModel.RegisterFriendRequest(_username1, _username2);
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(FriendRelationshipAlreadyExistsException))]
@@ -50,12 +49,30 @@ namespace ModelUnitsTest
             _oracleModel.RegisterFriendRequest(_username1, _username2);
         }
 
-
         [TestMethod]
         public void DeleteFriendRelationshipTest()
         {
             _oracleModel.RegisterFriendRequest(_username1, _username2);
             _oracleModel.DeleteFriendRelationship(_username1, _username2);
+        }
+
+        [TestMethod]
+        public void AcceptFriendshipStatus()
+        {
+            _oracleModel.RegisterFriendRequest(_username1, _username2);
+            _oracleModel.AcceptFriendRequest(_username1, _username2);
+            List<string> friendList = _oracleModel.GetFriendList(_username1);
+
+            Assert.IsTrue(friendList[0].Equals(_username2));
+        }
+
+        [TestMethod]
+        public void GetFriendshipRequests()
+        {
+            _oracleModel.RegisterFriendRequest(_username1, _username2);
+            List<string> requestsList = _oracleModel.GetReceivedPendingRequest(_username2);
+
+            Assert.IsTrue(requestsList[0].Equals(_username1));
         }
 
         [TestCleanup]

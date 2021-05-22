@@ -10,13 +10,12 @@ namespace ModelUnitsTest
     [TestClass]
     public class ModelConversationsUnitsTest
     {
-        private IModel _oracleModel = null;
-        private Random _random = null;
+        private IModel _oracleModel;
+        private Random _random;
 
-        private string _username1 = String.Empty;
-        private string _username2 = String.Empty;
-        const string _password = "1234";
-
+        private string _username1;
+        private string _username2;
+        private string _password;
 
         [TestInitialize]
         public void ModelConversationUnitTestInit()
@@ -26,18 +25,17 @@ namespace ModelUnitsTest
 
             _username1 = $"TestUser{_random.Next(1000, 10000)}";
             _username2 = $"TestUser{_random.Next(1000, 10000)}";
+            _password = "1234";
 
             _oracleModel.AddNewUser(_username1, _password);
             _oracleModel.AddNewUser(_username2, _password);
         }
-
 
         [TestMethod]
         public void CreateConversation()
         {
             _oracleModel.CreateConversation(_username1, _username2);
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(ConversationAlreadyExistsException))]
@@ -47,14 +45,12 @@ namespace ModelUnitsTest
             _oracleModel.CreateConversation(_username1, _username2);
         }
 
-
         [TestMethod]
         public void DeleteConversationTest()
         {
             _oracleModel.CreateConversation(_username1, _username2);
             _oracleModel.DeleteConversation(_username1, _username2);
         }
-
 
         [TestCleanup]
         public void ModelUnitTestCleanUp()

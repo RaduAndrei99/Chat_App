@@ -13,12 +13,12 @@ namespace ModelUnitsTest
     [TestClass]
     public class ModelUserRegistrationUnitsTest
     {
-        private IModel _oracleModel = null;
-        private Random _random = null;
+        private IModel _oracleModel;
+        private Random _random;
 
-        private string _username1 = String.Empty;
-        private string _username2 = String.Empty;
-        const string _password = "1234";
+        private string _username1;
+        private string _username2;
+        private string _password;
 
 
         [TestInitialize]
@@ -29,6 +29,7 @@ namespace ModelUnitsTest
 
             _username1 = $"TestUser{_random.Next(1000, 10000)}";
             _username2 = $"TestUser{_random.Next(1000, 10000)}";
+            _password = "1234";
 
             _oracleModel.AddNewUser(_username1, _password);
             _oracleModel.AddNewUser(_username2, _password);

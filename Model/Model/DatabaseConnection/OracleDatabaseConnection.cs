@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 
 namespace Model.DatabaseConnection
 {
+    /// <summary>
+    /// Clasa ce asigura conexiuni la o baza de date Oracle
+    /// </summary>
     public class OracleDatabaseConnection : IDatabaseConnection
     {
         /// <summary>

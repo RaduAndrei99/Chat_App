@@ -12,11 +12,11 @@ namespace ModelUnitsTest
     [TestClass]
     public class ModelApplicationSettingsUnitsTest
     {
-        private IModel _oracleModel = null;
-        private Random _random = null;
+        private IModel _oracleModel;
+        private Random _random;
 
-        private string _username = String.Empty;
-        private const string _password = "1234";
+        private string _username;
+        private string _password;
 
         [TestInitialize]
         public void ModelFriendRelationshipUnitsTestInit()
@@ -25,6 +25,8 @@ namespace ModelUnitsTest
             _random = new Random(DateTime.Now.Millisecond);
 
             _username = $"TestUser{_random.Next(1000, 10000)}";
+            _password = "1234";
+
             _oracleModel.AddNewUser(_username, _password);
         }
 
