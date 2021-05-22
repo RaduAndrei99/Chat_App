@@ -103,6 +103,17 @@ namespace Chat_App.Views
         }
 
         /// <summary>
+        /// Proprietate publică pentru accesul la mesajul de eroare.
+        /// </summary>
+        public Label ErrorMessage
+        {
+            get
+            {
+                return labelErorrMessage;
+            }
+        }
+
+        /// <summary>
         /// Constructor privat.
         /// </summary>
         private RegisterView() : base()

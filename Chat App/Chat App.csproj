@@ -173,6 +173,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Green_icon.png" />
+    <Content Include="Resources\logo.png" />
     <Content Include="Resources\outline_account_circle_black_48dp.png" />
     <Content Include="Resources\outline_account_circle_white_48dp.png" />
     <Content Include="Resources\outline_mail_black_24dp.ico" />

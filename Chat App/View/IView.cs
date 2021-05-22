@@ -12,7 +12,7 @@ namespace Chat_App.Views
     {
         void Login();
         void Logout();
-        void AddMessageToChat(Message message);
+        void AddMessageToChat(Message message, bool addToEnd);
         void AddFriendList(string friend);
         void AddFriendRequest(string username);
         void ShowErrorMessage(string message);

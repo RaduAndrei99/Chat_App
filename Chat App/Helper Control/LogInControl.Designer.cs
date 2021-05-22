@@ -44,10 +44,10 @@
             // 
             // pictureUser
             // 
-            this.pictureUser.Image = global::Chat_App.Properties.Resources.outline_account_circle_white_48dp;
-            this.pictureUser.Location = new System.Drawing.Point(125, 60);
+            this.pictureUser.Image = global::Chat_App.Properties.Resources.logo;
+            this.pictureUser.Location = new System.Drawing.Point(13, 30);
             this.pictureUser.Name = "pictureUser";
-            this.pictureUser.Size = new System.Drawing.Size(150, 150);
+            this.pictureUser.Size = new System.Drawing.Size(375, 193);
             this.pictureUser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureUser.TabIndex = 0;
             this.pictureUser.TabStop = false;

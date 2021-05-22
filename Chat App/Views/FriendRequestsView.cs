@@ -47,5 +47,14 @@ namespace Chat_App.Views
             this.Hide();
             e.Cancel = true;
         }
+
+        private void buttonAccept_Click(object sender, EventArgs e)
+        {
+            if (listviewFriendRequests.SelectedItems.Count > 0)
+            {
+                listviewFriendRequests.Items.Remove(listviewFriendRequests.SelectedItems[0]);
+                ChatApp.Instance.Presenter.AcceptFriendRequest(listviewFriendRequests.SelectedItems[0].Text, LogInView.Instance.Control.Username);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,10 @@ using System.Windows.Forms;
 
 namespace Chat_App.Views
 {
+    /// <summary>
+    /// Clasa care descrie form-ul de chat.
+    /// Utilizatorul poate alege din mai mulți prieteni și să vorbească cu ei.
+    /// </summary>
     public partial class ChatView : BasicView
     {
         /// <summary>
@@ -26,6 +31,12 @@ namespace Chat_App.Views
         /// Referință către form-ul care arată lista de cereri de prietenie în așteptare.
         /// </summary>
         private FriendRequestsView _friendRequestsForm;
+        
+        /// <summary>
+        /// Atribut care ține minte prietenul al cărui chat este activ, în cazul în care
+        /// utilizatorul selectează simplu alt prieten înainte de a trimite mesaje.
+        /// </summary>
+        private string _activeChatFriend;
 
         /// <summary>
         /// Proprietate publică pentru accesul la instanța unică.
@@ -105,69 +116,123 @@ namespace Chat_App.Views
             _instance = this;
         }
 
-
+        /// <summary>
+        /// Metodă apelată atunci când se apasă butonul de Send.
+        /// Trimite mesajul la presenter pentru a fi prelucrat și îl afișează în chat.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSend_Click(object sender, EventArgs e)
         {
             /*ListViewItem newMessage = new ListViewItem();
             newMessage.Text = textboxMessage.Text;
             newMessage.ForeColor = Color.DarkOrange;
             listviewChat.Items.Add(newMessage);*/
-            Chat.Text += "[Not Seen]" + textboxMessage.Text + '\n';
-           
-           ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, SelectedFriend, textboxMessage.Text);
+
+            // check that a friend is selected and the message isn't empty
+            if (FriendList.Items.Count != 0)
+            {
+                if (textboxMessage.Text.Length > 0)
+                {
+                    Chat.Text += 
+                        "[" + DateTime.Now.ToString() + "]" + "[Not Seen] " + 
+                        LogInView.Instance.Control.Username + ": " + textboxMessage.Text + '\n';
+                    Chat.SelectionStart = Chat.Text.Length;
+                    Chat.ScrollToCaret();
+                    ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, SelectedFriend, textboxMessage.Text);
+                }
+            }
+            else
+            {
+                labelErrorMessage.Text = "Selectează un prieten mai întâi!";
+            }
+            textboxMessage.Clear();
         }
 
+        /// <summary>
+        /// Deschide form-ul de adăugare de prieteni.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonAddFriend_Click(object sender, EventArgs e)
         {
             _addFriendForm.SetParentForm(this);
             _addFriendForm.Show();
         }
 
+        /// <summary>
+        /// Adaugă un prieten la lista de prieteni din form-ul de adăugare de prieteni.
+        /// </summary>
+        /// <param name="newFriendName"></param>
         public void AddFriendToList(string newFriendName)
         {
             ListViewItem newFriend = new ListViewItem();
             newFriend.Text = newFriendName;
             newFriend.ForeColor = Color.OrangeRed;
+            //newFriend.BackColor = Color.OrangeRed;
             listviewFriends.Items.Add(newFriend);
         }
 
+        /// <summary>
+        /// Metodă apelată la apăsarea dublu click pe un prieten.
+        /// Deschide chat-ul cu prietenul respectiv.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listviewFriends_DoubleClick(object sender, EventArgs e)
         {
-            var selectedItem = listviewFriends.SelectedItems;
-            labelActiveFriend.Text = selectedItem[0].Text;
-            // clean up old chat, load in new chat messages
-            Chat.Text = "";
-            textboxMessage.Clear();
+            try 
+            {
+                var selectedItem = listviewFriends.SelectedItems;
+                labelActiveFriend.Text = selectedItem[0].Text;
+                _activeChatFriend = selectedItem[0].Text;
+                if (_activeChatFriend.Contains("Online"))
+                    pictureboxOnline.Visible = true;
+                else
+                    pictureboxOnline.Visible = false;
+                // clean up old chat, load in new chat messages
+                Chat.Clear();
+                textboxMessage.Clear();
+                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend, 10);
+                Chat.SelectionStart = Chat.Text.Length;
+                Chat.ScrollToCaret();
+            }
+            catch (Exception exception)
+            {
+                // utilizatorul trebuie sa dea click pe un user
+                Debug.Write(exception.Message);
+            }
         }
 
+        /// <summary>
+        /// Metodă ce se apelează atunci când se închide form-ul.
+        /// Doar îl ascunde.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ChatView_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Hide();
             e.Cancel = true;
         }
 
-        private void listviewFriends_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                var selectedItem = listviewFriends.SelectedItems;
-                labelActiveFriend.Text = selectedItem[0].Text;
-                // clean up old chat, load in new chat messages
-                Chat.Clear();
-                textboxMessage.Clear();
-            }
-            catch
-            {
-                // do something
-            }
-        }
-
+        /// <summary>
+        /// Apelat în momentul apăsării butonului de log-out.
+        /// Deconectează utilizatorul, prin intermediul presenterului.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             // log user out
             ChatApp.Instance.Presenter.Logout(LogInView.Instance.Control.Username);
         }
 
+        /// <summary>
+        /// Deschide form-ul de setări.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSettings_Click(object sender, EventArgs e)
         {
             var form = SettingsView.Instance;
@@ -176,6 +241,11 @@ namespace Chat_App.Views
             form.Show();
         }
 
+        /// <summary>
+        /// Deschide lista de cereri de prieteni.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonFriendRequests_Click(object sender, EventArgs e)
         {
             var form = FriendRequestsView.Instance;
@@ -184,12 +254,29 @@ namespace Chat_App.Views
             form.Show();
         }
 
+        /// <summary>
+        /// Elimină tot conținutul din orice tip de control.
+        /// Este apelat atunci când un user se loghează.
+        /// </summary>
         public void ClearChat()
         {
             listviewChat.Clear();
             listviewFriends.Clear();
             textboxMessage.Clear();
             _friendRequestsForm.FriendRequests.Clear();
+        }
+
+        /// <summary>
+        /// Adaugă funcționalitatea de a apăsa enter pentru a trimite mesajul în loc de butonul SEND.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textboxMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                buttonSend_Click(sender, e);
+            }
         }
     }
 }

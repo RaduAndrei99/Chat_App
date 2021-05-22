@@ -70,7 +70,7 @@ namespace Chat_App.Views
         private void radioButtonDark_Click(object sender, EventArgs e)
         {
             _manager.Theme = MaterialSkinManager.Themes.DARK;
-            LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_white_48dp;
+            //LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_white_48dp;
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Chat_App.Views
         private void radioButtonWhite_Click(object sender, EventArgs e)
         {
             _manager.Theme = MaterialSkinManager.Themes.LIGHT;
-            LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_black_48dp;
+            //LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_black_48dp;
         }
 
         /// <summary>

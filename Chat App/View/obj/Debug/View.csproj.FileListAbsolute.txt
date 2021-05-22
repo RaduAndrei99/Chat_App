@@ -8,3 +8,9 @@ C:\facultate\anul III\IP\IView\View\bin\Debug\ProxyServer.dll
 C:\facultate\anul III\IP\IView\View\obj\Debug\View.csproj.CopyComplete
 C:\facultate\anul III\IP\IView\View\obj\Debug\View.dll
 C:\facultate\anul III\IP\IView\View\obj\Debug\View.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\View\bin\Debug\View.dll
+C:\facultate\anul III\IP\Proiect\Chat App\View\bin\Debug\View.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.csproj.CoreCompileInputs.cache
+C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.csproj.CopyComplete
+C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.dll
+C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.pdb

@@ -38,12 +38,14 @@
             this.labelActiveFriend = new MaterialSkin.Controls.MaterialLabel();
             this.dividerChat = new MaterialSkin.Controls.MaterialDivider();
             this.listviewFriends = new System.Windows.Forms.ListView();
+            this.friendsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonSettings = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonLogout = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonFriendRequests = new MaterialSkin.Controls.MaterialRaisedButton();
             this.labelErrorMessage = new MaterialSkin.Controls.MaterialLabel();
             this.richtextboxChat = new System.Windows.Forms.RichTextBox();
-            this.friendsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pictureboxOnline = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureboxOnline)).BeginInit();
             this.SuspendLayout();
             // 
             // listviewChat
@@ -77,12 +79,12 @@
             // 
             // textboxMessage
             // 
-            this.textboxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textboxMessage.Location = new System.Drawing.Point(190, 390);
-            this.textboxMessage.Multiline = true;
+            this.textboxMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textboxMessage.Location = new System.Drawing.Point(190, 396);
             this.textboxMessage.Name = "textboxMessage";
-            this.textboxMessage.Size = new System.Drawing.Size(504, 30);
+            this.textboxMessage.Size = new System.Drawing.Size(504, 24);
             this.textboxMessage.TabIndex = 1;
+            this.textboxMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxMessage_KeyDown);
             // 
             // buttonSend
             // 
@@ -92,7 +94,7 @@
             this.buttonSend.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Primary = true;
-            this.buttonSend.Size = new System.Drawing.Size(84, 30);
+            this.buttonSend.Size = new System.Drawing.Size(84, 31);
             this.buttonSend.TabIndex = 2;
             this.buttonSend.Text = "Send";
             this.buttonSend.UseVisualStyleBackColor = true;
@@ -117,7 +119,7 @@
             this.labelActiveFriend.Depth = 0;
             this.labelActiveFriend.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelActiveFriend.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.labelActiveFriend.Location = new System.Drawing.Point(200, 84);
+            this.labelActiveFriend.Location = new System.Drawing.Point(223, 84);
             this.labelActiveFriend.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelActiveFriend.Name = "labelActiveFriend";
             this.labelActiveFriend.Size = new System.Drawing.Size(150, 30);
@@ -138,6 +140,7 @@
             // 
             this.listviewFriends.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.friendsColumn});
+            this.listviewFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listviewFriends.FullRowSelect = true;
             this.listviewFriends.HideSelection = false;
             this.listviewFriends.Location = new System.Drawing.Point(13, 170);
@@ -146,7 +149,12 @@
             this.listviewFriends.TabIndex = 7;
             this.listviewFriends.UseCompatibleStateImageBehavior = false;
             this.listviewFriends.View = System.Windows.Forms.View.List;
-            this.listviewFriends.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listviewFriends_MouseDoubleClick);
+            this.listviewFriends.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listviewFriends_DoubleClick);
+            // 
+            // friendsColumn
+            // 
+            this.friendsColumn.Text = "";
+            this.friendsColumn.Width = 250;
             // 
             // buttonSettings
             // 
@@ -205,23 +213,32 @@
             // 
             // richtextboxChat
             // 
+            this.richtextboxChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richtextboxChat.Location = new System.Drawing.Point(190, 127);
             this.richtextboxChat.Name = "richtextboxChat";
             this.richtextboxChat.ReadOnly = true;
+            this.richtextboxChat.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
             this.richtextboxChat.Size = new System.Drawing.Size(594, 257);
             this.richtextboxChat.TabIndex = 12;
             this.richtextboxChat.Text = "";
             // 
-            // friendsColumn
+            // pictureboxOnline
             // 
-            this.friendsColumn.Text = "";
-            this.friendsColumn.Width = 250;
+            this.pictureboxOnline.Image = global::Chat_App.Properties.Resources.Green_icon;
+            this.pictureboxOnline.Location = new System.Drawing.Point(190, 89);
+            this.pictureboxOnline.Name = "pictureboxOnline";
+            this.pictureboxOnline.Size = new System.Drawing.Size(20, 20);
+            this.pictureboxOnline.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureboxOnline.TabIndex = 13;
+            this.pictureboxOnline.TabStop = false;
+            this.pictureboxOnline.Visible = false;
             // 
             // ChatView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureboxOnline);
             this.Controls.Add(this.richtextboxChat);
             this.Controls.Add(this.labelErrorMessage);
             this.Controls.Add(this.buttonFriendRequests);
@@ -240,6 +257,7 @@
             this.Text = "Chat";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatView_FormClosing);
             this.Load += new System.EventHandler(this.ChatView_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureboxOnline)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,5 +280,6 @@
         private MaterialSkin.Controls.MaterialLabel labelErrorMessage;
         private System.Windows.Forms.RichTextBox richtextboxChat;
         private System.Windows.Forms.ColumnHeader friendsColumn;
+        private System.Windows.Forms.PictureBox pictureboxOnline;
     }
 }

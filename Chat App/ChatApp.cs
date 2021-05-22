@@ -85,18 +85,20 @@ namespace Chat_App
             this.Hide();
         }
 
-        public void AddMessageToChat(ChatAppClient.Messages.Message message)
+        public void AddMessageToChat(ChatAppClient.Messages.Message message, bool addToEnd)
         {
             /*ListViewItem newMessage = new ListViewItem();
             newMessage.Text = message.Msg;
             newMessage.ForeColor = Color.DarkOrange;*/
 
-            _chatForm.Chat.Text += message.Timestamp.ToString();
-            /*if (message.Seen)
-                _chatForm.Chat.Text += "[Seen]";
+            if (addToEnd)
+            {
+                _chatForm.Chat.Text += "[" + message.Timestamp.ToString() + "]" + message.From + ": " + message.Msg + '\n';
+            }
             else
-                _chatForm.Chat.Text += "[Not Seen]";*/
-            _chatForm.Chat.Text += message.Msg + '\n';
+            {
+                _chatForm.Chat.Text = "[" + message.Timestamp.ToString() + "]" + message.From + ": " + message.Msg + '\n' + _chatForm.Chat.Text;
+            }
             //_chatForm.Chat.Items.Add(newMessage);
         }
 
@@ -137,6 +139,7 @@ namespace Chat_App
         {
             _loginForm.Hide();
             _presenter.GetFriendsList(_loginForm.Control.Username);
+            _presenter.GetFriendRequests(_loginForm.Control.Username);
             _chatForm.Show();
         }
 
@@ -157,8 +160,13 @@ namespace Chat_App
         public void ShowErrorMessage(string message)
         {
             // this might need to be changed in the future
-            _loginForm.Control.ErrorLabel.Text = message;
-            _chatForm.ErrorLabel.Text = message;
+            if (_loginForm.Visible)
+                if (RegisterView.Instance.Visible)
+                    RegisterView.Instance.ErrorMessage.Text = message;
+                else
+                    _loginForm.Control.ErrorLabel.Text = message;
+            if (_chatForm.Visible)
+                _chatForm.ErrorLabel.Text = message;
         }
     }
 }
