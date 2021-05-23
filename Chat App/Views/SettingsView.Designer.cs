@@ -38,8 +38,15 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelTheme = new MaterialSkin.Controls.MaterialLabel();
             this.buttonApply = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.radiobuttonddMMMM = new MaterialSkin.Controls.MaterialRadioButton();
+            this.radiobuttonddMM = new MaterialSkin.Controls.MaterialRadioButton();
+            this.labelDateFormat = new MaterialSkin.Controls.MaterialLabel();
+            this.radiobuttonMMdd = new MaterialSkin.Controls.MaterialRadioButton();
+            this.radiobuttonMMMMdd = new MaterialSkin.Controls.MaterialRadioButton();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonBlue
@@ -119,7 +126,7 @@
             this.panel1.Controls.Add(this.labelColor);
             this.panel1.Controls.Add(this.radioButtonOrange);
             this.panel1.Controls.Add(this.radioButtonBlue);
-            this.panel1.Location = new System.Drawing.Point(26, 77);
+            this.panel1.Location = new System.Drawing.Point(20, 82);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(120, 157);
             this.panel1.TabIndex = 2;
@@ -142,7 +149,7 @@
             this.panel2.Controls.Add(this.labelTheme);
             this.panel2.Controls.Add(this.radioButtonDark);
             this.panel2.Controls.Add(this.radioButtonLight);
-            this.panel2.Location = new System.Drawing.Point(167, 77);
+            this.panel2.Location = new System.Drawing.Point(161, 82);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(120, 157);
             this.panel2.TabIndex = 3;
@@ -165,7 +172,7 @@
             this.buttonApply.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonApply.AutoSize = true;
             this.buttonApply.Depth = 0;
-            this.buttonApply.Location = new System.Drawing.Point(230, 249);
+            this.buttonApply.Location = new System.Drawing.Point(328, 245);
             this.buttonApply.MouseState = MaterialSkin.MouseState.HOVER;
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Primary = true;
@@ -175,11 +182,107 @@
             this.buttonApply.UseVisualStyleBackColor = true;
             this.buttonApply.Click += new System.EventHandler(this.buttonApply_Click);
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.radiobuttonddMMMM);
+            this.panel3.Controls.Add(this.radiobuttonddMM);
+            this.panel3.Controls.Add(this.labelDateFormat);
+            this.panel3.Controls.Add(this.radiobuttonMMdd);
+            this.panel3.Controls.Add(this.radiobuttonMMMMdd);
+            this.panel3.Location = new System.Drawing.Point(302, 82);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(133, 157);
+            this.panel3.TabIndex = 4;
+            // 
+            // radiobuttonddMMMM
+            // 
+            this.radiobuttonddMMMM.AutoSize = true;
+            this.radiobuttonddMMMM.Depth = 0;
+            this.radiobuttonddMMMM.Font = new System.Drawing.Font("Roboto", 10F);
+            this.radiobuttonddMMMM.Location = new System.Drawing.Point(13, 125);
+            this.radiobuttonddMMMM.Margin = new System.Windows.Forms.Padding(0);
+            this.radiobuttonddMMMM.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.radiobuttonddMMMM.MouseState = MaterialSkin.MouseState.HOVER;
+            this.radiobuttonddMMMM.Name = "radiobuttonddMMMM";
+            this.radiobuttonddMMMM.Ripple = true;
+            this.radiobuttonddMMMM.Size = new System.Drawing.Size(98, 30);
+            this.radiobuttonddMMMM.TabIndex = 5;
+            this.radiobuttonddMMMM.Text = "dd/MMMM";
+            this.radiobuttonddMMMM.UseVisualStyleBackColor = true;
+            this.radiobuttonddMMMM.Click += new System.EventHandler(this.radiobuttonddMMMM_Click);
+            // 
+            // radiobuttonddMM
+            // 
+            this.radiobuttonddMM.AutoSize = true;
+            this.radiobuttonddMM.Depth = 0;
+            this.radiobuttonddMM.Font = new System.Drawing.Font("Roboto", 10F);
+            this.radiobuttonddMM.Location = new System.Drawing.Point(13, 95);
+            this.radiobuttonddMM.Margin = new System.Windows.Forms.Padding(0);
+            this.radiobuttonddMM.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.radiobuttonddMM.MouseState = MaterialSkin.MouseState.HOVER;
+            this.radiobuttonddMM.Name = "radiobuttonddMM";
+            this.radiobuttonddMM.Ripple = true;
+            this.radiobuttonddMM.Size = new System.Drawing.Size(74, 30);
+            this.radiobuttonddMM.TabIndex = 4;
+            this.radiobuttonddMM.Text = "dd/MM";
+            this.radiobuttonddMM.UseVisualStyleBackColor = true;
+            this.radiobuttonddMM.Click += new System.EventHandler(this.radiobuttonddMM_Click);
+            // 
+            // labelDateFormat
+            // 
+            this.labelDateFormat.AutoSize = true;
+            this.labelDateFormat.Depth = 0;
+            this.labelDateFormat.Font = new System.Drawing.Font("Roboto", 11F);
+            this.labelDateFormat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.labelDateFormat.Location = new System.Drawing.Point(22, 16);
+            this.labelDateFormat.MouseState = MaterialSkin.MouseState.HOVER;
+            this.labelDateFormat.Name = "labelDateFormat";
+            this.labelDateFormat.Size = new System.Drawing.Size(92, 19);
+            this.labelDateFormat.TabIndex = 3;
+            this.labelDateFormat.Text = "Date Format";
+            // 
+            // radiobuttonMMdd
+            // 
+            this.radiobuttonMMdd.AutoSize = true;
+            this.radiobuttonMMdd.Checked = true;
+            this.radiobuttonMMdd.Depth = 0;
+            this.radiobuttonMMdd.Font = new System.Drawing.Font("Roboto", 10F);
+            this.radiobuttonMMdd.Location = new System.Drawing.Point(13, 35);
+            this.radiobuttonMMdd.Margin = new System.Windows.Forms.Padding(0);
+            this.radiobuttonMMdd.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.radiobuttonMMdd.MouseState = MaterialSkin.MouseState.HOVER;
+            this.radiobuttonMMdd.Name = "radiobuttonMMdd";
+            this.radiobuttonMMdd.Ripple = true;
+            this.radiobuttonMMdd.Size = new System.Drawing.Size(74, 30);
+            this.radiobuttonMMdd.TabIndex = 2;
+            this.radiobuttonMMdd.TabStop = true;
+            this.radiobuttonMMdd.Text = "MM/dd";
+            this.radiobuttonMMdd.UseVisualStyleBackColor = true;
+            this.radiobuttonMMdd.Click += new System.EventHandler(this.radiobuttonMMdd_Click);
+            // 
+            // radiobuttonMMMMdd
+            // 
+            this.radiobuttonMMMMdd.AutoSize = true;
+            this.radiobuttonMMMMdd.Depth = 0;
+            this.radiobuttonMMMMdd.Font = new System.Drawing.Font("Roboto", 10F);
+            this.radiobuttonMMMMdd.Location = new System.Drawing.Point(13, 65);
+            this.radiobuttonMMMMdd.Margin = new System.Windows.Forms.Padding(0);
+            this.radiobuttonMMMMdd.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.radiobuttonMMMMdd.MouseState = MaterialSkin.MouseState.HOVER;
+            this.radiobuttonMMMMdd.Name = "radiobuttonMMMMdd";
+            this.radiobuttonMMMMdd.Ripple = true;
+            this.radiobuttonMMMMdd.Size = new System.Drawing.Size(98, 30);
+            this.radiobuttonMMMMdd.TabIndex = 3;
+            this.radiobuttonMMMMdd.Text = "MMMM/dd";
+            this.radiobuttonMMMMdd.UseVisualStyleBackColor = true;
+            this.radiobuttonMMMMdd.Click += new System.EventHandler(this.radiobuttonMMMMdd_Click);
+            // 
             // SettingsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 300);
+            this.ClientSize = new System.Drawing.Size(447, 300);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.buttonApply);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -192,6 +295,8 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +312,11 @@
         private System.Windows.Forms.Panel panel2;
         private MaterialSkin.Controls.MaterialLabel labelTheme;
         private MaterialSkin.Controls.MaterialRaisedButton buttonApply;
+        private System.Windows.Forms.Panel panel3;
+        private MaterialSkin.Controls.MaterialLabel labelDateFormat;
+        private MaterialSkin.Controls.MaterialRadioButton radiobuttonMMdd;
+        private MaterialSkin.Controls.MaterialRadioButton radiobuttonMMMMdd;
+        private MaterialSkin.Controls.MaterialRadioButton radiobuttonddMMMM;
+        private MaterialSkin.Controls.MaterialRadioButton radiobuttonddMM;
     }
 }

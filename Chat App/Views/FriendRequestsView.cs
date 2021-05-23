@@ -52,8 +52,8 @@ namespace Chat_App.Views
         {
             if (listviewFriendRequests.SelectedItems.Count > 0)
             {
-                listviewFriendRequests.Items.Remove(listviewFriendRequests.SelectedItems[0]);
                 ChatApp.Instance.Presenter.AcceptFriendRequest(listviewFriendRequests.SelectedItems[0].Text, LogInView.Instance.Control.Username);
+                listviewFriendRequests.Items.Remove(listviewFriendRequests.SelectedItems[0]);
             }
         }
     }

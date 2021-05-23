@@ -1,4 +1,5 @@
 ﻿using MaterialSkin;
+using Model.Commons;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -126,5 +127,44 @@ namespace Chat_App.Views
             this.Close();
         }
 
+        /// <summary>
+        /// Setează formatul de dată ca MM/dd/yyyy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radiobuttonMMdd_Click(object sender, EventArgs e)
+        {
+            ChatApp.Instance.DateFormat = DateFormat.MonthDayYearDateFormat;
+        }
+
+        /// <summary>
+        /// Setează formatul de dată ca MMMM/dd/yyyy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radiobuttonMMMMdd_Click(object sender, EventArgs e)
+        {
+            ChatApp.Instance.DateFormat = DateFormat.MonthNameDayYear;
+        }
+
+        /// <summary>
+        /// Setează formatul de dată ca dd/MM/yyyy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radiobuttonddMM_Click(object sender, EventArgs e)
+        {
+            ChatApp.Instance.DateFormat = DateFormat.DayMonthYear;
+        }
+
+        /// <summary>
+        /// Setează formatul de dată ca dd/MMMM/yyyy.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radiobuttonddMMMM_Click(object sender, EventArgs e)
+        {
+            ChatApp.Instance.DateFormat = DateFormat.DayMonthNameYear;
+        }
     }
 }

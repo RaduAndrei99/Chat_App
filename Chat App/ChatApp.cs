@@ -5,6 +5,7 @@ using System;
 using ChatAppClient.Messages;
 using System.Windows.Forms;
 using System.Drawing;
+using Model.Commons;
 
 namespace Chat_App
 {
@@ -35,6 +36,11 @@ namespace Chat_App
         private IPresenterServer _presenter;
 
         /// <summary>
+        /// Referință către un DateFormat ce are rolul de a afișa data într-o anumită formă.
+        /// </summary>
+        private DateFormat _dateFormat = DateFormat.MonthDayYearDateFormat;
+
+        /// <summary>
         /// Implementarea de singleton. Există o singură instanțiere a clasei în tot programul.
         /// </summary>
         public static ChatApp Instance
@@ -55,6 +61,22 @@ namespace Chat_App
             get
             {
                 return _presenter;
+            }
+        }
+
+        /// <summary>
+        /// Proprietate publică care permite accesul formatului de data.
+        /// </summary>
+        public DateFormat DateFormat
+        {
+            get
+            {
+                return _dateFormat;
+            }
+
+            set
+            {
+                _dateFormat = value;
             }
         }
 
@@ -93,11 +115,11 @@ namespace Chat_App
 
             if (addToEnd)
             {
-                _chatForm.Chat.Text += "[" + message.Timestamp.ToString() + "]" + message.From + ": " + message.Msg + '\n';
+                _chatForm.Chat.Text += "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n';
             }
             else
             {
-                _chatForm.Chat.Text = "[" + message.Timestamp.ToString() + "]" + message.From + ": " + message.Msg + '\n' + _chatForm.Chat.Text;
+                _chatForm.Chat.Text = "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n' + _chatForm.Chat.Text;
             }
             //_chatForm.Chat.Items.Add(newMessage);
         }
@@ -110,7 +132,7 @@ namespace Chat_App
         public void AddFriendList(string friend)
         {
             ListViewItem newFriend = new ListViewItem();
-            newFriend.Text = friend;
+            newFriend.Text = friend + "[Offline]";
             newFriend.ForeColor = Color.OrangeRed;
             _chatForm.FriendList.Items.Add(newFriend);
         }

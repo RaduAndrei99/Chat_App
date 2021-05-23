@@ -135,7 +135,7 @@ namespace Chat_App.Views
                 if (textboxMessage.Text.Length > 0)
                 {
                     Chat.Text += 
-                        "[" + DateTime.Now.ToString() + "]" + "[Not Seen] " + 
+                        "[" + DateTime.Now.ToString(ChatApp.Instance.DateFormat.ToString() + " HH:mm") + "]" + "[Not Seen] " + 
                         LogInView.Instance.Control.Username + ": " + textboxMessage.Text + '\n';
                     Chat.SelectionStart = Chat.Text.Length;
                     Chat.ScrollToCaret();

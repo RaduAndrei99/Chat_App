@@ -149,8 +149,18 @@ namespace Chat_App.Views
             {
                 if (IsValidUsername(Username) && IsValidPassword(Password) && IsValidEmail(Email))
                 {
-                    string firstName = EnteredName.Split(' ')[0];
-                    string lastName = EnteredName.Split(' ')[1];
+                    string firstName;
+                    string lastName;
+                    if ((EnteredName.Split(' ')).Length> 1)
+                    {
+                        firstName = EnteredName.Split(' ')[0];
+                        lastName = EnteredName.Split(' ')[1];
+                    }
+                    else
+                    {
+                        firstName = EnteredName;
+                        lastName = " ";
+                    }
                     ChatApp.Instance.Presenter.Register(Username, Password, firstName, lastName, Email, Birthdate);
                 }
                 else
