@@ -178,7 +178,7 @@ namespace Chat_App
         public void Login()
         {
             _loginForm.Hide();
-            _chatForm.Name = "Chat(" + _loginForm.Control.Username + ")";
+            _chatForm.Text = "Chat(" + _loginForm.Control.Username + ")";
             _presenter.GetFriendsList(_loginForm.Control.Username);
             _presenter.GetFriendRequests(_loginForm.Control.Username);
             _chatForm.Show();

@@ -193,7 +193,7 @@ namespace Chat_App.Views
                 // clean up old chat, load in new chat messages
                 Chat.Clear();
                 textboxMessage.Clear();
-                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend, 10);
+                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend.Split('[')[0], 10);
                 Chat.SelectionStart = Chat.Text.Length;
                 Chat.ScrollToCaret();
             }
