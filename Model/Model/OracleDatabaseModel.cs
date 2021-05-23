@@ -58,7 +58,7 @@ namespace Model
         /// <param name="hashedPassword">Parola utilizatorului</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
-        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordHashedRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul exista deja in baza de date</para>
         /// </exception>
         /// <returns></returns>
@@ -67,7 +67,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            if (!Regex.IsMatch(hashedPassword, Constraints.PasswordRegex))
+            if (!Regex.IsMatch(hashedPassword, Constraints.PasswordHashedRegex))
                 throw new WrongHashedPasswordFormatException(hashedPassword);
 
             uint connectionId = _databaseConnection.Connect();
@@ -104,7 +104,7 @@ namespace Model
         /// <param name="newUsername">Noul nume al utilizatorului</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
-        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordHashedRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
         /// </exception>
         /// <returns></returns>
@@ -155,8 +155,8 @@ namespace Model
         /// <param name="newPassword">Noul nume al utilizatorului</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
-        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
-        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordHashedRegex"/></para>
+        /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date.</para>
         /// </exception>
         /// <returns></returns>
         public void ChangeUserPassword(string username, string newPassword)
@@ -164,7 +164,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            if (!Regex.IsMatch(newPassword, Constraints.PasswordRegex))
+            if (!Regex.IsMatch(newPassword, Constraints.PasswordHashedRegex))
                 throw new WrongHashedPasswordFormatException(newPassword);
 
             long usernameId = GetUsernameId(username);
@@ -197,7 +197,7 @@ namespace Model
         /// <param name="username">Numele actual de utilizator al persoanei</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
-        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordHashedRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
         /// </exception>
         /// <returns></returns>
@@ -1088,7 +1088,7 @@ namespace Model
         /// <param name="hashedPassword">Parola unui utilizator</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
-        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
+        /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordHashedRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
         /// </exception>
         /// <returns>True daca datele utilizatorului sunt corecte sau False daca nu</returns>
@@ -1097,7 +1097,7 @@ namespace Model
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            if (!Regex.IsMatch(hashedPassword, Constraints.PasswordRegex))
+            if (!Regex.IsMatch(hashedPassword, Constraints.PasswordHashedRegex))
                 throw new WrongHashedPasswordFormatException(hashedPassword);
 
             long usernameId = GetUsernameId(username);
@@ -1174,11 +1174,11 @@ namespace Model
                 string cmdString = null;
                 if (bellowThisMessageId > -1)
                 {
-                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {bellowThisMessageId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
+                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {bellowThisMessageId} ORDER BY Message_id DESC FETCH NEXT {howManyMessages} ROWS ONLY;";
                 }
                 else if (bellowThisMessageId == -1)
                 {
-                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND ROWNUM <= {howManyMessages} ORDER BY Message_id DESC";
+                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} ORDER BY Message_id DESC FETCH NEXT {howManyMessages} ROWS ONLY";
                 }
                 else
                     throw new Exception("Invalid message id.");
