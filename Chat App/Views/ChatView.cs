@@ -102,7 +102,7 @@ namespace Chat_App.Views
         {
             get
             {
-                return labelActiveFriend
+                return labelActiveFriend;
             }
         }
 
@@ -234,6 +234,7 @@ namespace Chat_App.Views
         /// <param name="e"></param>
         private void ChatView_FormClosing(object sender, FormClosingEventArgs e)
         {
+            buttonLogout_Click(sender, e);
             this.Hide();
             e.Cancel = true;
         }

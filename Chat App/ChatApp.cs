@@ -177,6 +177,8 @@ namespace Chat_App
                     {
                         // set offline
                         friend.Text = friend.Text.Replace("[Online]", "[Offline]");
+                        if (_chatForm.ActiveFriend.Text.Contains(username))
+                            _chatForm.OnlineIcon.Visible = false;
                     }
                 }
             }
@@ -247,7 +249,7 @@ namespace Chat_App
         /// <param name="e"></param>
         private void ChatApp_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ((ProxyServer)_presenter).CloseServerConnection();
+            _presenter.CloseConnection("");
         }
     }
 }
