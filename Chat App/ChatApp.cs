@@ -124,11 +124,20 @@ namespace Chat_App
             //_chatForm.Chat.Items.Add(newMessage);
         }
 
+        /// <summary>
+        /// TODO
+        /// Trebuie să modifice chat-ul de 
+        /// </summary>
+        /// <param name="username"></param>
         public void FriendHasSeen(string username)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Adaugă un prieten în lista de prieteni.
+        /// </summary>
+        /// <param name="friend"></param>
         public void AddFriendList(string friend)
         {
             ListViewItem newFriend = new ListViewItem();
@@ -137,6 +146,11 @@ namespace Chat_App
             _chatForm.FriendList.Items.Add(newFriend);
         }
 
+        /// <summary>
+        /// Schimbă status-ul prietenului din online în offline sau invers.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="status"></param>
         public void ChangeFriendStatus(string username, bool status)
         {
             foreach (ListViewItem friend in _chatForm.FriendList.SelectedItems)
@@ -157,20 +171,32 @@ namespace Chat_App
             }
         }
 
+        /// <summary>
+        /// Loghează utilizatorul și ia toate datele necesare care trebuie puse
+        /// in view-ul ChatView.
+        /// </summary>
         public void Login()
         {
             _loginForm.Hide();
+            _chatForm.Name = "Chat(" + _loginForm.Control.Username + ")";
             _presenter.GetFriendsList(_loginForm.Control.Username);
             _presenter.GetFriendRequests(_loginForm.Control.Username);
             _chatForm.Show();
         }
 
+        /// <summary>
+        /// Deloghează utilizatorul.
+        /// </summary>
         public void Logout()
         {
             _chatForm.Hide();
             _loginForm.Show();
         }
 
+        /// <summary>
+        /// Adaugă un prieten în lista de cereri de prietenie.
+        /// </summary>
+        /// <param name="username"></param>
         public void AddFriendRequest(string username)
         {
             ListViewItem newFriend = new ListViewItem();
@@ -179,6 +205,10 @@ namespace Chat_App
             FriendRequestsView.Instance.FriendRequests.Items.Add(newFriend);
         }
 
+        /// <summary>
+        /// Arată mesajele de eroare care vin de la server în funcție de form-ul deschis.
+        /// </summary>
+        /// <param name="message"></param>
         public void ShowErrorMessage(string message)
         {
             // this might need to be changed in the future
@@ -189,6 +219,24 @@ namespace Chat_App
                     _loginForm.Control.ErrorLabel.Text = message;
             if (_chatForm.Visible)
                 _chatForm.ErrorLabel.Text = message;
+        }
+
+        /// <summary>
+        /// Se apelează atunci când înregistrarea e corectă.
+        /// </summary>
+        public void AcceptRegister()
+        {
+            RegisterView.Instance.Close();
+        }
+
+        /// <summary>
+        /// Închide conexiunea cu serverul atunci când se închide aplicația.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChatApp_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ((ProxyServer)_presenter).CloseServerConnection();
         }
     }
 }

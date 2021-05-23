@@ -14,3 +14,4 @@ C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.csproj.CoreCompile
 C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.csproj.CopyComplete
 C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.dll
 C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.pdb
+C:\facultate\anul III\IP\Proiect\Chat App\View\obj\Debug\View.csprojAssemblyReference.cache

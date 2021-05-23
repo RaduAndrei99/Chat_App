@@ -38,6 +38,7 @@
             this.Enabled = false;
             this.Name = "ChatApp";
             this.Text = "ChatApp";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatApp_FormClosing);
             this.ResumeLayout(false);
 
         }
