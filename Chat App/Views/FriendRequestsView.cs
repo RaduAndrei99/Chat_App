@@ -96,6 +96,7 @@ namespace Chat_App.Views
             {
                 ChatApp.Instance.Presenter.AcceptFriendRequest(listviewFriendRequests.SelectedItems[0].Text, LogInView.Instance.Control.Username);
                 listviewFriendRequests.Items.Remove(listviewFriendRequests.SelectedItems[0]);
+                this.Close();
             }
         }
     }

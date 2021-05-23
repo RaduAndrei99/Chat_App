@@ -204,6 +204,8 @@ namespace Chat_App
             _loginForm.Hide();
             _chatForm.Text = "Chat(" + _loginForm.Control.Username + ")";
             _chatForm.ClearChat();
+            _chatForm.Chat.Text = "";
+            _chatForm.OnlineIcon.Visible = false;
             _presenter.GetFriendsList(_loginForm.Control.Username);
             _presenter.GetFriendRequests(_loginForm.Control.Username);
             _chatForm.Show();
