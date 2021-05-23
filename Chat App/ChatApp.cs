@@ -162,19 +162,19 @@ namespace Chat_App
         /// <param name="status"></param>
         public void ChangeFriendStatus(string username, bool status)
         {
-            foreach (ListViewItem friend in _chatForm.FriendList.SelectedItems)
+            foreach (ListViewItem friend in _chatForm.FriendList.Items)
             {
                 if (friend.Text.Contains(username))
                 {
                     if (status)
                     {
                         // set online
-                        friend.Text.Replace("[Offline]", "[Online]");
+                        friend.Text = friend.Text.Replace("[Offline]", "[Online]");
                     }
                     else
                     {
                         // set offline
-                        friend.Text.Replace("[Online]", "[Offline]");
+                        friend.Text = friend.Text.Replace("[Online]", "[Offline]");
                     }
                 }
             }
