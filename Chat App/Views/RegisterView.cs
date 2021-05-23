@@ -24,6 +24,11 @@ namespace Chat_App.Views
         private static RegisterView _instance;
 
         /// <summary>
+        /// Regex pentru validarea numelui.
+        /// </summary>
+        private static string regexName = "/^[a-z,.'-]+$/i";
+
+        /// <summary>
         /// Proprietate publică care accesează instanțierea unică.
         /// </summary>
         public static RegisterView Instance
@@ -37,13 +42,24 @@ namespace Chat_App.Views
         }
 
         /// <summary>
-        /// Proprietate publică pentru a accesa numele utilizatorului.
+        /// Proprietate publică pentru a accesa prenumele utilizatorului.
         /// </summary>
-        public string EnteredName
+        public string FirstName
         {
             get
             {
-                return textfieldName.Text;
+                return textfieldFirstName.Text;
+            }
+        }
+
+        /// <summary>
+        /// Proprietate publică pentru a accesa numele utilizatorului.
+        /// </summary>
+        public string LastName
+        {
+            get
+            {
+                return textfieldLastName.Text;
             }
         }
 
@@ -149,19 +165,10 @@ namespace Chat_App.Views
             {
                 if (IsValidUsername(Username) && IsValidPassword(Password) && IsValidEmail(Email))
                 {
-                    string firstName;
-                    string lastName;
-                    if ((EnteredName.Split(' ')).Length> 1)
-                    {
-                        firstName = EnteredName.Split(' ')[0];
-                        lastName = EnteredName.Split(' ')[1];
-                    }
+                    if (IsValidName(FirstName) && IsValidName(LastName))
+                        ChatApp.Instance.Presenter.Register(Username, Password, FirstName, LastName, Email, Birthdate);
                     else
-                    {
-                        firstName = EnteredName;
-                        lastName = " ";
-                    }
-                    ChatApp.Instance.Presenter.Register(Username, Password, firstName, lastName, Email, Birthdate);
+                        labelErorrMessage.Text = "First name sau last name incorecte!";
                 }
                 else
                 {
@@ -202,6 +209,16 @@ namespace Chat_App.Views
         private bool IsValidEmail(string email)
         {
             return new Regex(Constraints.EmailRegex).IsMatch(email);
+        }
+
+        /// <summary>
+        /// Regex care validează numele.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private bool IsValidName(string name)
+        {
+            return new Regex(regexName).IsMatch(name);
         }
     }
 }
