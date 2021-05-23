@@ -132,15 +132,15 @@ namespace Chat_App
             /*ListViewItem newMessage = new ListViewItem();
             newMessage.Text = message.Msg;
             newMessage.ForeColor = Color.DarkOrange;*/
-
-            if (addToEnd)
-            {
-                _chatForm.Chat.Text += "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n';
-            }
-            else
-            {
-                _chatForm.Chat.Text = "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n' + _chatForm.Chat.Text;
-            }
+            if (message.From == _chatForm.ActiveFriend.Text.Split('[')[0])
+                if (addToEnd)
+                {
+                    _chatForm.Chat.Text += "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n';
+                }
+                else
+                {
+                    _chatForm.Chat.Text = "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n' + _chatForm.Chat.Text;
+                }
             //_chatForm.Chat.Items.Add(newMessage);
         }
 
@@ -175,7 +175,7 @@ namespace Chat_App
         {
             foreach (ListViewItem friend in _chatForm.FriendList.Items)
             {
-                if (friend.Text.Contains(username))
+                if (friend.Text.Split('[')[0] == username)
                 {
                     if (status)
                     {
