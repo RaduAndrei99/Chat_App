@@ -20,10 +20,10 @@ namespace Model.Commons
         public static readonly string UsernameRegex = @"^\w{3,}$";
 
         /// <summary>Constrangerea numelui de familie si a prenumelui utilizatorului din baza de date</summary>
-        public static readonly string PersonalNameRegex = @"^[^\d!”#$%&\’()*+,-.\\/:;<=>?@[\]^_{|}~\r\n\t\f\v]+[^ ]$";
+        public static readonly string PersonalNameRegex = @"^\D+$";
 
         /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
-        public static readonly string PasswordRegex = @"^\S+{8,16}$";
+        public static readonly string PasswordRegex = @"^\S{8,16}$";
 
         /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
         public static readonly string PasswordHashedRegex = @"^\S{1,64}$";

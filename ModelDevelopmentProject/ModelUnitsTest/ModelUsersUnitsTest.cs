@@ -40,18 +40,10 @@ namespace ModelUnitsTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(WrongPasswordFormatException))]
+        [ExpectedException(typeof(WrongHashedPasswordFormatException))]
         public void WrongPasswordFormatTest()
         {
             const string password = "134 67 \n9";
-            _oracleModel.AddNewUser(_username, password);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(WrongPasswordFormatException))]
-        public void PasswordTooLongTest()
-        {
-            const string password = "12345678910111213141516";
             _oracleModel.AddNewUser(_username, password);
         }
 

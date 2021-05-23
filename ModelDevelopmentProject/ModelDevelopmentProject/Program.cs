@@ -21,6 +21,9 @@ namespace ModelDevelopmentProject
         static void Main(string[] args)
         {
             IModel oracleModel = new OracleDatabaseModel(UserId, Password, Hostname, Port, Sid, Pooling);
+
+            oracleModel.RegisterUser("CCCCCCCCCCCCCCCCC", "asdddddddddddddddddd", "dddddddddddddddddddddddddddddd", "a@gmail.com", DateTime.UtcNow);
         }
+
     }
 }
