@@ -158,6 +158,11 @@ namespace Chat_App.Views
             e.Cancel = true;
         }
 
+        /// <summary>
+        /// Trimite către presenter datele introduse pentru a fi înregistrat utilizatorul.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonRegister_Click(object sender, EventArgs e)
         {
             // validate data and then send to presenter
