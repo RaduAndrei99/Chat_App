@@ -156,5 +156,22 @@ namespace Chat_App.Views
         {
             return new Regex(Model.Commons.Constraints.PasswordRegex).IsMatch(password);
         }
+
+        /// <summary>
+        /// Deschide help-ul sub forma unui fisier .chm.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonHelp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("Chat App.chm");
+            }
+            catch
+            {
+                labelErrorMessage.Text = "Can not find help file.";
+            }
+        }
     }
 }

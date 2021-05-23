@@ -161,7 +161,7 @@ namespace Chat_App.Views
             listviewChat.Items.Add(newMessage);*/
 
             // check that a friend is selected and the message isn't empty
-            if (FriendList.Items.Count != 0)
+            if (FriendList.SelectedItems.Count != 0)
             {
                 if (textboxMessage.Text.Length > 0)
                 {

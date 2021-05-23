@@ -8,6 +8,7 @@
  *  ***********************************************************************/
 
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 using ChatAppClient;
@@ -23,6 +24,14 @@ namespace Chat_App
         [STAThread]
         static void Main()
         {
+
+
+            bool result;
+            var mutex = new Mutex(true, "Chat App", out result);
+
+            if (!result)
+                return;
+
             Application.SetCompatibleTextRenderingDefault(false);
 
             IPresenterServer presenter = new ProxyServer(ChatApp.Instance);
@@ -30,6 +39,8 @@ namespace Chat_App
             ((ProxyServer)presenter).Run();
             Application.EnableVisualStyles();
             Application.Run(ChatApp.Instance);
+
+            GC.KeepAlive(mutex);
         }
     }
 }

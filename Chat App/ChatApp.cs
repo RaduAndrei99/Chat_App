@@ -146,7 +146,8 @@ namespace Chat_App
 
         /// <summary>
         /// TODO
-        /// Trebuie să modifice chat-ul de 
+        /// Trebuie să modifice seen-ul in chat.
+        /// In următoarea versiune.
         /// </summary>
         /// <param name="username"></param>
         public void FriendHasSeen(string username)

@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>outline_mail_black_24dp.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ChatAppClient">
       <HintPath>.\ChatAppClient.dll</HintPath>
@@ -173,6 +176,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="outline_mail_black_24dp.ico" />
     <Content Include="Resources\Green_icon.png" />
     <Content Include="Resources\logo.png" />
     <Content Include="Resources\outline_account_circle_black_48dp.png" />

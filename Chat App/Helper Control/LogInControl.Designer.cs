@@ -39,6 +39,7 @@
             this.buttonRegister = new MaterialSkin.Controls.MaterialRaisedButton();
             this.buttonSettings = new MaterialSkin.Controls.MaterialRaisedButton();
             this.labelErrorMessage = new MaterialSkin.Controls.MaterialLabel();
+            this.buttonHelp = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureUser)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,7 +57,7 @@
             // 
             this.labelUsername.Depth = 0;
             this.labelUsername.Font = new System.Drawing.Font("Roboto", 11F);
-            this.labelUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.labelUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelUsername.Location = new System.Drawing.Point(120, 250);
             this.labelUsername.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelUsername.Name = "labelUsername";
@@ -69,7 +70,7 @@
             // 
             this.labelPassword.Depth = 0;
             this.labelPassword.Font = new System.Drawing.Font("Roboto", 11F);
-            this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.labelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelPassword.Location = new System.Drawing.Point(120, 310);
             this.labelPassword.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelPassword.Name = "labelPassword";
@@ -151,7 +152,7 @@
             // 
             this.labelErrorMessage.Depth = 0;
             this.labelErrorMessage.Font = new System.Drawing.Font("Roboto", 11F);
-            this.labelErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.labelErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelErrorMessage.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.labelErrorMessage.Location = new System.Drawing.Point(3, 225);
             this.labelErrorMessage.MouseState = MaterialSkin.MouseState.HOVER;
@@ -160,10 +161,26 @@
             this.labelErrorMessage.TabIndex = 8;
             this.labelErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // buttonHelp
+            // 
+            this.buttonHelp.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonHelp.AutoSize = true;
+            this.buttonHelp.Depth = 0;
+            this.buttonHelp.Location = new System.Drawing.Point(293, 467);
+            this.buttonHelp.MouseState = MaterialSkin.MouseState.HOVER;
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Primary = true;
+            this.buttonHelp.Size = new System.Drawing.Size(95, 30);
+            this.buttonHelp.TabIndex = 9;
+            this.buttonHelp.Text = "Help";
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            // 
             // LogInControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonHelp);
             this.Controls.Add(this.labelErrorMessage);
             this.Controls.Add(this.buttonSettings);
             this.Controls.Add(this.buttonRegister);
@@ -193,5 +210,6 @@
         private MaterialSkin.Controls.MaterialRaisedButton buttonRegister;
         private MaterialSkin.Controls.MaterialRaisedButton buttonSettings;
         private MaterialSkin.Controls.MaterialLabel labelErrorMessage;
+        private MaterialSkin.Controls.MaterialRaisedButton buttonHelp;
     }
 }
