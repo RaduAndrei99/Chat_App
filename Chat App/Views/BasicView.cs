@@ -1,4 +1,13 @@
-﻿using MaterialSkin;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: BasicView.cs                                                   *
+ *                                                                         *
+ *  Descriere: Form-ul care este moștenit de restul form-urilor.           *
+ *  ***********************************************************************/
+
+using MaterialSkin;
 using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
@@ -23,7 +32,7 @@ namespace Chat_App.Views
         /// Se ocupă de culorile și tema aplicației.
         /// </summary>
         protected readonly MaterialSkinManager _manager;
-        
+
         /// <summary>
         /// Constructor.
         /// Setează o temă implicită.
@@ -33,8 +42,14 @@ namespace Chat_App.Views
             InitializeComponent();
             _manager = MaterialSkin.MaterialSkinManager.Instance;
             _manager.AddFormToManage(this);
-            _manager.Theme = MaterialSkinManager.Themes.DARK;
-            _manager.ColorScheme = new ColorScheme(Primary.DeepOrange300, Primary.DeepOrange500, Primary.DeepOrange500, Accent.DeepOrange700, TextShade.BLACK);
+            if (Properties.Settings.Default.theme == 1)
+                _manager.Theme = MaterialSkinManager.Themes.DARK;
+            else
+                _manager.Theme = MaterialSkinManager.Themes.LIGHT;
+            if (Properties.Settings.Default.color == 1)
+                _manager.ColorScheme = SettingsView.orangeScheme;
+            else
+                _manager.ColorScheme = SettingsView.blueScheme;
         }
     }
 }

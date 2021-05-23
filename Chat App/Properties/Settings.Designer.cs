@@ -25,13 +25,37 @@ namespace Chat_App.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int color {
             get {
-                return ((string)(this["Setting"]));
+                return ((int)(this["color"]));
             }
             set {
-                this["Setting"] = value;
+                this["color"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int theme {
+            get {
+                return ((int)(this["theme"]));
+            }
+            set {
+                this["theme"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int dateFormat {
+            get {
+                return ((int)(this["dateFormat"]));
+            }
+            set {
+                this["dateFormat"] = value;
             }
         }
     }

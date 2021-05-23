@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: FriendRequestsView.cs                                          *
+ *                                                                         *
+ *  Descriere: Form-ul ce conține lista de cereri de prietenie             *
+ *  ***********************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

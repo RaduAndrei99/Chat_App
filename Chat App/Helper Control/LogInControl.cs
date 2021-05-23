@@ -1,4 +1,15 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: LogInControl.cs                                                *
+ *                                                                         *
+ *  Descriere: Un control custom ce conține toate controller-urile din     *
+ *  interfața de log-in                                                    *
+ *  ***********************************************************************/
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;

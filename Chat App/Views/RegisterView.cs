@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: RegisterView.cs                                                *
+ *                                                                         *
+ *  Descriere: Form-ul ce conține datele de înregistrare                   *
+ *  ***********************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,11 +31,6 @@ namespace Chat_App.Views
         /// Referință statică privată pentru implementarea singleton.
         /// </summary>
         private static RegisterView _instance;
-
-        /// <summary>
-        /// Regex pentru validarea numelui.
-        /// </summary>
-        private static string regexName = "/^[a-z,.'-]+$/i";
 
         /// <summary>
         /// Proprietate publică care accesează instanțierea unică.
@@ -223,7 +227,7 @@ namespace Chat_App.Views
         /// <returns></returns>
         private bool IsValidName(string name)
         {
-            return new Regex(regexName).IsMatch(name);
+            return new Regex(Model.Commons.Constraints.PersonalNameRegex).IsMatch(name);
         }
     }
 }

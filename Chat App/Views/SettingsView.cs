@@ -1,4 +1,15 @@
-﻿using MaterialSkin;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: SettingsView.cs                                                *
+ *                                                                         *
+ *  Descriere: Conține setările aplicației, de la temă, culori și formatul *
+ *  datelor                                                                *
+ *  ***********************************************************************/
+
+
+using MaterialSkin;
 using Model.Commons;
 using System;
 using System.Collections.Generic;
@@ -51,6 +62,29 @@ namespace Chat_App.Views
         private SettingsView() : base()
         {
             InitializeComponent();
+            if (Properties.Settings.Default.theme == 1)
+                radioButtonDark.Checked = true;
+            else
+                radioButtonLight.Checked = true;
+            if (Properties.Settings.Default.color == 1)
+                radioButtonOrange.Checked = true;
+            else
+                radioButtonBlue.Checked = true;
+            switch (Properties.Settings.Default.dateFormat)
+            {
+                case 1:
+                    radiobuttonMMdd.Checked = true;
+                    break;
+                case 2:
+                    radiobuttonMMMMdd.Checked = true;
+                    break;
+                case 3:
+                    radiobuttonddMM.Checked = true;
+                    break;
+                case 4:
+                    radiobuttonddMMMM.Checked = true;
+                    break;
+            }
         }
 
         /// <summary>
@@ -71,6 +105,7 @@ namespace Chat_App.Views
         private void radioButtonDark_Click(object sender, EventArgs e)
         {
             _manager.Theme = MaterialSkinManager.Themes.DARK;
+            Properties.Settings.Default.theme = 1;
             //LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_white_48dp;
         }
 
@@ -82,6 +117,7 @@ namespace Chat_App.Views
         private void radioButtonWhite_Click(object sender, EventArgs e)
         {
             _manager.Theme = MaterialSkinManager.Themes.LIGHT;
+            Properties.Settings.Default.theme = 2;
             //LogInView.Instance.Control.Image.Image = Properties.Resources.outline_account_circle_black_48dp;
         }
 
@@ -93,6 +129,7 @@ namespace Chat_App.Views
         private void radioButtonOrange_Click(object sender, EventArgs e)
         {
             _manager.ColorScheme = orangeScheme;
+            Properties.Settings.Default.color = 1;
         }
 
         /// <summary>
@@ -103,6 +140,7 @@ namespace Chat_App.Views
         private void radioButtonBlue_CheckedChanged(object sender, EventArgs e)
         {
             _manager.ColorScheme = blueScheme;
+            Properties.Settings.Default.color = 2;
         }
 
         /// <summary>
@@ -124,6 +162,7 @@ namespace Chat_App.Views
         /// <param name="e"></param>
         private void buttonApply_Click(object sender, EventArgs e)
         {
+            Properties.Settings.Default.Save();
             this.Close();
         }
 
@@ -135,6 +174,7 @@ namespace Chat_App.Views
         private void radiobuttonMMdd_Click(object sender, EventArgs e)
         {
             ChatApp.Instance.DateFormat = DateFormat.MonthDayYearDateFormat;
+            Properties.Settings.Default.dateFormat = 1;
         }
 
         /// <summary>
@@ -145,6 +185,7 @@ namespace Chat_App.Views
         private void radiobuttonMMMMdd_Click(object sender, EventArgs e)
         {
             ChatApp.Instance.DateFormat = DateFormat.MonthNameDayYear;
+            Properties.Settings.Default.dateFormat = 2;
         }
 
         /// <summary>
@@ -155,6 +196,7 @@ namespace Chat_App.Views
         private void radiobuttonddMM_Click(object sender, EventArgs e)
         {
             ChatApp.Instance.DateFormat = DateFormat.DayMonthYear;
+            Properties.Settings.Default.dateFormat = 3;
         }
 
         /// <summary>
@@ -165,6 +207,7 @@ namespace Chat_App.Views
         private void radiobuttonddMMMM_Click(object sender, EventArgs e)
         {
             ChatApp.Instance.DateFormat = DateFormat.DayMonthNameYear;
+            Properties.Settings.Default.dateFormat = 4;
         }
     }
 }

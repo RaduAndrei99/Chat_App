@@ -1,4 +1,15 @@
-﻿using Chat_App.Views;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: ChatApp.cs                                                     *
+ *                                                                         *
+ *  Descriere: Conține form-ul care încapsulează toate view-urile și       *
+ *  implementarea View-ului din MVP                                        *
+ *  ***********************************************************************/
+
+
+using Chat_App.Views;
 using ChatAppClient;
 using MainServerNs;
 using System;
@@ -192,6 +203,7 @@ namespace Chat_App
         {
             _loginForm.Hide();
             _chatForm.Text = "Chat(" + _loginForm.Control.Username + ")";
+            _chatForm.ClearChat();
             _presenter.GetFriendsList(_loginForm.Control.Username);
             _presenter.GetFriendRequests(_loginForm.Control.Username);
             _chatForm.Show();

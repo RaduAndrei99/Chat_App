@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: ChatView.cs                                                    *
+ *                                                                         *
+ *  Descriere: Form-ul ce conține chat-ul, și lista de prieteni            *
+ *  ***********************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -157,7 +166,7 @@ namespace Chat_App.Views
                 if (textboxMessage.Text.Length > 0)
                 {
                     Chat.Text += 
-                        "[" + DateTime.Now.ToString(ChatApp.Instance.DateFormat.ToString() + " HH:mm") + "]" + "[Not Seen] " + 
+                        "[" + DateTime.Now.ToString(ChatApp.Instance.DateFormat.ToString() + " HH:mm") + "]" +
                         LogInView.Instance.Control.Username + ": " + textboxMessage.Text + '\n';
                     Chat.SelectionStart = Chat.Text.Length;
                     Chat.ScrollToCaret();
@@ -207,7 +216,7 @@ namespace Chat_App.Views
             {
                 var selectedItem = listviewFriends.SelectedItems;
                 labelActiveFriend.Text = selectedItem[0].Text;
-                _activeChatFriend = selectedItem[0].Text.Split('[')[0];
+                _activeChatFriend = selectedItem[0].Text;
                 if (_activeChatFriend.Contains("Online"))
                     pictureboxOnline.Visible = true;
                 else
@@ -215,7 +224,7 @@ namespace Chat_App.Views
                 // clean up old chat, load in new chat messages
                 Chat.Clear();
                 textboxMessage.Clear();
-                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend, 14);
+                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend.Split('[')[0], 14);
                 Chat.SelectionStart = Chat.Text.Length;
                 Chat.ScrollToCaret();
             }
@@ -286,6 +295,7 @@ namespace Chat_App.Views
             listviewChat.Clear();
             listviewFriends.Clear();
             textboxMessage.Clear();
+            ActiveFriend.Text = "";
             _friendRequestsForm.FriendRequests.Clear();
         }
 

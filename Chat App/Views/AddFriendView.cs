@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: AddFriendView.cs                                               *
+ *                                                                         *
+ *  Descriere: Form-ul ce oferă funcționalitatea de a adăuga un prieten    *
+ *  ***********************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

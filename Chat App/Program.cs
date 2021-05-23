@@ -1,4 +1,12 @@
-﻿
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: Program.cs                                                     *
+ *                                                                         *
+ *  Descriere: Punctul de intrare al aplicației                            *
+ *  ***********************************************************************/
+
 using System;
 using System.Windows.Forms;
 
