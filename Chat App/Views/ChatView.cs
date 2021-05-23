@@ -224,6 +224,7 @@ namespace Chat_App.Views
                 // clean up old chat, load in new chat messages
                 Chat.Clear();
                 textboxMessage.Clear();
+                ChatApp.Instance.Presenter.ResetMessageID("");
                 ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend.Split('[')[0], 14);
                 Chat.SelectionStart = Chat.Text.Length;
                 Chat.ScrollToCaret();

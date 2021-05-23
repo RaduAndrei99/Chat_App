@@ -19,7 +19,6 @@ namespace Chat_App.Views
         void SetPresenter(IPresenterServer presenter);
         void ChangeFriendStatus(string username, bool status);
         void FriendHasSeen(string username);
-
         void AcceptRegister();
     }
 }
