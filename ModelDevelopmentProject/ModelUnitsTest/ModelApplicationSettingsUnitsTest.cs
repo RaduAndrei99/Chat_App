@@ -25,7 +25,7 @@ namespace ModelUnitsTest
             _random = new Random(DateTime.Now.Millisecond);
 
             _username = $"TestUser{_random.Next(1000, 10000)}";
-            _password = "1234";
+            _password = "123456789";
 
             _oracleModel.AddNewUser(_username, _password);
         }

@@ -10,7 +10,7 @@
         public static readonly string UsernameRegex = @"^\w{8,16}$";
 
         /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
-        public static readonly string PasswordRegex = @"^\S+$";
+        public static readonly string PasswordRegex = @"^\S{8,16}$";
 
         /// <summary>Constrangerea adresei de email al utilizatorilor din baza de date</summary>
         public static readonly string EmailRegex = @"^[a-z0-9._%-]+@[a-z0-9._%-]+\.[a-z]{2,4}$";

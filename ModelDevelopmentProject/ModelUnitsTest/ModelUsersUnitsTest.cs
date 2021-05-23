@@ -23,7 +23,7 @@ namespace ModelUnitsTest
             _random = new Random(DateTime.Now.Millisecond);
 
             _username = $"TestUser{_random.Next(1000, 10000)}";
-            _password = "1234";
+            _password = "123456789";
         }
 
         [TestMethod]
@@ -48,12 +48,19 @@ namespace ModelUnitsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(WrongPasswordFormatException))]
+        public void PasswordTooLongTest()
+        {
+            const string password = "12345678910111213141516";
+            _oracleModel.AddNewUser(_username, password);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(UserAlreadyExistsException))]
         public void AddTheSameUserTest()
         {
-            const string password = "134679";
-            _oracleModel.AddNewUser(_username, password);
-            _oracleModel.AddNewUser(_username, password);
+            _oracleModel.AddNewUser(_username, _password);
+            _oracleModel.AddNewUser(_username, _password);
         }
 
 

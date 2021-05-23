@@ -33,9 +33,9 @@ namespace ModelUnitsTest
             _username2 = $"TestUser{_random.Next(1000, 10000)}";
             _username3 = $"TestUser{_random.Next(1000, 10000)}";
             _username4 = $"TestUser{_random.Next(1000, 10000)}";
-            _password = "1234";
+            _password = "123456789";
 
-                _oracleModel.AddNewUser(_username1, _password);
+            _oracleModel.AddNewUser(_username1, _password);
                 _oracleModel.AddNewUser(_username2, _password);
                 _oracleModel.AddNewUser(_username3, _password);
                 _oracleModel.AddNewUser(_username4, _password);
