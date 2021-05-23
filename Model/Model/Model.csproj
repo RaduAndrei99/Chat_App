@@ -65,8 +65,11 @@
     <Compile Include="Exceptions\DoNotExistsExceptions\UserRegistrationDoNotExistsException.cs" />
     <Compile Include="Exceptions\WrongFormatExceptions\WrongEmailFormatException.cs" />
     <Compile Include="Exceptions\WrongFormatExceptions\WrongFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongHashedPasswordFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongLastNameFormatException.cs" />
     <Compile Include="Exceptions\WrongFormatExceptions\WrongMessageFormatFormatException.cs" />
     <Compile Include="Exceptions\WrongFormatExceptions\WrongPasswordFormatException.cs" />
+    <Compile Include="Exceptions\WrongFormatExceptions\WrongFirstNameFormatException.cs" />
     <Compile Include="Exceptions\WrongFormatExceptions\WrongUsernameFormatException.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="OracleDatabaseModel.cs" />

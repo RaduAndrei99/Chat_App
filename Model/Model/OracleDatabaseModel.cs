@@ -45,25 +45,25 @@ namespace Model
         /// Adauga un nou utilizator in baza de date.
         /// </summary>
         /// <param name="username">Numele de utilizator al persoanei</param>
-        /// <param name="password">Parola utilizatorului</param>
+        /// <param name="hashedPassword">Parola utilizatorului</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul exista deja in baza de date</para>
         /// </exception>
         /// <returns></returns>
-        public void AddNewUser(string username, string password)
+        public void AddNewUser(string username, string hashedPassword)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            if (!Regex.IsMatch(password, Constraints.PasswordRegex))
-                throw new WrongPasswordFormatException(password);
+            if (!Regex.IsMatch(hashedPassword, Constraints.PasswordRegex))
+                throw new WrongHashedPasswordFormatException(hashedPassword);
 
             uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"INSERT INTO Users(user_name, user_password) VALUES('{username}', '{password}')";
+                string cmdString = $"INSERT INTO Users(user_name, user_password) VALUES('{username}', '{hashedPassword}')";
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     oracleCommand.ExecuteNonQuery();
@@ -155,7 +155,7 @@ namespace Model
                 throw new WrongUsernameFormatException(username);
 
             if (!Regex.IsMatch(newPassword, Constraints.PasswordRegex))
-                throw new WrongPasswordFormatException(newPassword);
+                throw new WrongHashedPasswordFormatException(newPassword);
 
             long usernameId = GetUsernameId(username);
             if (usernameId == -1)
@@ -304,6 +304,7 @@ namespace Model
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca formatul adresei de email este gresit. See <see cref="Commons.Constraints.EmailRegex"/></para>
+        /// <para>Arunca exceptie daca formatul numelui de familie sau al prenumelui este gresit. See <see cref="Commons.Constraints.PersonalNameRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
         /// </exception>
         /// <returns></returns>
@@ -314,6 +315,12 @@ namespace Model
 
             if (!Regex.IsMatch(email, Constraints.EmailRegex))
                 throw new WrongEmailFormatException(email);
+
+            if (!Regex.IsMatch(firstname, Constraints.PersonalNameRegex))
+                throw new WrongFirstNameFormatException(firstname);
+
+            if (!Regex.IsMatch(lastname, Constraints.PersonalNameRegex))
+                throw new WrongLastNameFormatException(lastname);
 
             long usernameId = GetUsernameId(username);
             if (usernameId == -1)
@@ -1068,20 +1075,20 @@ namespace Model
         /// Verifica credentialele unui utilizator
         /// </summary>
         /// <param name="username">Numele de utilizator al persoanei</param>
-        /// <param name="password">Parola unui utilizator</param>
+        /// <param name="hashedPassword">Parola unui utilizator</param>
         /// <exception cref="System.Exception">
         /// <para>Arunca exceptie daca formatul numelui utilizatorului este gresit. See <see cref="Commons.Constraints.UsernameRegex"/></para>
         /// <para>Arunca exceptie daca formatul parolei utilizatorului este gresit. See <see cref="Commons.Constraints.PasswordRegex"/></para>
         /// <para>Arunca exceptie daca utilizatorul nu exista in baza de date</para>
         /// </exception>
         /// <returns>True daca datele utilizatorului sunt corecte sau False daca nu</returns>
-        public bool CheckUserCredentials(string username, string password)
+        public bool CheckUserCredentials(string username, string hashedPassword)
         {
             if (!Regex.IsMatch(username, Constraints.UsernameRegex))
                 throw new WrongUsernameFormatException(username);
 
-            if (!Regex.IsMatch(password, Constraints.PasswordRegex))
-                throw new WrongPasswordFormatException(password);
+            if (!Regex.IsMatch(hashedPassword, Constraints.PasswordRegex))
+                throw new WrongHashedPasswordFormatException(hashedPassword);
 
             long usernameId = GetUsernameId(username);
             if (usernameId == -1)
@@ -1090,7 +1097,7 @@ namespace Model
             uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"SELECT COUNT(*) FROM Users WHERE user_id = {usernameId} and user_password = '{password}'";
+                string cmdString = $"SELECT COUNT(*) FROM Users WHERE user_id = {usernameId} and user_password = '{hashedPassword}'";
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())

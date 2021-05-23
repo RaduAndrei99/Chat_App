@@ -17,13 +17,16 @@ namespace Model.Commons
     public class Constraints
     {
         /// <summary>Constrangerea numelui de utilizator din baza de date</summary>
-        public static readonly string UsernameRegex = @"^\w+$";
+        public static readonly string UsernameRegex = @"^\w{3,}$";
+
+        /// <summary>Constrangerea numelui de familie si a prenumelui utilizatorului din baza de date</summary>
+        public static readonly string PersonalNameRegex = @"^[^\d!”#$%&\’()*+,-.\\/:;<=>?@[\]^_{|}~\r\n\t\f\v]+[^ ]$";
 
         /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
-        public static readonly string PasswordRegex = @"^\S+$";
+        public static readonly string PasswordRegex = @"^\S+{8,16}$";
 
         /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
-        public static readonly string PasswordHashedRegex = @"^\S+$";
+        public static readonly string PasswordHashedRegex = @"^\S{1,64}$";
 
         /// <summary>Constrangerea adresei de email al utilizatorilor din baza de date</summary>
         public static readonly string EmailRegex = @"^[a-z0-9._%-]+@[a-z0-9._%-]+\.[a-z]{2,4}$";

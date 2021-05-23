@@ -13,10 +13,14 @@
 <createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>36AF1B19-EDD9-1A9D-24B0-CA1588A248A6</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>first_name_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(first_name, &apos;^[^\d!”#$%&amp;’()*+,-.\/:;&lt;=&gt;?@[\]^_`{|}~\r\n\t\f\v]+[^ ]$&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
@@ -25,10 +29,14 @@
 <createdTime>2021-05-07 19:57:28 UTC</createdTime>
 <generatorID>33400D3A-99C8-61E6-6535-B5B6C3E67F3D</generatorID>
 <ownerDesignName>Messaging_App</ownerDesignName>
+<constraintName>last_name_ck</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(last_name, &apos;^[^\d!”#$%&amp;’()*+,-.\/:;&lt;=&gt;?@[\]^_`{|}~\r\n\t\f\v]+[^ ]$&apos;)"/>
+</checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
