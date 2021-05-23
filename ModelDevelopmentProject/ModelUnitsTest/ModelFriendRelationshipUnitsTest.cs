@@ -19,6 +19,8 @@ namespace ModelUnitsTest
 
         private string _username1;
         private string _username2;
+        private string _username3;
+        private string _username4;
         private string _password;
 
         [TestInitialize]
@@ -29,10 +31,14 @@ namespace ModelUnitsTest
 
             _username1 = $"TestUser{_random.Next(1000, 10000)}";
             _username2 = $"TestUser{_random.Next(1000, 10000)}";
+            _username3 = $"TestUser{_random.Next(1000, 10000)}";
+            _username4 = $"TestUser{_random.Next(1000, 10000)}";
             _password = "1234";
 
-            _oracleModel.AddNewUser(_username1, _password);
-            _oracleModel.AddNewUser(_username2, _password);
+                _oracleModel.AddNewUser(_username1, _password);
+                _oracleModel.AddNewUser(_username2, _password);
+                _oracleModel.AddNewUser(_username3, _password);
+                _oracleModel.AddNewUser(_username4, _password);
         }
 
         [TestMethod]
@@ -67,6 +73,16 @@ namespace ModelUnitsTest
         }
 
         [TestMethod]
+        public void GetEmptyFriendList()
+        {
+            _oracleModel.RegisterFriendRequest(_username1, _username2);
+            _oracleModel.AcceptFriendRequest(_username1, _username2);
+            
+            List<string> friendList = _oracleModel.GetFriendList(_username3);
+            Assert.AreEqual(friendList.Count, 0);
+        }
+
+        [TestMethod]
         public void GetFriendshipRequests()
         {
             _oracleModel.RegisterFriendRequest(_username1, _username2);
@@ -80,6 +96,8 @@ namespace ModelUnitsTest
         {
             _oracleModel.DeleteUser(_username1);
             _oracleModel.DeleteUser(_username2);
+            _oracleModel.DeleteUser(_username3);
+            _oracleModel.DeleteUser(_username4);
 
             _oracleModel = null;
             _random = null;

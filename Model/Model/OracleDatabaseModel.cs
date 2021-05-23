@@ -1036,7 +1036,8 @@ namespace Model
             uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"INSERT INTO Messages(format, message_data, sent_at, Users_user_id, Conversations_conversation_id) VALUES('{format}', :message_data, TO_DATE('{sentDate.ToString("MM/dd/yyyy HH:mm:ss")}', 'MM/DD/YYYY HH24:MI:SS'), {senderUsernameId}, {conversationId})";
+                string cmdString = $"INSERT INTO Messages(format, message_data, sent_at, Users_user_id, Conversations_conversation_id) VALUES('{format}', :message_data, " +
+                    $"TO_DATE('{sentDate.ToString("MM/dd/yyyy HH:mm:ss")}', 'MM/DD/YYYY HH24:MI:SS'), {senderUsernameId}, {conversationId})";
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using(OracleParameter param = new OracleParameter("message_data", OracleDbType.Blob))
@@ -1385,7 +1386,7 @@ namespace Model
             uint connectionId = _databaseConnection.Connect();
             try
             {
-                string cmdString = $"SELECT user_name FROM Users u, Friend_relationships fr WHERE (fr.users_user_id = u.user_id OR fr.users_user_id2 = u.user_id) AND u.user_id != {usernameId} AND fr.status = '{Constraints.FriendshipFriendsStatus}' ORDER BY user_name";
+                string cmdString = $"SELECT user_name FROM Users u, Friend_relationships fr WHERE (fr.users_user_id = u.user_id OR fr.users_user_id2 = u.user_id) AND (fr.users_user_id = {usernameId} OR fr.users_user_id2 = {usernameId}) AND u.user_id != {usernameId} AND fr.status = '{Constraints.FriendshipFriendsStatus}' ORDER BY user_name";
                 using (OracleCommand oracleCommand = new OracleCommand(cmdString, _databaseConnection.Connection(connectionId)))
                 {
                     using (OracleDataReader oracleDataReader = oracleCommand.ExecuteReader())

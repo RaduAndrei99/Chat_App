@@ -9,6 +9,7 @@ namespace Model.Exceptions.AlreadyExistsExceptions
     /// <summary>
     /// Exceptie ce trebuie aruncata atunci cand setarile aplicatiei exista deja in baza de date
     /// </summary>
+    [Serializable]
     class ApplicationSettingsAlreadyExistsException : AlreadyExistsException
     {
         /// <summary>

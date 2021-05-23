@@ -77,7 +77,7 @@ SELECT date_format FROM Application_settings WHERE Users_user_id = 1;
 SELECT hour_format FROM Application_settings WHERE Users_user_id = 1;
 
 -- Friends
-SELECT user_name FROM Users u, Friend_relationships fr WHERE (fr.users_user_id = u.user_id OR fr.users_user_id2 = u.user_id) AND u.user_id != 1 AND fr.status = 'friends' ORDER BY user_name;
+SELECT user_name FROM Users u, Friend_relationships fr WHERE (fr.users_user_id = u.user_id OR fr.users_user_id2 = u.user_id) AND (fr.users_user_id = 261 OR fr.users_user_id2 = 261) AND u.user_id != 261 AND fr.status = 'friends' ORDER BY user_name;
 
 -- Sent pending requests
 SELECT user_name FROM Users u, Friend_relationships fr WHERE fr.users_user_id = 1 AND fr.users_user_id2 = u.user_id AND fr.status = 'pending' ORDER BY user_name;

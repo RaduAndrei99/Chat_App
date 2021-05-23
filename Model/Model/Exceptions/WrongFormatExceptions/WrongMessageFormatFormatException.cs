@@ -9,6 +9,7 @@ namespace Model.Exceptions.WrongFormatExceptions
     /// <summary>
     /// Exceptie ce trebuie aruncata atunci cand formatul formatului mesajului este incorect
     /// </summary>
+    [Serializable]
     class WrongMessageFormatFormatException : WrongFormatException
     {
         /// <summary>
