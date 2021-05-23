@@ -19,7 +19,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
 <checkConstraint>
-<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(first_name, &apos;^[^\d!”#$%&amp;’()*+,-.\/:;&lt;=&gt;?@[\]^_`{|}~\r\n\t\f\v]+[^ ]$&apos;)"/>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(first_name, &apos;^\D+$&apos;)"/>
 </checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
@@ -35,7 +35,7 @@
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>40</dataTypeSize>
 <checkConstraint>
-<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(last_name, &apos;^[^\d!”#$%&amp;’()*+,-.\/:;&lt;=&gt;?@[\]^_`{|}~\r\n\t\f\v]+[^ ]$&apos;)"/>
+<implementationDef dbType="Generic Constraint" definition="REGEXP_LIKE(last_name, &apos;^\D+$&apos;)"/>
 </checkConstraint>
 <ownDataTypeParameters>40,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>

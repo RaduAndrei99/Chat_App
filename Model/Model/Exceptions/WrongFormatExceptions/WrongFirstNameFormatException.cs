@@ -1,4 +1,15 @@
-﻿using System;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: WrongFirstNameFormatException.cs                                *
+ *                                                                          *
+ *  Descriere: Exceptie cand formatul prenumelui utilizatorului             *
+ *      este incorect                                                       *
+ *                                                                          *
+ ****************************************************************************/
+
+using System;
 
 namespace Model.Exceptions.WrongFormatExceptions
 {

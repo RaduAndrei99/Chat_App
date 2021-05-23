@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: WrongFormatException.cs                                         *
+ *                                                                          *
+ *  Descriere: Exceptie cand formatul unui element este incorect            *
+ *                                                                          *
+ ****************************************************************************/
+
+using System;
 
 namespace Model.Exceptions.WrongFormatExceptions
 {

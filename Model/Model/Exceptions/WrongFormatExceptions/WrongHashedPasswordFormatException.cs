@@ -1,4 +1,15 @@
-﻿using System;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: WrongHashedPasswordFormatException.cs                           *
+ *                                                                          *
+ *  Descriere: Exceptie cand formatul parolei hash-uite unui utilizator     *
+ *              este incorect                                               *
+ *                                                                          *
+ ****************************************************************************/
+
+using System;
 
 namespace Model.Exceptions.WrongFormatExceptions
 {

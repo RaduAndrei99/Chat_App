@@ -4,8 +4,7 @@
  *  Grupa:  1309A                                                           *
  *  Fisier: UserAlreadyExistsException.cs                                   *
  *                                                                          *
- *  Descriere: Exceptie cand setarile relatiei de prietenie exista deja     *
- *              in baza de date                                             *
+ *  Descriere: Exceptie cand utilizatorul exista deja in baza de date       *
  *                                                                          *
  ****************************************************************************/
 

@@ -1,4 +1,15 @@
-﻿using System;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: OracleDatabaseModel.cs                                          *
+ *                                                                          *
+ *  Descriere: Modelul concret pentru o baza de date Oracle                 *
+ *              Stocheaza si interogheaza datele stocate in baza de date.   *
+ *                                                                          *
+ ****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Model.DatabaseConnection;
@@ -6,7 +17,6 @@ using Oracle.ManagedDataAccess.Client;
 using System.Text.RegularExpressions;
 using Model.Commons;
 using Model.DataTransferObjects;
-using Model.Exceptions;
 using Model.Exceptions.DoNotExistsExceptions;
 using Model.Exceptions.WrongFormatExceptions;
 using Model.Exceptions.AlreadyExistsExceptions;
@@ -647,18 +657,18 @@ namespace Model
         public void RegisterFriendRequest(string fromUsername, string toUsername)
         {
             if (!Regex.IsMatch(fromUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {fromUsername}.");
+                throw new WrongUsernameFormatException($"Wrong username format for {fromUsername}.");
 
             if (!Regex.IsMatch(toUsername, Constraints.UsernameRegex))
-                throw new Exception($"Wrong username format for {toUsername}.");
+                throw new WrongUsernameFormatException($"Wrong username format for {toUsername}.");
 
             long fromUsernameId = GetUsernameId(fromUsername);
             if (fromUsernameId == -1)
-                throw new Exception($"Username {fromUsername} do not exists.");
+                throw new UserDoNotExistsException($"Username {fromUsername} do not exists.");
 
             long toUsernameId = GetUsernameId(toUsername);
             if (toUsernameId == -1)
-                throw new Exception($"Username {toUsername} do not exists.");
+                throw new UserDoNotExistsException($"Username {toUsername} do not exists.");
 
             uint connectionId = _databaseConnection.Connect();
             try

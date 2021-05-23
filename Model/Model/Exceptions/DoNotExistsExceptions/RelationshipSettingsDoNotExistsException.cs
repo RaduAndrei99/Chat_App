@@ -1,8 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: RelationshipSettingsDoNotExistsException.cs                   *
+ *                                                                          *
+ *  Descriere: Exceptie cand setarile relatiei de prietenie nu exista       *
+ *              in baza de date                                             *
+ *                                                                          *
+ ****************************************************************************/
+
+using System;
 
 namespace Model.Exceptions.DoNotExistsExceptions
 {

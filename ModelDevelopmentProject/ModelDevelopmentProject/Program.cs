@@ -5,8 +5,6 @@ using Model.DatabaseConnection;
 using Model.DataTransferObjects;
 using Model.Exceptions;
 using Model.Exceptions.AlreadyExistsExceptions;
-using Model.Exceptions.DoNotExistsExceptions;
-
 namespace ModelDevelopmentProject
 {
     class Program

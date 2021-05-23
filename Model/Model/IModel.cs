@@ -1,11 +1,17 @@
-﻿using Model.Commons;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: IModel.cs                                                       *
+ *                                                                          *
+ *  Descriere: Interfata pentru un model generic                            *
+ *                                                                          *
+ ****************************************************************************/
+
+using Model.Commons;
 using Model.DataTransferObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Model.Commons.Constraints;
 
 namespace Model
 {

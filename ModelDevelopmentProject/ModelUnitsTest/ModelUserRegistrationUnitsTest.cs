@@ -47,6 +47,30 @@ namespace ModelUnitsTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(WrongFirstNameFormatException))]
+        public void WrongFirstNameTest()
+        {
+            const string FirstName = "Cosm2in-Constantin";
+            const string LastName = "Cojocaru";
+            const string Email = "constantin-cosmin.cojocaru@student.tuiasi.ro";
+            DateTime birthDate = new DateTime(1999, 4, 29);
+
+            _oracleModel.RegisterUser(_username1, FirstName, LastName, Email, birthDate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WrongLastNameFormatException))]
+        public void WrongLastNameTest()
+        {
+            const string FirstName = "Cosmin-Constantin";
+            const string LastName = "Cojoc2aru";
+            const string Email = "constantin-cosmin.cojocaru@student.tuiasi.ro";
+            DateTime birthDate = new DateTime(1999, 4, 29);
+
+            _oracleModel.RegisterUser(_username1, FirstName, LastName, Email, birthDate);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(UserRegistrationAlreadyExistsException))]
         public void RegisterTheSameUserTest()
         {
