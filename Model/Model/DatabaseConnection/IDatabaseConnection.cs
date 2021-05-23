@@ -1,4 +1,14 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Cojocaru Constantin-Cosmin                                     *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: IDatabaseConnection.cs                                         *
+ *                                                                         *
+ *  Descriere: Interfata pentru o conexiune la o baza de date generica     *
+ *                                                                         *
+ ***************************************************************************/
+
+using Oracle.ManagedDataAccess.Client;
 
 namespace Model.DatabaseConnection
 {

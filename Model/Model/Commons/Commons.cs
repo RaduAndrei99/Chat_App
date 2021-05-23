@@ -1,4 +1,14 @@
-﻿namespace Model.Commons
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Cojocaru Constantin-Cosmin                                     *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: Commons.cs                                                     *
+ *                                                                         *   
+ *  Descriere: Contine constrangerile bazei de date la nivelul aplicatiei  *
+ *                                                                         *
+ ***************************************************************************/
+
+namespace Model.Commons
 {
 
     /// <summary>
@@ -7,10 +17,13 @@
     public class Constraints
     {
         /// <summary>Constrangerea numelui de utilizator din baza de date</summary>
-        public static readonly string UsernameRegex = @"^\w{8,16}$";
+        public static readonly string UsernameRegex = @"^\w+$";
 
         /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
-        public static readonly string PasswordRegex = @"^\S{8,16}$";
+        public static readonly string PasswordRegex = @"^\S+$";
+
+        /// <summary>Constrangerea parolei utilizatorilor din baza de date</summary>
+        public static readonly string PasswordHashedRegex = @"^\S+$";
 
         /// <summary>Constrangerea adresei de email al utilizatorilor din baza de date</summary>
         public static readonly string EmailRegex = @"^[a-z0-9._%-]+@[a-z0-9._%-]+\.[a-z]{2,4}$";

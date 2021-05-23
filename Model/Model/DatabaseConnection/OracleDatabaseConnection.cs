@@ -1,4 +1,14 @@
-﻿using Oracle.ManagedDataAccess.Client;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Cojocaru Constantin-Cosmin                                     *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: OracleDatabaseConnection.cs                                    *
+ *                                                                         *
+ *  Descriere: Creeaza conexiuni la o baza de date Oracle                  *
+ *                                                                         *
+ ***************************************************************************/
+
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;

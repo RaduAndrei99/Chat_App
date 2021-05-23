@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commons\Commons.cs" />
-    <Compile Include="Commons\DateTime.cs" />
+    <Compile Include="Commons\DateFormat.cs" />
     <Compile Include="Commons\TimeFormat.cs" />
     <Compile Include="DataTransferObjects\MessageDTO.cs" />
     <Compile Include="DatabaseConnection\IDatabaseConnection.cs" />

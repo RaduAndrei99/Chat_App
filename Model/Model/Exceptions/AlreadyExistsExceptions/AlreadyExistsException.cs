@@ -1,8 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: AlreadyExistsException.cs                                       *
+ *                                                                          *
+ *  Descriere: Clasa de baza pentru exceptiile care trebuie aruncate        *
+ *              atunci cand un element exista deja in baza de date          *
+ *                                                                          *
+ ****************************************************************************/
+
+using System;
 
 namespace Model.Exceptions
 {

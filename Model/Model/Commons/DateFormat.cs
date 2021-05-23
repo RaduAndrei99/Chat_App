@@ -1,8 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Cojocaru Constantin-Cosmin                                     *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: DateFormat.cs                                                  *
+ *                                                                         *
+ *  Descriere: Contine constrangerile formatului datei ale bazei de date   *
+ *              la nivelul aplicatiei                                      *
+ *                                                                         *
+ ***************************************************************************/
 
 namespace Model.Commons
 {

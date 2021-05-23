@@ -1,4 +1,14 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Cojocaru Constantin-Cosmin                                     *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: MessageDTO.cs                                                  *
+ *                                                                         *
+ *  Descriere: Clasa pentru transferul datelor referitoare la mesaj        *
+ *                                                                         *
+ ***************************************************************************/
+
+using System;
 
 namespace Model.DataTransferObjects
 {
