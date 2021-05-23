@@ -205,10 +205,10 @@
             this.labelErrorMessage.Depth = 0;
             this.labelErrorMessage.Font = new System.Drawing.Font("Roboto", 11F);
             this.labelErrorMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.labelErrorMessage.Location = new System.Drawing.Point(12, 423);
+            this.labelErrorMessage.Location = new System.Drawing.Point(12, 424);
             this.labelErrorMessage.MouseState = MaterialSkin.MouseState.HOVER;
             this.labelErrorMessage.Name = "labelErrorMessage";
-            this.labelErrorMessage.Size = new System.Drawing.Size(776, 18);
+            this.labelErrorMessage.Size = new System.Drawing.Size(776, 31);
             this.labelErrorMessage.TabIndex = 11;
             this.labelErrorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -222,6 +222,7 @@
             this.richtextboxChat.Size = new System.Drawing.Size(594, 257);
             this.richtextboxChat.TabIndex = 12;
             this.richtextboxChat.Text = "";
+            this.richtextboxChat.VScroll += new System.EventHandler(this.richtextboxChat_VScroll);
             // 
             // pictureboxOnline
             // 
@@ -238,7 +239,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 462);
             this.Controls.Add(this.pictureboxOnline);
             this.Controls.Add(this.richtextboxChat);
             this.Controls.Add(this.labelErrorMessage);
@@ -255,6 +256,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "ChatView";
+            this.Sizable = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chat";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChatView_FormClosing);
             this.Load += new System.EventHandler(this.ChatView_Load);
@@ -279,8 +282,8 @@
         private MaterialSkin.Controls.MaterialRaisedButton buttonLogout;
         private MaterialSkin.Controls.MaterialRaisedButton buttonFriendRequests;
         private MaterialSkin.Controls.MaterialLabel labelErrorMessage;
-        private System.Windows.Forms.RichTextBox richtextboxChat;
         private System.Windows.Forms.ColumnHeader friendsColumn;
         private System.Windows.Forms.PictureBox pictureboxOnline;
+        private System.Windows.Forms.RichTextBox richtextboxChat;
     }
 }

@@ -161,7 +161,7 @@ namespace Chat_App.Views
                         LogInView.Instance.Control.Username + ": " + textboxMessage.Text + '\n';
                     Chat.SelectionStart = Chat.Text.Length;
                     Chat.ScrollToCaret();
-                    ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, SelectedFriend, textboxMessage.Text);
+                    ChatApp.Instance.Presenter.SendMessage(LogInView.Instance.Control.Username, ActiveFriend.Text.Split('[')[0], textboxMessage.Text);
                 }
             }
             else
@@ -207,7 +207,7 @@ namespace Chat_App.Views
             {
                 var selectedItem = listviewFriends.SelectedItems;
                 labelActiveFriend.Text = selectedItem[0].Text;
-                _activeChatFriend = selectedItem[0].Text;
+                _activeChatFriend = selectedItem[0].Text.Split('[')[0];
                 if (_activeChatFriend.Contains("Online"))
                     pictureboxOnline.Visible = true;
                 else
@@ -215,7 +215,7 @@ namespace Chat_App.Views
                 // clean up old chat, load in new chat messages
                 Chat.Clear();
                 textboxMessage.Clear();
-                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend.Split('[')[0], 10);
+                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, _activeChatFriend, 14);
                 Chat.SelectionStart = Chat.Text.Length;
                 Chat.ScrollToCaret();
             }
@@ -300,6 +300,12 @@ namespace Chat_App.Views
             {
                 buttonSend_Click(sender, e);
             }
+        }
+
+        private void richtextboxChat_VScroll(object sender, EventArgs e)
+        {
+            if (Chat.GetPositionFromCharIndex(0).Y == 1)
+                ChatApp.Instance.Presenter.GetLastNMessages(LogInView.Instance.Control.Username, ActiveFriend.Text.Split('[')[0], 10);
         }
     }
 }

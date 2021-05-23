@@ -19,7 +19,7 @@ namespace Chat_App
 
             IPresenterServer presenter = new ProxyServer(ChatApp.Instance);
             ChatApp.Instance.SetPresenter(presenter);
-            ((ProxyServer)presenter).Run();
+            //((ProxyServer)presenter).Run();
             Application.EnableVisualStyles();
             Application.Run(ChatApp.Instance);
         }
