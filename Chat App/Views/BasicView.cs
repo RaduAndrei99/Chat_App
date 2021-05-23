@@ -12,9 +12,22 @@ using System.Windows.Forms;
 
 namespace Chat_App.Views
 {
+    /// <summary>
+    /// Clasă ce reprezintă un view.
+    /// Moștenită de celalte view-uri.
+    /// </summary>
     public partial class BasicView : MaterialForm
     {
+        /// <summary>
+        /// Referință către managerul framework-ului materialskin.
+        /// Se ocupă de culorile și tema aplicației.
+        /// </summary>
         protected readonly MaterialSkinManager _manager;
+        
+        /// <summary>
+        /// Constructor.
+        /// Setează o temă implicită.
+        /// </summary>
         public BasicView()
         {
             InitializeComponent();

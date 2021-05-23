@@ -13,14 +13,25 @@ using System.Windows.Forms;
 
 namespace Chat_App
 {
+    /// <summary>
+    /// Clasă ce descrie form-ul de LogIn.
+    /// Permite logarea, înregistrarea și schimbarea setărilor. 
+    /// </summary>
     public partial class LogInView : BasicView
     {
+        /// <summary>
+        /// Referință către instanța. Pentru implementare de singleton.
+        /// </summary>
         private static LogInView _instance;
-        private BasicView _chatForm;
-        private BasicView _settingsForm;
-        private BasicView _registerForm;
+
+        /// <summary>
+        /// Referință către controlul care conține restul controller-urilor.
+        /// </summary>
         private LogInControl _control;
 
+        /// <summary>
+        /// Proprietate publică pentru accesul instanței unice.
+        /// </summary>
         public static LogInView Instance
         {
             get
@@ -31,30 +42,10 @@ namespace Chat_App
             }
         }
 
-        public BasicView ChatForm
-        {
-            get
-            {
-                return _chatForm;
-            }
-        }
-
-        public BasicView SettingsForm
-        {
-            get
-            {
-                return _settingsForm;
-            }
-        }
-
-        public BasicView RegisterForm
-        {
-            get
-            {
-                return _registerForm;
-            }
-        }
-
+        /// <summary>
+        /// Proprietate publică pentru accesul controlului care deține alte date necesare
+        /// precum username-ul și parola.
+        /// </summary>
         public LogInControl Control
         {
             get
@@ -63,23 +54,35 @@ namespace Chat_App
             }
         }
 
+        /// <summary>
+        /// Constructor privat.
+        /// </summary>
         private LogInView() : base()
         {
             InitializeComponent();
             _control = new LogInControl(this);
-            _chatForm = ChatView.Instance;
-            _settingsForm = SettingsView.Instance;
-            _registerForm = RegisterView.Instance;
-            _chatForm.StartPosition = FormStartPosition.CenterScreen;
-            _settingsForm.StartPosition = FormStartPosition.CenterScreen;
+            ChatView.Instance.StartPosition = FormStartPosition.CenterScreen;
+            SettingsView.Instance.StartPosition = FormStartPosition.CenterScreen;
         }
 
+        /// <summary>
+        /// Metodă apelată la încărcarea form-ului.
+        /// Pentru implementarea singleton.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogIn_Load(object sender, EventArgs e)
         {
             _instance = this;
             panelUser.Controls.Add(_control);
         }
 
+        /// <summary>
+        /// Metodă apelată la închiderea form-ului.
+        /// Ascunde form-ul în loc să îl închidă.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogInView_FormClosing(object sender, FormClosingEventArgs e)
         {
             ChatApp.Instance.Close();

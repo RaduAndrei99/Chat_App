@@ -92,6 +92,10 @@ namespace Chat_App
             //_chatForm.Show();
         }
 
+        /// <summary>
+        /// Setează presenterul care se va ocupa de view.
+        /// </summary>
+        /// <param name="presenter"></param>
         public void SetPresenter(IPresenterServer presenter)
         {
             _presenter = presenter;
@@ -107,6 +111,11 @@ namespace Chat_App
             this.Hide();
         }
 
+        /// <summary>
+        /// Metodă apelată de către presenter. Adaugă un mesajul în chat.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="addToEnd"></param>
         public void AddMessageToChat(ChatAppClient.Messages.Message message, bool addToEnd)
         {
             /*ListViewItem newMessage = new ListViewItem();
