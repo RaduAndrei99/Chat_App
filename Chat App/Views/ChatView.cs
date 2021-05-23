@@ -96,6 +96,28 @@ namespace Chat_App.Views
         }
 
         /// <summary>
+        /// Proprietate publică pentru accesul la prietenul al cărui chat este activ.
+        /// </summary>
+        public Label ActiveFriend
+        {
+            get
+            {
+                return labelActiveFriend
+            }
+        }
+
+        /// <summary>
+        /// Proprietate publică pentru accesul la iconița de online.
+        /// </summary>
+        public PictureBox OnlineIcon
+        {
+            get
+            {
+                return pictureboxOnline;
+            }
+        }
+
+        /// <summary>
         /// Constructor privat.
         /// </summary>
         private ChatView()

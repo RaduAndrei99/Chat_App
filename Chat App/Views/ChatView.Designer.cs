@@ -124,6 +124,7 @@
             this.labelActiveFriend.Name = "labelActiveFriend";
             this.labelActiveFriend.Size = new System.Drawing.Size(150, 30);
             this.labelActiveFriend.TabIndex = 5;
+            this.labelActiveFriend.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dividerChat
             // 

@@ -170,6 +170,8 @@ namespace Chat_App
                     {
                         // set online
                         friend.Text = friend.Text.Replace("[Offline]", "[Online]");
+                        if (_chatForm.ActiveFriend.Text.Contains(username))
+                            _chatForm.OnlineIcon.Visible = true;
                     }
                     else
                     {
