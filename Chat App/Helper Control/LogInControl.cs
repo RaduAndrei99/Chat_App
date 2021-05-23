@@ -111,8 +111,8 @@ namespace Chat_App.Views
         /// <param name="e"></param>
         private void buttonSettings_Click(object sender, EventArgs e)
         {
-            _parentForm.FormClosing += delegate { _parentForm.SettingsForm.Close(); };
-            _parentForm.SettingsForm.Show();
+            _parentForm.FormClosing += delegate { SettingsView.Instance.Close(); };
+            SettingsView.Instance.Show();
         }
 
         /// <summary>
@@ -122,8 +122,8 @@ namespace Chat_App.Views
         /// <param name="e"></param>
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            _parentForm.FormClosing += delegate { _parentForm.RegisterForm.Close(); };
-            _parentForm.RegisterForm.Show();
+            _parentForm.FormClosing += delegate { RegisterView.Instance.Close(); };
+            RegisterView.Instance.Show();
         }
 
         /// <summary>
