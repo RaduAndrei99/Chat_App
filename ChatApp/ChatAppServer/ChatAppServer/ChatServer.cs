@@ -60,8 +60,8 @@ namespace ChatAppServer
         /// <summary>
         /// IP-ul pe care ruleaza server-ul
         /// </summary>
-        // private string Host = "192.168.0.220";
-        private string Host = "127.0.0.1";
+        /// 
+        private string Host = "192.168.43.48";
 
         /// <summary>
         /// Port-ul pe care ruleaza server-ul
@@ -238,22 +238,20 @@ namespace ChatAppServer
                         //login USERNAME HASHED_PASSWORD
                         case "login":
                             {
+                                if(userName != "")
+                                {
+                                    _loggedUserConnections.Remove(userName);
+                                }
                                 userName = msg.Split(' ')[1];
                                 string password = msg.Split(' ')[2];
 
                                 Console.WriteLine("**" + " " + userName + " " + password);
                                 if (Login(userName, password))
                                 {
-                                    if(loggedIn == false)
+                                    if(!_loggedUserConnections.ContainsKey(userName))
                                     {
-                                        if (!_loggedUserConnections.ContainsKey(userName))
-                                            _loggedUserConnections.Add(userName, new Pair<Socket, int>(handler, -1));
-                                        else
-                                        {
-                                            handler.Send(PrepareMessageToSend("ERROR ALREADY_LOGGED_IN"));
+                                        _loggedUserConnections.Add(userName, new Pair<Socket, int>(handler, -1));
 
-                                            break;
-                                        }
                                         handler.Send(PrepareMessageToSend("confirmLogin"));
 
                                         NotifyFriendsWithMessage(userName, "online");
@@ -365,7 +363,7 @@ namespace ChatAppServer
                                 {
                                     _model.RegisterFriendRequest(userName, friend);
                                 }
-                                catch (Model.Exceptions.AlreadyExistsException e)
+                                catch (Model.Exceptions.AlreadyExistsExceptions.AlreadyExistsException e)
                                 {
                                     handler.Send(PrepareMessageToSend("ERROR FRIEND_REQUEST_ALREADY_SENT " + e.Message));
                                 }
@@ -496,12 +494,18 @@ namespace ChatAppServer
                 Console.WriteLine("Waiting for a connection...");
                 while (true)
                 {
-              
                     handler = listener.Accept();
 
                     Thread thread = new Thread(HandleClient);
 
-                    thread.Start(handler);
+                    try
+                    {
+                        thread.Start(handler);
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
 
 
@@ -743,6 +747,10 @@ namespace ChatAppServer
             }
         }
 
+        /// <summary>
+        /// Reseteaza id-ul pentru mesaje.
+        /// </summary>
+        /// <param name="username"></param>
         public void ResetMessageID(string username)
         {
             try

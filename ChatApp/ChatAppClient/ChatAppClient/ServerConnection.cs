@@ -32,7 +32,7 @@ namespace ChatAppClient
         /// IP-ul server-ului.
         /// </summary>
         //private const string ServerHost = "192.168.0.220";
-        private const string ServerHost = "127.0.0.1";
+        private const string ServerHost = "192.168.43.48";
 
         /// <summary>
         /// Port-ul server-ului
