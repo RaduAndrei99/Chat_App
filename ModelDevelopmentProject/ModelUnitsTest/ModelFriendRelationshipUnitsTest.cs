@@ -1,13 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/****************************************************************************
+ *                                                                          *
+ *  Autor:  Cojocaru Constantin-Cosmin                                      *
+ *  Grupa:  1309A                                                           *
+ *  Fisier: OracleDatabaseModel.cs                                          *
+ *                                                                          *
+ *  Descriere: Clasa cu unit tests pentru FriendRelationship                *
+ *                                                                          *
+ ****************************************************************************/
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model.Exceptions.AlreadyExistsExceptions;
-using Model.Exceptions.DoNotExistsExceptions;
-using Model.Exceptions.WrongFormatExceptions;
 
 namespace ModelUnitsTest
 {
