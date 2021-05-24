@@ -1174,7 +1174,7 @@ namespace Model
                 string cmdString = null;
                 if (bellowThisMessageId > -1)
                 {
-                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {bellowThisMessageId} ORDER BY Message_id DESC FETCH NEXT {howManyMessages} ROWS ONLY;";
+                    cmdString = $"SELECT * FROM Messages WHERE Conversations_conversation_id = {conversationId} AND message_id < {bellowThisMessageId} ORDER BY Message_id DESC FETCH NEXT {howManyMessages} ROWS ONLY";
                 }
                 else if (bellowThisMessageId == -1)
                 {

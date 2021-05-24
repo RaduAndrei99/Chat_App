@@ -11,7 +11,7 @@
 
 using System;
 
-namespace Model.Exceptions
+namespace Model.Exceptions.AlreadyExistsExceptions
 {
     /// <summary>
     /// Clasa de baza pentru exceptiile care trebuie aruncate atunci cand un element exista deja in baza de date

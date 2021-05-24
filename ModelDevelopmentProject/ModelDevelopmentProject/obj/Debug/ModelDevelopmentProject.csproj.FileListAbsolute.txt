@@ -1,11 +1,11 @@
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\ModelDevelopmentProject.exe.config
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\ModelDevelopmentProject.exe
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\ModelDevelopmentProject.pdb
+C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\Model.dll
+C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\Model.pdb
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\obj\Debug\ModelDevelopmentProject.csprojAssemblyReference.cache
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\obj\Debug\ModelDevelopmentProject.csproj.CoreCompileInputs.cache
+C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\obj\Debug\ModelDevelopmentProject.csproj.CopyComplete
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\obj\Debug\ModelDevelopmentProject.exe
 C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\obj\Debug\ModelDevelopmentProject.pdb
-C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\Model.dll
-C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\Model.pdb
-C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\obj\Debug\ModelDevelopmentProject.csproj.CopyComplete
-C:\Chat_App\ModelDevelopmentProject\ModelDevelopmentProject\bin\Debug\Oracle.ManagedDataAccess.dll
