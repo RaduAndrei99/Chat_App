@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/**************************************************************************
+ *                                                                        *
+ *  Fisier:     Message.cs                                                *
+ *  Autor:      Budeanu Radu-Andrei                                       *
+ *  E-mail:     budeanuradu99@gmail.com                                  *
+ *  Descriere:  Contine descrierea unui mesaj ce este receptionat de      *
+ *              catre un utilizator.                                      *
+ *                                                                        *
+ **************************************************************************/
+
+using System;
 
 namespace ChatAppClient.Messages
 {

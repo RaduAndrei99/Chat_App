@@ -1,4 +1,14 @@
-﻿using System;
+﻿/**************************************************************************
+ *                                                                        *
+ *  Fisier:     ServerConnection.cs                                       *
+ *  Autor:      Budeanu Radu-Andrei                                       *
+ *  E-mail:     budeanuradu99@gmail.com                                   *
+ *  Descriere:  Contine clasa ce implementeaza notiunea de conexiune cu   *
+ *              server-ul central.                                        *
+ *                                                                        *
+ **************************************************************************/
+
+using System;
 using System.Net;
 using System.Net.Sockets;
 
@@ -98,6 +108,7 @@ namespace ChatAppClient
             _sender.Shutdown(SocketShutdown.Both);
             _sender.Close();
 
+            instance = null;
         }
     }
 }

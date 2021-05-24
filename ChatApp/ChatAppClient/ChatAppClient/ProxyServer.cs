@@ -1,4 +1,16 @@
-﻿using System;
+﻿/**************************************************************************
+ *                                                                        *
+ *  Fisier:     ProxyServer.cs                                            *
+ *  Autor:      Budeanu Radu-Andrei                                       *
+ *  E-mail:     budeanuradu99@gmail.com                                   *
+ *  Descriere:  Contine componenta de tip proxy din modelul Proxy pentru  *
+ *              a interfata conexiunea cu server-ul.                      *
+ *                                                                        *
+ **************************************************************************/
+
+
+
+using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -20,13 +32,20 @@ namespace ChatAppClient
         private ServerConnection _serverConnection;
 
         /// <summary>
-        /// parola de pentru criptarea/decriptarea datelor
+        /// Parola de pentru criptarea/decriptarea datelor
         /// </summary>
         private const string EncryptionPassword = "1234qwertasdfg1234";
 
+
+        /// <summary>
+        /// Variabila folosita pentru rularea buclei care asteapta mesaje de la server.
+        /// </summary>
         private bool _isRunning;
 
    
+        /// <summary>
+        /// Referinta catre view-ul din modelul MVP.
+        /// </summary>
         private IView _view;
 
         /// <summary>
@@ -52,7 +71,8 @@ namespace ChatAppClient
             {
                 Socket sender = _serverConnection.GetSenderConnection();
 
-                sender.Send(PrepareMessageToSend("login " + username + " " +  password ));
+                string hashedPassword = Cryptography.HashString(password);
+                sender.Send(PrepareMessageToSend("login " + username + " " + hashedPassword));
 
                 return true;
 
@@ -61,7 +81,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Server-ul nu raspunde.");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
 
                 return false;
             }
@@ -90,7 +110,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Server-ul nu raspunde.");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
 
             }
         }
@@ -115,17 +135,9 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Server-ul nu raspunde.");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
 
             }
-        }
-
-        /// <summary>
-        /// Metoda folosita pentru a inchide conexiunea cu server-ul.
-        /// </summary>
-        public void CloseServerConnection()
-        {
-            _serverConnection.CloseConnection();
         }
 
       
@@ -147,7 +159,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding.");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
 
             }
         }
@@ -168,7 +180,10 @@ namespace ChatAppClient
             {
                 Socket sender = _serverConnection.GetSenderConnection();
 
-                sender.Send(PrepareMessageToSend("register " + username + " " + password + " " + firstName + " " + lastName + " " + email + " " + birthdate ));
+                string hashedPassword = Cryptography.HashString(password);
+                sender.Send(PrepareMessageToSend("login " + username + " " + hashedPassword));
+
+                sender.Send(PrepareMessageToSend("register " + username + " " + hashedPassword + " " + firstName + " " + lastName + " " + email + " " + birthdate ));
 
                 return true;
             }
@@ -176,7 +191,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
 
                 return false;
             }
@@ -196,109 +211,157 @@ namespace ChatAppClient
 
             Console.WriteLine("I'm waiting for messages from the server...");
 
-            while (_isRunning)
+            try
             {
-                receivedData = "";
-                while (true)
+                while (_isRunning)
                 {
-                    byte[] bytes = new byte[1024];
-                    int bytesRec = sender.Receive(bytes);
-                    receivedData += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    if (receivedData.IndexOf("<EOF>") > -1)
+                    receivedData = "";
+                    while (true)
                     {
-                        break;
+                        byte[] bytes = new byte[1024];
+                        int bytesRec = sender.Receive(bytes);
+                        receivedData += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                        if (receivedData.IndexOf("<EOF>") > -1)
+                        {
+                            break;
+                        }
+                    }
+
+                    string[] stringSeparators = new string[] { "<EOF>" };
+                    foreach (string singleMsg in receivedData.Split(stringSeparators, StringSplitOptions.None))
+                    {
+                        if (singleMsg == "")
+                            break;
+
+                        string msg = Cryptography.Decrypt(singleMsg.Replace("<EOF>", ""), EncryptionPassword);
+                        Console.WriteLine("Received(run): " + msg);
+
+                        string msgType = msg.Split(' ')[0];
+                        switch (msgType)
+                        {
+                            case "message":
+                                {
+                                    string from = msg.Split(' ')[1];
+                                    string timestamp = msg.Split(' ')[2].Replace("_", " ");
+
+                                    string message = msg.Substring((msgType + " " + from + " " + timestamp + " ").Length);
+
+                                    Console.WriteLine(from + ": " + message);
+
+                                    Messages.Message messageObject = new Messages.Message();
+                                    messageObject.Msg = message;
+                                    messageObject.From = from;
+                                    messageObject.Timestamp = DateTime.Parse(timestamp) + (DateTime.Now - DateTime.UtcNow);
+
+                                    ((Form)_view).Invoke((Action<Messages.Message, bool>)_view.AddMessageToChat, messageObject, true);
+
+                                    break;
+                                }
+
+                            case "storedMessage":
+                                {
+                                    string friend = msg.Split(' ')[1];
+                                    string timestamp = msg.Split(' ')[2].Replace("_", " ");
+
+                                    string message = msg.Substring((msgType + " " + friend + " " + timestamp + " ").Length);
+
+                                    Messages.Message messageObject = new Messages.Message();
+                                    messageObject.Msg = message;
+                                    messageObject.From = friend;
+                                    messageObject.Timestamp = DateTime.Parse(timestamp) + (DateTime.Now - DateTime.UtcNow);
+
+
+                                    ((Form)_view).Invoke((Action<Messages.Message, bool>)_view.AddMessageToChat, messageObject, false);
+                                    break;
+                                }
+
+                            case "friendRequest":
+                                {
+                                    string friend = msg.Split(' ')[1];
+                                    Console.WriteLine("Friend request from: " + friend);
+
+                                    ((Form)_view).Invoke((Action<string>)_view.AddFriendRequest, friend);
+
+                                    break;
+                                }
+
+                            case "friend":
+                                {
+                                    string friend = msg.Split(' ')[1];
+                                    Console.WriteLine("Friend: " + friend);
+
+                                    ((Form)_view).Invoke((Action<string>)_view.AddFriendList, friend);
+
+                                    break;
+                                }
+
+                            case "online":
+                                {
+                                    string friend = msg.Split(' ')[1];
+                                    Console.WriteLine("friend " + friend + " is online.");
+
+                                    ((Form)_view).Invoke((Action<string, bool>)_view.ChangeFriendStatus, friend, true);
+
+                                    break;
+                                }
+
+                            case "offline":
+                                {
+                                    string friend = msg.Split(' ')[1];
+                                    Console.WriteLine("friend " + friend + " is offline.");
+
+                                    ((Form)_view).Invoke((Action<string, bool>)_view.ChangeFriendStatus, friend, false);
+
+                                    break;
+                                }
+
+                            case "confirmLogin":
+                                {
+                                    ((Form)_view).Invoke((Action)_view.Login);
+                                    break;
+                                }
+
+                            case "confirmClose":
+                                {
+                                    _serverConnection.CloseConnection();
+                                    _isRunning = false;
+
+                                    break;
+                                }
+
+                            case "confirmLogout":
+                                {
+                                    ((Form)_view).Invoke((Action)_view.Logout);
+
+                                    break;
+                                }
+
+
+
+                            case "confirmRegister":
+                                {
+                                    ((Form)_view).Invoke((Action)_view.AcceptRegister);
+
+                                    break;
+                                }
+                            case "ERROR":
+                                {
+                                    string error = msg.Split(' ')[1];
+
+                                    Console.WriteLine("ERROR: " + error);
+                                    ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, error);
+                                    break;
+                                }
+                        }
                     }
                 }
 
-                string msg = Cryptography.Decrypt(receivedData.Replace("<EOF>", ""), EncryptionPassword);
-                Console.WriteLine("Received(run): " + msg);
-
-                string msgType = msg.Split(' ')[0];
-                switch (msgType)
-                {
-                    case "message":
-                    {
-                        string from = msg.Split(' ')[1];
-                        string message = msg.Substring((msgType + " " + from + " ").Length);
-
-                        Console.WriteLine(from + ": " + message);
-
-                        Messages.Message messageObject = new Messages.Message();
-                        messageObject.Msg = message;
-                        messageObject.From = from;
-
-                        //TODO timestamp pt mesaj
-
-                        ((Form)_view).Invoke((Action<Messages.Message>)_view.AddMessageToChat, messageObject);
-
-                        break;
-                    }
-
-                    case "storedMessage":
-                    {
-                        string friend = msg.Split(' ')[1];
-                        string message = msg.Substring((msgType + " " + friend + " ").Length);
-
-                        Console.WriteLine(friend + ":" + message);
-                        break;
-                    }
-
-                    case "friendRequest":
-                    {
-                        string friend = msg.Split(' ')[1];
-                        Console.WriteLine("Friend request from: " + friend);
-
-                        ((Form)_view).Invoke((Action<string>)_view.AddFriendRequest, friend);
-
-                        break;
-                    }
-
-                    case "friend":
-                    {
-                        string friend = msg.Split(' ')[1];
-                        Console.WriteLine("Friend: " + friend);
-
-                        ((Form)_view).Invoke((Action<string>)_view.AddFriendList, friend);
-
-                        break;
-                    }
-
-                    case "online":
-                    {
-                        string friend = msg.Split(' ')[1];
-                        Console.WriteLine("friend " + friend + " is online.");
-
-                        ((Form)_view).Invoke((Action<string, bool>)_view.ChangeFriendStatus, friend, true);
-
-                        break;
-                    }
-
-                    case "confirmLogin":
-                    {
-                        ((Form)_view).Invoke((Action)_view.Login);
-                        break;
-                    }
-
-                    case "confirmLogout":
-                    {
-                        ((Form)_view).Invoke((Action)_view.Logout);
-
-                        break;
-                    }
-
-
-                    case "ERROR":
-                    {
-                        string error = msg.Split(' ')[1];
-
-                        Console.WriteLine("ERROR: " + error);
-                        ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, error);
-                        break;
-                    }
-                }
+            }
+            catch(Exception e)
+            {
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, e.Message);
             }
 
-            Console.WriteLine("done");
         }
 
         /// <summary>
@@ -340,7 +403,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
             }
         }
 
@@ -363,7 +426,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
             }
         }
 
@@ -385,7 +448,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
             }
         }
 
@@ -406,7 +469,7 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
             }
         }
 
@@ -427,13 +490,58 @@ namespace ChatAppClient
             catch (SocketException e)
             {
                 Console.WriteLine(e.Message);
-                Console.WriteLine("The server is not responding");
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
             }
         }
 
+        /// <summary>
+        /// Metoda ce opreste bucla scoket-ului care asteapta mesaje de la server.
+        /// </summary>
         public void StopRunning()
         {
             _isRunning = false;
+        }
+
+        /// <summary>
+        /// Metoda ii comunica server-ului intentia de a inchide conexiunea.
+        /// </summary>
+        /// <param name="username"></param>
+        public void CloseConnection(string username = "default")
+        {
+            try
+            {
+                Socket sender = _serverConnection.GetSenderConnection();
+
+                sender.Send(PrepareMessageToSend("closeConnection" + username));
+
+
+            }
+
+            catch (SocketException e)
+            {
+                Console.WriteLine(e.Message);
+
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
+            }
+        }
+
+        public void ResetMessageID(string username = "DEFAULT")
+        {
+            try
+            {
+                Socket sender = _serverConnection.GetSenderConnection();
+
+                sender.Send(PrepareMessageToSend("resetMessageID"));
+
+
+            }
+
+            catch (SocketException e)
+            {
+                Console.WriteLine(e.Message);
+
+                ((Form)_view).Invoke((Action<string>)_view.ShowErrorMessage, "Server is offline!" + " " + e.Message);
+            }
         }
     }
 }

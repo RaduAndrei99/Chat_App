@@ -1,4 +1,14 @@
-﻿using System;
+﻿/**************************************************************************
+ *                                                                        *
+ *  Fisier:    ChatServer.cs                                              *
+ *  Autor:     (c) Budeanu Radu=-Andrei                                   *
+ *  E-mail:    budeanuradu99@gmail.com                                    *
+ *  Descriere: Proxy-ul real pentru server-ul aplicatiei. Este folosit    *  
+ *             pentru rula aplicatia de tip server ce se ocupa cu         *
+ *             gestionarea utilizatorilor si a mesajelor.                 *
+ **************************************************************************/
+
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -11,6 +21,37 @@ using ProtectionProxy;
 
 namespace ChatAppServer
 {
+
+    /// <summary>
+    /// Clasa folosita pentru a crea un obiect ce implementeaza notiunea de pereche de obiecte.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="U"></typeparam>
+    public class Pair<T, U>
+    {
+        /// <summary>
+        /// Constructorul cu argumente al clasei Pair.
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        public Pair(T first, U second)
+        {
+            this.Item1 = first;
+            this.Item2 = second;
+        }
+
+        /// <summary>
+        /// Getter/setter pentru primul obiect.
+        /// </summary>
+        public T Item1 { get; set; }
+
+        /// <summary>
+        /// Getter/setter pentru primul obiect.
+        /// </summary>
+        public U Item2 { get; set; }
+    };
+
+
     /// <summary>
     /// Clasa ce implementeaza server-ul central care este intermediatorul dintre utilizatori.
     /// </summary>
@@ -35,14 +76,16 @@ namespace ChatAppServer
         /// <summary>
         /// Un dictionar folosit pentru gestiunea clientilor conectati la un moment dat.
         /// </summary>
-        private Dictionary<string, Socket> _loggedUserConnections;
+        private Dictionary<string, Pair<Socket, int>> _loggedUserConnections;
 
         /// <summary>
         /// Parola pentru criptarea/decriptarea datelor.
         /// </summary>
         private const string EncryptionPassword = "1234qwertasdfg1234";
 
-
+        /// <summary>
+        /// Parametrii necesari pentru conectarea la baza de date(locala).
+        /// </summary>
         private const string UserId = "radu";
         private const string Password = "1991129";
         private const string Hostname = "localhost";
@@ -55,12 +98,12 @@ namespace ChatAppServer
         /// </summary>
         public ChatServer()
         {
-            _loggedUserConnections = new Dictionary<string, Socket>();
+            _loggedUserConnections = new Dictionary<string, Pair<Socket, int>>();
             _model = new OracleDatabaseModel(UserId, Password, Hostname, DBPort, Sid, Pooling);
         }
 
         /// <summary>
-        /// Aceasta metoda incearca sa conecteze un usesr la server.
+        /// Aceasta metoda incearca sa conecteze un utilizator la server.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
@@ -73,27 +116,22 @@ namespace ChatAppServer
             }
             catch(Model.Exceptions.DoNotExistsExceptions.UserDoNotExistsException e)
             {
-                _loggedUserConnections[username].Send(PrepareMessageToSend("ERROR " + "USERNAME_DOESN'T_EXISTS " + e.Message));
+
                 return false;
             }
         }
 
         /// <summary>
-        /// Aceasta metoda il deconecteaza pe user de la server.
+        /// Aceasta metoda realizeaza delogarea unui utilizator de la server.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         public void Logout(string username)
         {
-            _loggedUserConnections[username].Send(PrepareMessageToSend("confirmLogout"));
-            Thread.Sleep(100);
-
-            _loggedUserConnections[username].Shutdown(SocketShutdown.Both);
-            _loggedUserConnections[username].Close();
-
-            _loggedUserConnections.Remove(username);
-
             NotifyFriendsWithMessage(username, "offline");
+
+            _loggedUserConnections[username].Item1.Send(PrepareMessageToSend("confirmLogout"));
+
         }
 
         /// <summary>
@@ -107,14 +145,23 @@ namespace ChatAppServer
             {
                 //daca prietenul este si el online, il notific
                 if (_loggedUserConnections.ContainsKey(friend))
-                    _loggedUserConnections[friend].Send(PrepareMessageToSend(message  + username));
+                    _loggedUserConnections[friend].Item1.Send(PrepareMessageToSend(message + " "  + username));
+            }
+        }
+
+        private void NotifyUserAboutFriends(string username, string message)
+        {
+            foreach (string friend in _model.GetFriendList(username))
+            {
+                if (_loggedUserConnections.ContainsKey(friend))
+                    _loggedUserConnections[username].Item1.Send(PrepareMessageToSend(message + " " + friend));
             }
         }
 
 
 
         /// <summary>
-        /// Metoda folosita pentru a gestiona mesajele de la fiecare client.
+        /// Metoda folosita pentru a gestiona mesajele venite de la fiecare client.
         /// </summary>
         /// <param name="handlerObj"></param>
         void HandleClient(Object handlerObj)
@@ -126,6 +173,7 @@ namespace ChatAppServer
             string data = null;
             byte[] bytes = null;
 
+            bool loggedIn = false;
 
             Console.WriteLine("New client on: " + (IPEndPoint)handler.RemoteEndPoint);
             while (true)
@@ -172,194 +220,255 @@ namespace ChatAppServer
 
                 Console.WriteLine("Encrypted: " + data);
 
-                string msg = Cryptography.Decrypt(data.Replace("<EOF>", ""), EncryptionPassword);
-                Console.WriteLine("Received: " + msg);
+                string[] stringSeparators = new string[] { "<EOF>" };
 
-                string messageType = msg.Split(' ')[0];
-
-                switch (messageType)
+                foreach (string singleMsg in data.Split(stringSeparators, StringSplitOptions.None))
                 {
+                    if (singleMsg == "")
+                        break;
 
-                    //login USERNAME HASHED_PASSWORD
-                    case "login":
+                    string msg = Cryptography.Decrypt(singleMsg.Replace("<EOF>", ""), EncryptionPassword);
+                    Console.WriteLine("Received: " + msg);
+
+                    string messageType = msg.Split(' ')[0];
+
+                    switch (messageType)
                     {
-                        userName = msg.Split(' ')[1];
-                        string password = msg.Split(' ')[2];
 
-                        Console.WriteLine("**" + " " + userName + " " + password);
-                        if (Login(userName, password))
-                        {
-                            if (!_loggedUserConnections.ContainsKey(userName))
+                        //login USERNAME HASHED_PASSWORD
+                        case "login":
                             {
-                                handler.Send(PrepareMessageToSend("confirmLogin"));
-                                _loggedUserConnections.Add(userName, handler);
+                                userName = msg.Split(' ')[1];
+                                string password = msg.Split(' ')[2];
 
+                                Console.WriteLine("**" + " " + userName + " " + password);
+                                if (Login(userName, password))
+                                {
+                                    if(loggedIn == false)
+                                    {
+                                        if (!_loggedUserConnections.ContainsKey(userName))
+                                            _loggedUserConnections.Add(userName, new Pair<Socket, int>(handler, -1));
+                                        else
+                                        {
+                                            handler.Send(PrepareMessageToSend("ERROR ALREADY_LOGGED_IN"));
 
-                                NotifyFriendsWithMessage(userName, "online");
+                                            break;
+                                        }
+                                        handler.Send(PrepareMessageToSend("confirmLogin"));
+
+                                        NotifyFriendsWithMessage(userName, "online");
+
+                                        loggedIn = true;
+                                    }
+                                    else
+                                    {
+                                        handler.Send(PrepareMessageToSend("ERROR ALREADY_LOGGED_IN"));
+                                    }
+                                }
+                                else
+                                {
+                                    handler.Send(PrepareMessageToSend("ERROR WRONG_PASSWORD_OR_USERNAME"));
+                                }
+
+                                break;
                             }
-                            else
+
+
+                        //logout
+                        case "logout":
                             {
-                                handler.Send(PrepareMessageToSend("ERROR ALREADY_LOGGED_IN"));
+                                Console.WriteLine("Client logged out - " + userName + ": " + (IPEndPoint)handler.RemoteEndPoint);
+                                Logout(userName);
+                                loggedIn = false;
+                                break;
                             }
-                        }
-                        else
-                        {
-                            handler.Send(PrepareMessageToSend("ERROR WRONG_PASSWORD_OR_USERNAME"));
-                        }
+                        //sendMessage FROM TO MESSAGE
+                        case "sendMessage":
+                            {
+                                string destinationUserName = msg.Split(' ')[2];
+                                string from = msg.Split(' ')[1];
 
-                        break;
+                                if(destinationUserName == "")
+                                {
+                                    break;
+                                }
+
+                                string destinationMessage = msg.Substring((messageType + " " + from + " " + destinationUserName + " ").Length);
+
+                                //daca avem conectat deja user-ul destinatie, ii trimitem direct mesajul
+                                if (_loggedUserConnections.ContainsKey(destinationUserName))
+                                {
+                                    SendMessage(userName, destinationUserName, destinationMessage);
+                                    Console.WriteLine("User " + destinationUserName + " is connected.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("User " + destinationUserName + " is not connected.");
+                                }
+
+                                //incercam sa stocam mesajul. lipsa conversatiei va duce la o exceptie pe care o tratez
+                                try
+                                {
+                                    _model.StoreMessage(userName, destinationUserName, "txt", Encoding.ASCII.GetBytes(destinationMessage), DateTime.UtcNow);
+                                }
+                                catch (Model.Exceptions.DoNotExistsExceptions.ConversationDoNotExistsException e)
+                                {
+                                    Console.WriteLine(e.Message);
+                                    _model.CreateConversation(userName, destinationUserName);
+                                    _model.StoreMessage(userName, destinationUserName, "txt", Encoding.ASCII.GetBytes(destinationMessage), DateTime.UtcNow);
+                                }
+
+                                break;
+                            }
+
+
+                        //register USERNAME HASHED_PASSWORD FIRST_NAME LAST_NAME EMAIL BIRTHDATE
+                        case "register":
+                            {
+                                string username = msg.Split(' ')[1];
+                                string pass = msg.Split(' ')[2];
+                                string firstName = msg.Split(' ')[3];
+                                string lastName = msg.Split(' ')[4];
+                                string email = msg.Split(' ')[5];
+                                string birthdate = msg.Split(' ')[6];
+
+                                if (Register(username, pass, firstName, lastName, email, birthdate))
+                                {
+                                    handler.Send(PrepareMessageToSend("confirmRegister"));
+                                }
+                                else
+                                {
+                                    handler.Send(PrepareMessageToSend("ERROR ERROR_REGISTERING_THE_USER"));
+                                }
+
+                                break;
+                            }
+
+                        //addFriend FROM TO
+                        case "addFriend":
+                            {
+                                string friend = msg.Split(' ')[2];
+
+                                foreach (string friendAlready in _model.GetFriendList(userName))
+                                {
+                                    if (friendAlready == friend)
+                                    {
+
+                                        handler.Send(PrepareMessageToSend("ERROR ALREADY_FRIENDS"));
+
+                                        break;
+                                    }
+              
+                                }
+
+                                try
+                                {
+                                    _model.RegisterFriendRequest(userName, friend);
+                                }
+                                catch (Model.Exceptions.AlreadyExistsException e)
+                                {
+                                    handler.Send(PrepareMessageToSend("ERROR FRIEND_REQUEST_ALREADY_SENT " + e.Message));
+                                }
+                                catch (Model.Exceptions.DoNotExistsExceptions.UserDoNotExistsException e)
+                                {
+                                    handler.Send(PrepareMessageToSend("ERROR USERNAME_DOESN'T_EXISTS " + e.Message));
+                                }
+
+                                catch (Model.Exceptions.WrongFormatExceptions.WrongUsernameFormatException e)
+                                {
+                                    handler.Send(PrepareMessageToSend("ERROR WRONG_USERNAME" + e.Message));
+                                }
+
+                                //daca prietenul este online, ii trimit direct cerereea
+                                if (_loggedUserConnections.ContainsKey(friend))
+                                {
+                                    SendFriendRequest(userName, friend);
+                                }
+                                break;
+                            }
+
+                        //changeUsername FROM TO NICKNAME
+                        case "changeUsername":
+                            {
+                                string friend = msg.Split(' ')[2];
+                                string nickname = msg.Split(' ')[3];
+
+                                ChangeFriendNickname(userName, friend, nickname);
+                                break;
+                            }
+
+                        //getMessages NUMBER_OF_MESSAGES USERNAME1 USERNAME2
+                        case "getMessages":
+                            {
+                                uint noOfMessages = uint.Parse(msg.Split(' ')[1]);
+                                string username2 = msg.Split(' ')[3];
+
+                                GetLastNMessages(userName, username2, noOfMessages);
+
+                                break;
+                            }
+
+                        //getFriendRequest 
+                        case "getFriendRequests":
+                            {
+                                GetFriendRequests(userName);
+                                break;
+                            }
+
+                        //acceptFriendRequest from
+                        case "acceptFriendRequest":
+                            {
+                                string from = msg.Split(' ')[1];
+
+                                AcceptFriendRequest(from, userName);
+                                try
+                                {
+                                    _model.AddRelationshipSettings(from, userName);
+
+                                }
+                                catch (Model.Exceptions.AlreadyExistsExceptions.FriendRelationshipAlreadyExistsException e)
+                                {
+                                    handler.Send(PrepareMessageToSend("ERROR ALREADY_FRIENDS " + e.Message));
+                                }
+
+                                break;
+                            }
+
+                        case "changeNickname":
+                            {
+                                string user = msg.Split(' ')[1];
+                                string nickname = msg.Split(' ')[2];
+
+                                ChangeFriendNickname(userName, user, nickname);
+                                break;
+                            }
+
+                        case "closeConnection":
+                            {
+                                handler.Send(PrepareMessageToSend("confirmClose"));
+
+                                CloseConnection(userName);
+
+                                return;
+                            }
+
+
+                        case "getFriendsList":
+                            {
+                                GetFriendsList(userName);
+                                NotifyUserAboutFriends(userName, "online");
+                                break;
+                            }
+
+
+                        case "resetMessageID":
+                            {
+                                ResetMessageID(userName);
+                                break;
+                            }
+
+
                     }
-
-
-                    //logout
-                    case "logout":
-                    {
-                        Console.WriteLine("Client logged out: " + (IPEndPoint)handler.RemoteEndPoint);
-                        Logout(userName);
-
-
-                        return;
-                    }
-                    //sendMessage FROM TO MESSAGE
-                    case "sendMessage":
-                    {
-                        string destinationUserName = msg.Split(' ')[2];
-                        string from = msg.Split(' ')[1];
-    
-                        string destinationMessage = msg.Substring((messageType + " " + from + " " +destinationUserName + " ").Length);
-                           
-                        //daca avem conectat deja user-ul destinatie, ii trimitem direct mesajul
-                        if (_loggedUserConnections.ContainsKey(destinationUserName))
-                        {
-                            SendMessage(userName, destinationUserName, destinationMessage);
-                            Console.WriteLine("User " + destinationUserName + " is connected.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("User " + destinationUserName + " is not connected.");
-                        }
-
-                        //incercam sa stocam mesajul. lipsa conversatiei va duce la o exceptie pe care o tratez
-                        try
-                        {
-                             _model.StoreMessage(userName, destinationUserName, "txt", Encoding.ASCII.GetBytes(destinationMessage), DateTime.UtcNow);
-                        }
-                        catch (Model.Exceptions.DoNotExistsExceptions.ConversationDoNotExistsException e)
-                        {
-                            Console.WriteLine(e.Message);
-                            _model.CreateConversation(userName, destinationUserName);
-                            _model.StoreMessage(userName, destinationUserName, "txt", Encoding.ASCII.GetBytes(destinationMessage), DateTime.UtcNow);
-                        }
-
-                        break;
-                    }
-                    
-
-                    //register USERNAME HASHED_PASSWORD FIRST_NAME LAST_NAME EMAIL BIRTHDATE
-                    case "register":
-                    {
-                        string username = msg.Split(' ')[1];
-                        string pass = msg.Split(' ')[2];
-                        string firstName = msg.Split(' ')[3];
-                        string lastName = msg.Split(' ')[4];
-                        string email = msg.Split(' ')[5];
-                        string birthdate = msg.Split(' ')[6];
-
-                        if (Register(username, pass, firstName, lastName, email, birthdate))
-                        {
-                            handler.Send(PrepareMessageToSend("CONFIRM"));
-                        }
-                        else
-                        {
-                            handler.Send(PrepareMessageToSend("ERROR"));
-                        }
-
-                        break;
-                    }
-
-                    //addFriend FROM TO
-                    case "addFriend":
-                    {
-                        string friend = msg.Split(' ')[2];
-                        try
-                        {
-                            _model.RegisterFriendRequest(userName, friend);
-                        }
-                        catch(Model.Exceptions.AlreadyExistsException e)
-                        {
-                            handler.Send(PrepareMessageToSend("ERROR FRIEND_REQUEST_ALREADY_SENT " + e.Message));
-                        }  
-
-                        //daca prietenul este online, ii trimit direct cerereea
-                        if (_loggedUserConnections.ContainsKey(friend))
-                        {
-                            SendFriendRequest(userName, friend);
-                        }
-                        break;
-                    }
-
-                    //changeUsername FROM TO NICKNAME
-                    case "changeUsername":
-                    {
-                        string friend = msg.Split(' ')[2];
-                        string nickname = msg.Split(' ')[3];
-
-                        ChangeFriendNickname(userName, friend, nickname);
-                        break;
-                    }
-
-                    //getMessages NUMBER_OF_MESSAGES USERNAME1 USERNAME2
-                    case "getMessages":
-                    {
-                        uint noOfMessages = uint.Parse(msg.Split(' ')[1]);
-                        string username2 = msg.Split(' ')[2];
-
-                        GetLastNMessages(userName, username2, noOfMessages);
-
-                        break;
-                    }
-
-                    //getFriendRequest 
-                    case "getFriendRequests":
-                    {
-                        GetFriendRequests(userName);
-                        break;
-                    }
-
-                    //acceptFriendRequest from
-                    case "acceptFriendRequest":
-                    {
-                        string from = msg.Split(' ')[2];
-
-                        AcceptFriendRequest(from, userName);
-                        try
-                        {
-                            _model.AddRelationshipSettings(from, userName);
-                        }
-                        catch(Model.Exceptions.AlreadyExistsExceptions.FriendRelationshipAlreadyExistsException e)
-                        {
-                            handler.Send(PrepareMessageToSend("ERROR ALREADY_FRIENDS " + e.Message));
-                        }
-
-                        break;
-                    }
-
-                    case "changeNickname":
-                    {
-                        string user = msg.Split(' ')[1];
-                        string nickname = msg.Split(' ')[2];
-
-                        ChangeFriendNickname(userName, user, nickname);
-                        break;
-                    }
-
-                    case "getFriendsList":
-                    {
-                        GetFriendsList(userName);
-                        break;
-                    }
-
-
                 }
             }
         }
@@ -412,12 +521,11 @@ namespace ChatAppServer
         {
             try
             {
-                _loggedUserConnections[destination].Send(PrepareMessageToSend("message" + 
-                    " " + from + " " + message));
+                _loggedUserConnections[destination].Item1.Send(PrepareMessageToSend("message" + " " + from + " " + DateTime.UtcNow.ToString().Replace(" ", "_") + " " + message ));
             }
             catch(Exception e)
             {
-                _loggedUserConnections[from].Send(PrepareMessageToSend("ERROR" + " " + "FAILED_TO_SEND_MESSAGE " + e.Message));
+                _loggedUserConnections[from].Item1.Send(PrepareMessageToSend("ERROR" + " " + "FAILED_TO_SEND_MESSAGE " + e.Message));
             }
         }
 
@@ -435,8 +543,8 @@ namespace ChatAppServer
             try
             {
                 //TODO - de convertit data din string in DateTime
-                _model.RegisterUser(username, firstName, lastName, email, DateTime.UtcNow);
                 _model.AddNewUser(username, password);
+                _model.RegisterUser(username, firstName, lastName, email, DateTime.Parse(birthdate));
 
                 return true;
             }
@@ -448,6 +556,10 @@ namespace ChatAppServer
             catch (Model.Exceptions.AlreadyExistsExceptions.UserAlreadyExistsException e)
             {
                 Console.WriteLine(e.Message);
+                return false;
+            }
+            catch (Exception e)
+            {
                 return false;
             }
         }
@@ -462,11 +574,11 @@ namespace ChatAppServer
         {
             try
             {
-                _loggedUserConnections[friend].Send(PrepareMessageToSend("friendRequest " + asker));             
+                _loggedUserConnections[friend].Item1.Send(PrepareMessageToSend("friendRequest " + asker));             
             }
             catch(Exception e)
             {
-                _loggedUserConnections[asker].Send(PrepareMessageToSend("ERROR " + "FAILED_TO_SEND_FRIEND_REQUEST " + e.Message));
+                _loggedUserConnections[asker].Item1.Send(PrepareMessageToSend("ERROR " + "FAILED_TO_SEND_FRIEND_REQUEST " + e.Message));
             }
         }
 
@@ -480,6 +592,12 @@ namespace ChatAppServer
             return Encoding.ASCII.GetBytes(Cryptography.Encrypt(message, EncryptionPassword) + "<EOF>");
         }
 
+        /// <summary>
+        /// Metoda folosita pentru a schimba nickname-ul unui utilizator.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="who"></param>
+        /// <param name="nickname"></param>
         public void ChangeFriendNickname(string from, string who, string nickname)
         {
             try
@@ -488,36 +606,84 @@ namespace ChatAppServer
             }
             catch(Exception E)
             {
-                _loggedUserConnections[from].Send(PrepareMessageToSend("ERROR UNABLE_TO_CHANGE_THE_NICKNAME " + E.Message));
+                _loggedUserConnections[from].Item1.Send(PrepareMessageToSend("ERROR UNABLE_TO_CHANGE_THE_NICKNAME " + E.Message));
             }
         }
 
+        /// <summary>
+        /// Metoda folosita pentru a obtine ultimele n mesaje dintr-o conversatie din baza de date.
+        /// </summary>
+        /// <param name="username1"></param>
+        /// <param name="username2"></param>
+        /// <param name="howManyMessages"></param>
         public void GetLastNMessages(string username1, string username2 , uint howManyMessages)
         {
-            List<Model.DataTransferObjects.MessageDTO> messages;
-
-            long msgId;
-            _model.GetLastNMessagesFromConversation(username1, username2, -1, (uint)howManyMessages,out messages, out msgId);
-
-            for(int i=0;i<messages.Count;++i)
+            try
             {
-                _loggedUserConnections[username1].Send(PrepareMessageToSend("storedMessage" + " " + username2 + " " + Encoding.ASCII.GetString(messages[i].MessageData, 0, messages[i].MessageData.Length)));
-                Thread.Sleep(10);
+                List<Model.DataTransferObjects.MessageDTO> messages;
+
+                long msgId;
+                _model.GetLastNMessagesFromConversation(username1, username2, _loggedUserConnections[username1].Item2, (uint)howManyMessages , out messages, out msgId);
+                Console.WriteLine("ID:" + msgId.ToString());
+
+                if (msgId == -1)
+                    return;
+
+                _loggedUserConnections[username1].Item2 = (int)msgId;
+                for (int i = 0; i < messages.Count; ++i)
+                {
+                    Console.WriteLine("MESSAGE: " + Encoding.ASCII.GetString(messages[i].MessageData, 0, messages[i].MessageData.Length) );
+                    _loggedUserConnections[username1].Item1.Send(PrepareMessageToSend("storedMessage" + " " + messages[i].SenderUsername + " " + messages[i].SentAt.ToString().Replace(" ", "_") + " " + 
+                        Encoding.ASCII.GetString(messages[i].MessageData, 0, messages[i].MessageData.Length)));
+                    Thread.Sleep(10);
+                }
+
+
             }
+            catch (Model.Exceptions.DoNotExistsExceptions.ConversationDoNotExistsException e)
+            {
+                return; 
+            }
+
         }
 
+        /// <summary>
+        /// Metoda ce accepta o cerere de prietenie primita de catre un utilizator.
+        /// </summary>
+        /// <param name="asker"></param>
+        /// <param name="friend"></param>
         public void AcceptFriendRequest(string asker, string friend)
         {
             try
             {
                 _model.AcceptFriendRequest(asker, friend);
+
+                if (_loggedUserConnections.ContainsKey(asker))
+                {
+                    _loggedUserConnections[asker].Item1.Send(PrepareMessageToSend("friend" + " " + friend));
+
+                    _loggedUserConnections[asker].Item1.Send(PrepareMessageToSend("online" + " " + friend));
+
+                }
+
+                if (_loggedUserConnections.ContainsKey(friend))
+                {
+                    _loggedUserConnections[friend].Item1.Send(PrepareMessageToSend("friend" + " " + asker));
+
+                    _loggedUserConnections[friend].Item1.Send(PrepareMessageToSend("online" + " " + asker));
+                }
             }
             catch (Exception e)
             {
-                _loggedUserConnections[friend].Send(PrepareMessageToSend("ERROR UNABLE_TO_ACCEPT_THE_FRIEND_REQUEST " + e.Message));
+                _loggedUserConnections[friend].Item1.Send(PrepareMessageToSend("ERROR UNABLE_TO_ACCEPT_THE_FRIEND_REQUEST " + e.Message));
             }
         }
 
+
+        /// <summary>
+        /// Metoda ce trimite lista de cereri de prietenie unui utilizator.
+        /// </summary>
+        /// <param name="username"></param>
         public void GetFriendRequests(string username)
         {
             try
@@ -533,10 +699,14 @@ namespace ChatAppServer
             }
             catch (Exception e)
             {
-                _loggedUserConnections[username].Send(PrepareMessageToSend("ERROR UNABLE_TO_GET_FRIEND_REQUESTS " + e.Message));
+                _loggedUserConnections[username].Item1.Send(PrepareMessageToSend("ERROR UNABLE_TO_GET_FRIEND_REQUESTS " + e.Message));
             }
         }
 
+        /// <summary>
+        /// Metoda ce trimite lista de prieteni unui utilizator.
+        /// </summary>
+        /// <param name="username"></param>
         public void GetFriendsList(string username)
         {
             try
@@ -545,15 +715,44 @@ namespace ChatAppServer
 
                 foreach (string friend in friends)
                 {
-                    _loggedUserConnections[username].Send(PrepareMessageToSend("friend" + " " + friend));
+                    _loggedUserConnections[username].Item1.Send(PrepareMessageToSend("friend" + " " + friend));
                     Thread.Sleep(10);
                 }
             }
             catch (Exception e)
             {
-                _loggedUserConnections[username].Send(PrepareMessageToSend("ERROR UNABLE_TO_GET_FRIEND_LIST " + e.Message));
+                _loggedUserConnections[username].Item1.Send(PrepareMessageToSend("ERROR UNABLE_TO_GET_FRIEND_LIST " + e.Message));
             }
         }
 
+
+        /// <summary>
+        /// Metoda ce inchide conexiunea cu un utilizator.
+        /// </summary>
+        /// <param name="username"></param>
+        public void CloseConnection(string username)
+        {
+
+            if (_loggedUserConnections.ContainsKey(username))
+            {
+                _loggedUserConnections[username].Item1.Shutdown(SocketShutdown.Both);
+                _loggedUserConnections[username].Item1.Close();
+
+                _loggedUserConnections.Remove(username);
+
+            }
+        }
+
+        public void ResetMessageID(string username)
+        {
+            try
+            {
+                _loggedUserConnections[username].Item2 = -1;
+            }
+            catch (Exception e)
+            {
+                _loggedUserConnections[username].Item1.Send(PrepareMessageToSend("ERROR UNABLE_TO_RESET " + e.Message));
+            }
+        }
     }
 }

@@ -14,5 +14,8 @@ namespace MainServerNs
         void GetLastNMessages(string username1, string username2, uint howManyMessages);
         void GetFriendRequests(string username);
         void GetFriendsList(string username);
+        void CloseConnection(string username);
+        void ResetMessageID(string username);
+
     }
 }
