@@ -1,4 +1,14 @@
-﻿using System;
+﻿/***************************************************************************
+ *                                                                         *
+ *  Autor:  Gafencu Gabriel                                                *
+ *  Grupa:  1309A                                                          *
+ *  Fisier: IView.cs                                                       *
+ *                                                                         *
+ *  Descriere: Interfața folosită de către Presenter pentru lucrul         *
+ *  cu interfața grafică                                                   *
+ *  ***********************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

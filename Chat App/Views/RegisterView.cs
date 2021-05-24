@@ -195,7 +195,7 @@ namespace Chat_App.Views
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        private bool IsValidUsername(string username)
+        public static bool IsValidUsername(string username)
         {
             return new Regex(Constraints.UsernameRegex).IsMatch(username);
         }
@@ -205,7 +205,7 @@ namespace Chat_App.Views
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        private bool IsValidPassword(string password)
+        public static bool IsValidPassword(string password)
         {
             return new Regex(Constraints.PasswordRegex).IsMatch(password);
         }
@@ -215,7 +215,7 @@ namespace Chat_App.Views
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        private bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
             return new Regex(Constraints.EmailRegex).IsMatch(email);
         }
@@ -225,7 +225,7 @@ namespace Chat_App.Views
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private bool IsValidName(string name)
+        public static bool IsValidName(string name)
         {
             return new Regex(Model.Commons.Constraints.PersonalNameRegex).IsMatch(name);
         }
