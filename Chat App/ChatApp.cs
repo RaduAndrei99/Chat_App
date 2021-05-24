@@ -132,7 +132,7 @@ namespace Chat_App
             /*ListViewItem newMessage = new ListViewItem();
             newMessage.Text = message.Msg;
             newMessage.ForeColor = Color.DarkOrange;*/
-            if (message.From == _chatForm.ActiveFriend.Text.Split('[')[0])
+            if (message.From == _chatForm.ActiveFriend.Text.Split('[')[0] || message.From == LogInView.Instance.Control.Username)
                 if (addToEnd)
                 {
                     _chatForm.Chat.Text += "[" + message.Timestamp.ToString(DateFormat.ToString() + " HH:mm") + "]" + message.From + ": " + message.Msg + '\n';
